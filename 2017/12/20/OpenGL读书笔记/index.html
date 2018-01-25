@@ -102,7 +102,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android, OpenGL, OpenGL ES, GlSurfaceView," />
 
 
 
@@ -113,20 +113,21 @@
 
 
 
-<meta name="description" content="title: OpenGL ES 读书笔记date: 2017-12-20 18:20:51tags:  Android, OpenGL, OpenGL ES, GlSurfaceView OpenGL ES 读书笔记[TOC]  OpenGL（Open Graphics Library）是指定义了一个跨编程语言、跨平台的编程接口规格的专业的图形程序接口。它用于三维图像（二维的亦可），是一个功能">
+<meta name="description" content="OpenGL ES 读书笔记[TOC]  OpenGL（Open Graphics Library）是指定义了一个跨编程语言、跨平台的编程接口规格的专业的图形程序接口。它用于三维图像（二维的亦可），是一个功能强大，调用方便的底层图形库。 OpenGL ES (OpenGL for Embedded Systems)是 OpenGL的子集，针对手机、PDA和游戏主机等嵌入式设备而设计的。OpenGL">
+<meta name="keywords" content="Android, OpenGL, OpenGL ES, GlSurfaceView">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DavyJones的博客">
-<meta property="og:url" content="http://codefarmer.tech/2018/01/25/OpenGL读书笔记/index.html">
+<meta property="og:title" content="OpenGL ES 读书笔记">
+<meta property="og:url" content="http://codefarmer.tech/2017/12/20/OpenGL读书笔记/index.html">
 <meta property="og:site_name" content="DavyJones的博客">
-<meta property="og:description" content="title: OpenGL ES 读书笔记date: 2017-12-20 18:20:51tags:  Android, OpenGL, OpenGL ES, GlSurfaceView OpenGL ES 读书笔记[TOC]  OpenGL（Open Graphics Library）是指定义了一个跨编程语言、跨平台的编程接口规格的专业的图形程序接口。它用于三维图像（二维的亦可），是一个功能">
+<meta property="og:description" content="OpenGL ES 读书笔记[TOC]  OpenGL（Open Graphics Library）是指定义了一个跨编程语言、跨平台的编程接口规格的专业的图形程序接口。它用于三维图像（二维的亦可），是一个功能强大，调用方便的底层图形库。 OpenGL ES (OpenGL for Embedded Systems)是 OpenGL的子集，针对手机、PDA和游戏主机等嵌入式设备而设计的。OpenGL">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/davyjoneswang/static-res/blob/master/%E7%AE%A1%E9%81%93.png?raw=true">
 <meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEBbac1fbac0f48726d29f7dd1a2fa3dc78?method=getImage&version=1494&cstk=aNW9Q6WS">
 <meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB72e27e72a7ef593fafa3651359bd5d99?method=getImage&version=1495&cstk=aNW9Q6WS">
-<meta property="og:updated_time" content="2018-01-25T02:40:29.000Z">
+<meta property="og:updated_time" content="2018-01-25T02:42:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DavyJones的博客">
-<meta name="twitter:description" content="title: OpenGL ES 读书笔记date: 2017-12-20 18:20:51tags:  Android, OpenGL, OpenGL ES, GlSurfaceView OpenGL ES 读书笔记[TOC]  OpenGL（Open Graphics Library）是指定义了一个跨编程语言、跨平台的编程接口规格的专业的图形程序接口。它用于三维图像（二维的亦可），是一个功能">
+<meta name="twitter:title" content="OpenGL ES 读书笔记">
+<meta name="twitter:description" content="OpenGL ES 读书笔记[TOC]  OpenGL（Open Graphics Library）是指定义了一个跨编程语言、跨平台的编程接口规格的专业的图形程序接口。它用于三维图像（二维的亦可），是一个功能强大，调用方便的底层图形库。 OpenGL ES (OpenGL for Embedded Systems)是 OpenGL的子集，针对手机、PDA和游戏主机等嵌入式设备而设计的。OpenGL">
 <meta name="twitter:image" content="https://github.com/davyjoneswang/static-res/blob/master/%E7%AE%A1%E9%81%93.png?raw=true">
 
 
@@ -157,13 +158,13 @@
 
 
 
-  <link rel="canonical" href="http://codefarmer.tech/2018/01/25/OpenGL读书笔记/"/>
+  <link rel="canonical" href="http://codefarmer.tech/2017/12/20/OpenGL读书笔记/"/>
 
 
 
 
 
-  <title> | DavyJones的博客</title>
+  <title>OpenGL ES 读书笔记 | DavyJones的博客</title>
   
 
 
@@ -300,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2018/01/25/OpenGL读书笔记/">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2017/12/20/OpenGL读书笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DavyJones">
@@ -317,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">OpenGL ES 读书笔记</h1>
         
 
         <div class="post-meta">
@@ -329,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-25T10:39:01+08:00">
-                2018-01-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T18:20:51+08:00">
+                2017-12-20
               </time>
             
 
@@ -367,9 +368,7 @@
       
 
       
-        <hr>
-<p>title: OpenGL ES 读书笔记<br>date: 2017-12-20 18:20:51<br>tags:  Android, OpenGL, OpenGL ES, GlSurfaceView</p>
-<h1 id="OpenGL-ES-读书笔记"><a href="#OpenGL-ES-读书笔记" class="headerlink" title="OpenGL ES 读书笔记"></a>OpenGL ES 读书笔记</h1><p>[TOC]</p>
+        <h1 id="OpenGL-ES-读书笔记"><a href="#OpenGL-ES-读书笔记" class="headerlink" title="OpenGL ES 读书笔记"></a>OpenGL ES 读书笔记</h1><p>[TOC]</p>
 <blockquote>
 <p>OpenGL（Open Graphics Library）是指定义了一个跨编程语言、跨平台的编程接口规格的专业的图形程序接口。它用于三维图像（二维的亦可），是一个功能强大，调用方便的底层图形库。</p>
 <p>OpenGL ES (OpenGL for Embedded Systems)是 OpenGL的子集，针对手机、PDA和游戏主机等嵌入式设备而设计的。OpenGL ES 是从 OpenGL 裁剪的定制而来的，去除了glBegin/glEnd，四边形（GL_QUADS）、多边形（GL_POLYGONS）等复杂图元等许多非绝对必要的特性。</p>
@@ -587,6 +586,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Android-OpenGL-OpenGL-ES-GlSurfaceView/" rel="tag"># Android, OpenGL, OpenGL ES, GlSurfaceView</a>
+          
+        </div>
+      
 
       
       
@@ -694,7 +699,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
