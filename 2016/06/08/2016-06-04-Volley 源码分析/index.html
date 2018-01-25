@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Volley 源码分析： 第一章：Volley简介Volley是Google于2003 IO大会上提出的Http请求库，能够让Android应用进行更快，更容易的网络操作。Volley提供了很多特性 ：  自动调度网络请求 并发的网络连接 透明的磁盘和内存响应缓存与标准的HTTP缓存一致性。 支持请求的优先级 可以取消请求 易于定制 例如：重试和退避 强大的排序,便于正确填充UI使用异步获取的网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Volley 源码分析 ">
+<meta property="og:url" content="http://codefarmer.tech/2016/06/08/2016-06-04-Volley 源码分析/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="Volley 源码分析： 第一章：Volley简介Volley是Google于2003 IO大会上提出的Http请求库，能够让Android应用进行更快，更容易的网络操作。Volley提供了很多特性 ：  自动调度网络请求 并发的网络连接 透明的磁盘和内存响应缓存与标准的HTTP缓存一致性。 支持请求的优先级 可以取消请求 易于定制 例如：重试和退避 强大的排序,便于正确填充UI使用异步获取的网络">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2016-06-12T10:54:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Volley 源码分析 ">
+<meta name="twitter:description" content="Volley 源码分析： 第一章：Volley简介Volley是Google于2003 IO大会上提出的Http请求库，能够让Android应用进行更快，更容易的网络操作。Volley提供了很多特性 ：  自动调度网络请求 并发的网络连接 透明的磁盘和内存响应缓存与标准的HTTP缓存一致性。 支持请求的优先级 可以取消请求 易于定制 例如：重试和退避 强大的排序,便于正确填充UI使用异步获取的网络">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2016/06/08/2016-06-04-Volley 源码分析/"/>
+
+
+
+
+
+  <title>Volley 源码分析  | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2016/06/08/2016-06-04-Volley 源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Volley 源码分析 </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-08T14:47:00+08:00">
+                2016-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Volley 源码分析：</p>
+<h1 id="第一章：Volley简介"><a href="#第一章：Volley简介" class="headerlink" title="第一章：Volley简介"></a>第一章：Volley简介</h1><p>Volley是Google于2003 IO大会上提出的Http请求库，能够让Android应用进行更快，更容易的网络操作。Volley提供了很多特性 ：</p>
+<ul>
+<li>自动调度网络请求</li>
+<li>并发的网络连接</li>
+<li>透明的磁盘和内存响应缓存与标准的HTTP缓存一致性。</li>
+<li>支持请求的优先级</li>
+<li>可以取消请求</li>
+<li>易于定制 例如：重试和退避</li>
+<li>强大的排序,便于正确填充UI使用异步获取的网络数据。</li>
+<li>调试和追踪工具</li>
+</ul>
+<p>Volley适合数据量不大的快速的并发网络请求，并不适合大数据下载，这是因为Volley在解析数据时，会保存所有的网络请求数据在内存中。</p>
+<p>Volley源码位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone &lt;https://android.googlesource.com/platform/frameworks/volley&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="第二章：基本使用"><a href="#第二章：基本使用" class="headerlink" title="第二章：基本使用"></a>第二章：基本使用</h1><ol>
+<li><p>创建请求队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RequestQueue mQueue = Volley.newRequestQueue(context);</span><br></pre></td></tr></table></figure>
+<p>建议在应用的全局Application对象总创建全局的Application建议</p>
+</li>
+<li><p>定义我们的请求对象并添加到我们的请求队列中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">StringRequest stringRequest = new StringRequest(&quot;http://ip.taobao.com/&quot;,new Response.Listener&lt;String&gt;() &#123;</span><br><span class="line">@Override</span><br><span class="line">public void onResponse(String response) &#123;</span><br><span class="line">   Log.d(&quot;TAG&quot;, response);</span><br><span class="line">&#125;</span><br><span class="line">&#125;, new Response.ErrorListener() &#123;</span><br><span class="line">@Override</span><br><span class="line">public void onErrorResponse(VolleyError error) &#123;</span><br><span class="line">Log.e(&quot;TAG&quot;, error.getMessage(), error);</span><br><span class="line">&#125;</span><br><span class="line">&#125;);</span><br><span class="line">App.mRequestQueue.add(stringRequest);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加网络请求权限</p>
+<p><uses-permission android:name="android.permission.INTERNET"><br></uses-permission></p>
+</li>
+</ol>
+<h1 id="第三章-源码分析"><a href="#第三章-源码分析" class="headerlink" title="第三章 源码分析"></a>第三章 源码分析</h1><p>第一步：请求队列的建立 RequestQueue mQueue = Volley.newRequestQueue(context);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">//缓存目录： Volley会将我们的请求结果缓存到本地文件</span><br><span class="line">File cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);</span><br><span class="line">//userAgent 创建userAgent</span><br><span class="line">...</span><br><span class="line">//根据SDK版本决定使用HttpUrlConnection还是HttpClient;9以前版本很少见，基本都是HttpUrlConnection</span><br><span class="line">if (stack == null) &#123;</span><br><span class="line">     if (Build.VERSION.SDK_INT &gt;= 9) &#123;</span><br><span class="line">         stack = new HurlStack();</span><br><span class="line">     &#125; else &#123;</span><br><span class="line">         // Prior to Gingerbread, HttpUrlConnection was unreliable.</span><br><span class="line">         // See: &lt;http://android-developers.blogspot.com/2011/09/androids-http-clients.html&gt;</span><br><span class="line">         stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line">Network network = new BasicNetwork(stack);</span><br><span class="line"></span><br><span class="line">//创建请求对象，（根据设置的磁盘缓存最大值创建磁盘缓存）</span><br><span class="line">RequestQueue queue;</span><br><span class="line">if (maxDiskCacheBytes &lt;= -1) &#123;</span><br><span class="line">   // No maximum size specified</span><br><span class="line">   queue = new RequestQueue(new DiskBasedCache(cacheDir), network);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">   // Disk cache size specified</span><br><span class="line">   queue = new RequestQueue(new DiskBasedCache(cacheDir, maxDiskCacheBytes), network);</span><br><span class="line">&#125;</span><br><span class="line">queue.start();</span><br><span class="line">return queue;</span><br></pre></td></tr></table></figure>
+<p>RequestQueue 创建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">  * Creates the worker pool. Processing will not begin until &#123;@link #start()&#125; is called.</span><br><span class="line">  *</span><br><span class="line">  * @param cache A Cache to use for persisting responses to disk</span><br><span class="line">  * @param network A Network interface for performing HTTP requests</span><br><span class="line">  * @param threadPoolSize Number of network dispatcher threads to create</span><br><span class="line">  * @param delivery A ResponseDelivery interface for posting responses and errors</span><br><span class="line">  */</span><br><span class="line"> public RequestQueue(Cache cache, Network network, int threadPoolSize,</span><br><span class="line">         ResponseDelivery delivery) &#123;</span><br><span class="line">     mCache = cache;</span><br><span class="line">     mNetwork = network;</span><br><span class="line">     mDispatchers = new NetworkDispatcher[threadPoolSize];</span><br><span class="line">     mDelivery = delivery;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> 包含 创建磁盘缓存对象， 网络请求协议栈，网络分发线程组， 响应分发对象（将响应结果分发到UI线程，其实是一个handler）</span><br></pre></td></tr></table></figure>
+<p>RequestQueue –&gt; start()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public void start() &#123;</span><br><span class="line">        //如果已经开始，先停止</span><br><span class="line">        this.stop();</span><br><span class="line">        //创建一个缓存分发线程并启动</span><br><span class="line">        this.mCacheDispatcher = new CacheDispatcher(this.mCacheQueue, this.mNetworkQueue, this.mCache, this.mDelivery);</span><br><span class="line">        this.mCacheDispatcher.start();</span><br><span class="line">        //创建4个缓存分发线程并启动 （ this.mDispatchers.length == 4 ）</span><br><span class="line">        for(int i = 0; i &lt; this.mDispatchers.length; ++i) &#123;</span><br><span class="line">            NetworkDispatcher networkDispatcher = new NetworkDispatcher(this.mNetworkQueue, this.mNetwork, this.mCache, this.mDelivery);</span><br><span class="line">            this.mDispatchers[i] = networkDispatcher;</span><br><span class="line">            networkDispatcher.start();</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>RequestQueue 几个关键成员变量介绍 private AtomicInteger mSequenceGenerator = new AtomicInteger(); Volley会自动为每一个请求对象添加一个请求序列号，来唯一表示一个请求。</p>
+<p>private final Map</p>
+<p>&lt;string, queue&lt;request&lt;?=””&gt;&gt;&gt; mWaitingRequests =<br>            new HashMap&lt;string, queue&lt;request&lt;?=””&gt;&gt;&gt;();<br>  如果我们的请求设置需要缓存响应结果，Volley通过mWaitingRequests来缓存相同的请求，key是cacheKey，待获得（网络或者磁盘缓存）结果后，。          </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/20/Retrofit2与Rxjava实践《二》/" rel="next" title="Retrofit2与Rxjava实践《二》">
+                <i class="fa fa-chevron-left"></i> Retrofit2与Rxjava实践《二》
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/12/2016-06-12-javascript学习/" rel="prev" title="JavaScript学习">
+                JavaScript学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章：Volley简介"><span class="nav-number">1.</span> <span class="nav-text">第一章：Volley简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章：基本使用"><span class="nav-number">2.</span> <span class="nav-text">第二章：基本使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-源码分析"><span class="nav-number">3.</span> <span class="nav-text">第三章 源码分析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
