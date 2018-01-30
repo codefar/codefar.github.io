@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="i-Jetty, 嵌入式服务器, Android, NanoHttpd, Web, http," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="[TOC] Android嵌入式服务器Android应用开发基本都是手机应用作为客户端访问服务器。但是有些时候, 却需要将手机作为服务端对外提供服务。 目前，可用的嵌入式服务器有NanoHttpd和I-Jetty。 NanoHttpd的地址是https://github.com/NanoHttpd/nanohttpd，该框架的好处是简单，轻量，只有一个java文件。坏处也明显: 对于稍复杂的项目，">
+<meta name="keywords" content="i-Jetty, 嵌入式服务器, Android, NanoHttpd, Web, http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android I-Jetty 服务器">
+<meta property="og:url" content="http://codefarmer.tech/2018/01/30/Android-I-Jetty-服务器/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="[TOC] Android嵌入式服务器Android应用开发基本都是手机应用作为客户端访问服务器。但是有些时候, 却需要将手机作为服务端对外提供服务。 目前，可用的嵌入式服务器有NanoHttpd和I-Jetty。 NanoHttpd的地址是https://github.com/NanoHttpd/nanohttpd，该框架的好处是简单，轻量，只有一个java文件。坏处也明显: 对于稍复杂的项目，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEBbdb93fa85accbe522e166840ebcb3a88?method=getImage&version=1962&cstk=aNW9Q6WS">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB3756db5e8fafad5759d772e6d6fb41a7?method=getImage&version=2023&cstk=aNW9Q6WS">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEB64a5e3837dba7e0a3382bfaad61e5016?method=getImage&version=2031&cstk=aNW9Q6WS">
+<meta property="og:updated_time" content="2018-01-30T11:14:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android I-Jetty 服务器">
+<meta name="twitter:description" content="[TOC] Android嵌入式服务器Android应用开发基本都是手机应用作为客户端访问服务器。但是有些时候, 却需要将手机作为服务端对外提供服务。 目前，可用的嵌入式服务器有NanoHttpd和I-Jetty。 NanoHttpd的地址是https://github.com/NanoHttpd/nanohttpd，该框架的好处是简单，轻量，只有一个java文件。坏处也明显: 对于稍复杂的项目，">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/WEBbdb93fa85accbe522e166840ebcb3a88?method=getImage&version=1962&cstk=aNW9Q6WS">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2018/01/30/Android-I-Jetty-服务器/"/>
+
+
+
+
+
+  <title>Android I-Jetty 服务器 | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2018/01/30/Android-I-Jetty-服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android I-Jetty 服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T19:13:04+08:00">
+                2018-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="Android嵌入式服务器"><a href="#Android嵌入式服务器" class="headerlink" title="Android嵌入式服务器"></a>Android嵌入式服务器</h1><p>Android应用开发基本都是手机应用作为客户端访问服务器。但是有些时候, 却需要将手机作为服务端对外提供服务。</p>
+<p>目前，可用的嵌入式服务器有NanoHttpd和I-Jetty。</p>
+<p>NanoHttpd的地址是<a href="https://github.com/NanoHttpd/nanohttpd，该框架的好处是简单，轻量，只有一个java文件。坏处也明显" target="_blank" rel="noopener">https://github.com/NanoHttpd/nanohttpd，该框架的好处是简单，轻量，只有一个java文件。坏处也明显</a>: 对于稍复杂的项目，支持力度就不太够，请求并发增多后，稳定性减弱。</p>
+<p>I-Jetty是开源Web容器Jetty移植到Android的项目。I-Jetty本身就是一个标准的servlet容器，该框架的好处是拥有标准的ServletApi，也就意味着，我们基于标准的ServletApi开发war，这对于熟悉后台开发的同学来说更简便。如果将来业务变更，我们甚至可以无缝地将war部署到云端。同时，并发稳定性也稳定。</p>
+<h2 id="I-Jetty-在Android的使用"><a href="#I-Jetty-在Android的使用" class="headerlink" title="I-Jetty 在Android的使用"></a>I-Jetty 在Android的使用</h2><p>I-Jetty 项目地址：<a href="https://github.com/jetty-project/i-jetty。" target="_blank" rel="noopener">https://github.com/jetty-project/i-jetty。</a> 原来是在googlecode的。</p>
+<h2 id="下载源码"><a href="#下载源码" class="headerlink" title="下载源码"></a>下载源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/jetty-project/i-jetty.git</span><br></pre></td></tr></table></figure>
+<h2 id="源码结构"><a href="#源码结构" class="headerlink" title="源码结构"></a>源码结构</h2><ul>
+<li><p>i-jetty</p>
+<p>  该目录是i-jetty的核心，实现Android上运行jetty的Android项目。<br>  我们称之为WebApp的容器。</p>
+</li>
+<li><p>example-webapps</p>
+<p>该目录是一个WebApp，也就是war应用的demo项目。我们称之为WebApp项目。  </p>
+</li>
+<li><p>console</p>
+<p>该目录是一个控制台项目。是用来控制的。</p>
+</li>
+</ul>
+<h2 id="容器应用使用"><a href="#容器应用使用" class="headerlink" title="容器应用使用"></a>容器应用使用</h2><ul>
+<li><p>首先配置环境，包括Android, maven等，这些网上很多，请读者自行配置。</p>
+</li>
+<li><p>编译容器项目</p>
+<p>i-jetty 是使用maven构建Android应用的。对于Android开发者来说, 绝大部分基本只接触过ADT+Eclipse 和 Android Studio 这两种开发环境，<br>而使用maven构建现在已经很少，而且也不推荐使用了。所以，我们使用Android Studio也就是gradle来构建我们的容器应用。</p>
+<ol>
+<li><p>创建空项目</p>
+<p>   使用Android Studio创建一个空的Android项目，创建时包名使用org.mortbay.ijetty。 创建后，删除res下的所有文件。如果有java代码也都删除。</p>
+</li>
+<li><p>拷贝java代码</p>
+<p>   进入i-jetty目录，拷贝i-jetty-server目录下src/main/java下 和i-jetty-ui目录下src/下的java源码到我们的源码目录中。</p>
+</li>
+<li><p>拷贝res代码</p>
+<p>   进入i-jetty-ui目录，拷贝res/下的资源文件到我们的资源res/目录中。<br>   拷贝resource目录到项目中的src/main/目录下，和java/和res保持同一目录。</p>
+</li>
+<li><p>移植依赖</p>
+<p>   i-jetty项目的依赖是使用POM文件定义的，我们需要转为gradle方式。</p>
+</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;javax.servlet:servlet-api:2.5&apos;</span><br><span class="line">implementation &apos;org.eclipse.jetty:jetty-client:7.6.0.RC4&apos;</span><br><span class="line">implementation &apos;org.eclipse.jetty:jetty-webapp:7.6.0.RC4&apos;</span><br><span class="line">implementation &apos;org.eclipse.jetty:jetty-deploy:7.6.0.RC4&apos;</span><br></pre></td></tr></table></figure>
+<p>如果你使用的是旧版本的gradle, 需改为compile</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;javax.servlet:servlet-api:2.5&apos;</span><br><span class="line">compile &apos;org.eclipse.jetty:jetty-client:7.6.0.RC4&apos;</span><br><span class="line">compile &apos;org.eclipse.jetty:jetty-webapp:7.6.0.RC4&apos;</span><br><span class="line">compile &apos;org.eclipse.jetty:jetty-deploy:7.6.0.RC4&apos;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>移植AndroidManefest.xml</p>
+<p>  拷贝i-jetty-ui的AndroidManefest.xml文件，替换现在的AndroidManefest.xml文件。</p>
+</li>
+</ol>
+<ol>
+<li><p>处理旧版本API。</p>
+<p>a. i-jetty-ui的IJettyService使用了Notification的setLatestEventInfo旧版API，我们使用新版的替换。</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// Notification notification = new Notification(R.drawable.ijetty_stat, text, System.currentTimeMillis());</span><br><span class="line"></span><br><span class="line">Notification.Builder builder = new Notification.Builder(IJettyService.this);</span><br><span class="line">Notification notification = builder.setSmallIcon(R.drawable.ijetty_stat)</span><br><span class="line">                                .setContentText(text)</span><br><span class="line">                                .setTicker(text)</span><br><span class="line">                                .setWhen(System.currentTimeMillis())</span><br><span class="line">                                .setContentTitle(getText(R.string.app_name))</span><br><span class="line">                                .setContentText(text)</span><br><span class="line">                                .setContentIntent(contentIntent)</span><br><span class="line">                                .build();</span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>到此，容器项目到此构建完成。</p>
+<blockquote>
+<p>由于要往SD卡读写文件，如果是在api23以上系统运行，因为没有做动态的权限申请请先在设置-应用里给应用赋予SD卡权限。</p>
+</blockquote>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEBbdb93fa85accbe522e166840ebcb3a88?method=getImage&amp;version=1962&amp;cstk=aNW9Q6WS" alt=""></p>
+<p>到此，服务器已经运行起来了， 点击configure，可以配置我们的服务器。<br>例如： 端口，ssl, nio 等等。</p>
+<h1 id="Web-应用部署"><a href="#Web-应用部署" class="headerlink" title="Web 应用部署"></a>Web 应用部署</h1><h2 id="example-webapps构建"><a href="#example-webapps构建" class="headerlink" title="example-webapps构建"></a>example-webapps构建</h2><p>通常Web应用都是由maven构建的。，我们直接进进入example-webapps/hello应用目录。执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean package</span><br></pre></td></tr></table></figure>
+<p><strong>提示</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[INFO] I-Jetty :: Example Webapps Parent .................. SUCCESS [  0.148 s]</span><br><span class="line">[INFO] I-Jetty :: Hello ................................... FAILURE [  0.995 s]</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br><span class="line">[INFO] BUILD FAILURE</span><br><span class="line">[INFO] ------------------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+<p>原因：最初Android版本SDK里的dx.jar都是放在platform-tools/lib/dx.jar这的，现在都是在build-tools下的每个版本里都有自己的dx.jar.</p>
+<p>解决：复制SDK里的dx.jar(最好是你构建使用的Android SDK版本)到hello项目的根目录(也就是example-webapps目录下)。修改hello目录下的POM文件，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;argument&gt;$&#123;project.build.directory&#125;/../../dx.jar&lt;/argument&gt;</span><br><span class="line">&lt;!--&lt;argument&gt;$&#123;env.ANDROID_HOME&#125;/platform-tools/lib/dx.jar&lt;/argument&gt;--&gt;</span><br></pre></td></tr></table></figure>
+<p>使用<argument>${project.build.directory}/../../dx.jar</argument> 替换</p>
+<argument>${env.ANDROID_HOME}/platform-tools/lib/dx.jar</argument>
+
+<p>.</p>
+<p>再次执行构建，mvn clean package。</p>
+<p>如果没问题，在target目录下,生成了我们的war包。</p>
+<h2 id="部署war包"><a href="#部署war包" class="headerlink" title="部署war包"></a>部署war包</h2><p>adb push target/hello-3.2-SNAPSHOT.war /sdcard/jetty/webapps/hello.war</p>
+<p>将war push 到 i-jetty的部署目录并改名。重启i-jetty，使用浏览器访问 <a href="http://localhost:8080/hello。" target="_blank" rel="noopener">http://localhost:8080/hello。</a></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB3756db5e8fafad5759d772e6d6fb41a7?method=getImage&amp;version=2023&amp;cstk=aNW9Q6WS" alt="image"></p>
+<p>访问<a href="http://localhost:8080/sayit/*" target="_blank" rel="noopener">http://localhost:8080/sayit/*</a></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/WEB64a5e3837dba7e0a3382bfaad61e5016?method=getImage&amp;version=2031&amp;cstk=aNW9Q6WS" alt="image"></p>
+<p>源码地址<br><a href="https://github.com/davyjoneswang/AndroidIJetty" target="_blank" rel="noopener">https://github.com/davyjoneswang/AndroidIJetty</a><br><a href="https://github.com/codefar/i-jetty" target="_blank" rel="noopener">https://github.com/codefar/i-jetty</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/i-Jetty-嵌入式服务器-Android-NanoHttpd-Web-http/" rel="tag"># i-Jetty, 嵌入式服务器, Android, NanoHttpd, Web, http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/20/OpenGL读书笔记/" rel="next" title="OpenGL ES 读书笔记">
+                <i class="fa fa-chevron-left"></i> OpenGL ES 读书笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/30/Mac版本的StarUML破解方法/" rel="prev" title="Mac版本的StarUML破解方法">
+                Mac版本的StarUML破解方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android嵌入式服务器"><span class="nav-number">1.</span> <span class="nav-text">Android嵌入式服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Jetty-在Android的使用"><span class="nav-number">1.1.</span> <span class="nav-text">I-Jetty 在Android的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载源码"><span class="nav-number">1.2.</span> <span class="nav-text">下载源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码结构"><span class="nav-number">1.3.</span> <span class="nav-text">源码结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器应用使用"><span class="nav-number">1.4.</span> <span class="nav-text">容器应用使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">1.5.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web-应用部署"><span class="nav-number">2.</span> <span class="nav-text">Web 应用部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#example-webapps构建"><span class="nav-number">2.1.</span> <span class="nav-text">example-webapps构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署war包"><span class="nav-number">2.2.</span> <span class="nav-text">部署war包</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
