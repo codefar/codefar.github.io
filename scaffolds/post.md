@@ -1,5 +1,8 @@
 ---
 title: {{ title }}
 date: {{ date }}
-tags:
+categories: Android
+tags: [Android]
+description: 
+comments: true
 ---
