@@ -1,0 +1,142 @@
+---
+layout: post
+title: 'Volley 源码分析 '
+date: '2016-06-08 14:47'
+---
+
+Volley 源码分析：
+
+# 第一章：Volley简介
+
+Volley是Google于2003 IO大会上提出的Http请求库，能够让Android应用进行更快，更容易的网络操作。Volley提供了很多特性 ：
+
+- 自动调度网络请求
+- 并发的网络连接
+- 透明的磁盘和内存响应缓存与标准的HTTP缓存一致性。
+- 支持请求的优先级
+- 可以取消请求
+- 易于定制 例如：重试和退避
+- 强大的排序,便于正确填充UI使用异步获取的网络数据。
+- 调试和追踪工具
+
+Volley适合数据量不大的快速的并发网络请求，并不适合大数据下载，这是因为Volley在解析数据时，会保存所有的网络请求数据在内存中。
+
+Volley源码位置
+
+```
+git clone <https://android.googlesource.com/platform/frameworks/volley>
+```
+
+# 第二章：基本使用
+
+1. 创建请求队列
+
+  ```
+  RequestQueue mQueue = Volley.newRequestQueue(context);
+  ```
+
+  建议在应用的全局Application对象总创建全局的Application建议
+
+2. 定义我们的请求对象并添加到我们的请求队列中
+
+  ```
+  StringRequest stringRequest = new StringRequest("http://ip.taobao.com/",new Response.Listener<String>() {
+  @Override
+  public void onResponse(String response) {
+     Log.d("TAG", response);
+  }
+  }, new Response.ErrorListener() {
+  @Override
+  public void onErrorResponse(VolleyError error) {
+  Log.e("TAG", error.getMessage(), error);
+  }
+  });
+  App.mRequestQueue.add(stringRequest);
+  ```
+
+3. 添加网络请求权限
+
+  <uses-permission android:name="android.permission.INTERNET">
+  </uses-permission>
+
+# 第三章 源码分析
+
+第一步：请求队列的建立 RequestQueue mQueue = Volley.newRequestQueue(context);
+
+```
+       //缓存目录： Volley会将我们的请求结果缓存到本地文件
+       File cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);
+       //userAgent 创建userAgent
+       ...
+       //根据SDK版本决定使用HttpUrlConnection还是HttpClient;9以前版本很少见，基本都是HttpUrlConnection
+       if (stack == null) {
+            if (Build.VERSION.SDK_INT >= 9) {
+                stack = new HurlStack();
+            } else {
+                // Prior to Gingerbread, HttpUrlConnection was unreliable.
+                // See: <http://android-developers.blogspot.com/2011/09/androids-http-clients.html>
+                stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));
+            }
+        }
+       Network network = new BasicNetwork(stack);
+
+       //创建请求对象，（根据设置的磁盘缓存最大值创建磁盘缓存）
+       RequestQueue queue;
+       if (maxDiskCacheBytes <= -1) {
+          // No maximum size specified
+          queue = new RequestQueue(new DiskBasedCache(cacheDir), network);
+       } else {
+          // Disk cache size specified
+          queue = new RequestQueue(new DiskBasedCache(cacheDir, maxDiskCacheBytes), network);
+       }
+       queue.start();
+       return queue;
+```
+
+RequestQueue 创建
+
+```
+     /**
+       * Creates the worker pool. Processing will not begin until {@link #start()} is called.
+       *
+       * @param cache A Cache to use for persisting responses to disk
+       * @param network A Network interface for performing HTTP requests
+       * @param threadPoolSize Number of network dispatcher threads to create
+       * @param delivery A ResponseDelivery interface for posting responses and errors
+       */
+      public RequestQueue(Cache cache, Network network, int threadPoolSize,
+              ResponseDelivery delivery) {
+          mCache = cache;
+          mNetwork = network;
+          mDispatchers = new NetworkDispatcher[threadPoolSize];
+          mDelivery = delivery;
+      }
+
+      包含 创建磁盘缓存对象， 网络请求协议栈，网络分发线程组， 响应分发对象（将响应结果分发到UI线程，其实是一个handler）
+```
+
+RequestQueue --> start()
+
+```
+public void start() {
+        //如果已经开始，先停止
+        this.stop();
+        //创建一个缓存分发线程并启动
+        this.mCacheDispatcher = new CacheDispatcher(this.mCacheQueue, this.mNetworkQueue, this.mCache, this.mDelivery);
+        this.mCacheDispatcher.start();
+        //创建4个缓存分发线程并启动 （ this.mDispatchers.length == 4 ）
+        for(int i = 0; i < this.mDispatchers.length; ++i) {
+            NetworkDispatcher networkDispatcher = new NetworkDispatcher(this.mNetworkQueue, this.mNetwork, this.mCache, this.mDelivery);
+            this.mDispatchers[i] = networkDispatcher;
+            networkDispatcher.start();
+        }
+}
+```
+
+RequestQueue 几个关键成员变量介绍 private AtomicInteger mSequenceGenerator = new AtomicInteger(); Volley会自动为每一个请求对象添加一个请求序列号，来唯一表示一个请求。
+
+private final Map
+
+<string, queue<request<?="">&gt;&gt; mWaitingRequests =
+            new HashMap<string, queue<request<?="">&gt;&gt;();
+  如果我们的请求设置需要缓存响应结果，Volley通过mWaitingRequests来缓存相同的请求，key是cacheKey，待获得（网络或者磁盘缓存）结果后，。          </string,></string,>
