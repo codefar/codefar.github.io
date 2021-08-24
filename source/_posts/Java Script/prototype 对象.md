@@ -1,0 +1,43 @@
+---
+layout: post
+title:prototype 对象
+date: '2020-8-14 16:02'
+categories: JavaScript
+tags: [JavaScript]
+description:prototype 对象
+comments: true
+---
+
+# prototype 对象
+
+面向对象编程很重要的一个方面，就是对象的继承。A 对象通过继承 B 对象，就能直接拥有 B 对象的所有属性和方法。这对于代码的复用是非常有用的。
+
+大部分面向对象的编程语言，都是通过“类”（class）来实现对象的继承。JavaScript 语言的继承则是通过“原型对象”（prototype）。
+
+## 原型对象概述
+### 构造函数的缺点
+JavaScript 通过构造函数生成新对象，因此构造函数可以视为对象的模板。实例对象的属性和方法，可以定义在构造函数内部。
+
+
+```
+function Cat (name, color) {
+  this.name = name;
+  this.color = color;
+}
+
+var cat1 = new Cat('大毛', '白色');
+
+cat1.name // '大毛'
+cat1.color // '白色'
+```
+
+上面代码中，Cat函数是一个构造函数，函数内部定义了name属性和color属性，所有实例对象（上例是cat1）都会生成这两个属性，即这两个属性会定义在实例对象上面。
+
+通过构造函数为实例对象定义属性，虽然很方便，但是有一个缺点。同一个构造函数的多个实例之间，无法共享属性，从而造成对系统资源的浪费。
+
+
+参考：
+
+http://javascript.ruanyifeng.com/oop/basic.html
+
+https://developer.mozilla.org/zh-CN/docs/Web/JavaScript

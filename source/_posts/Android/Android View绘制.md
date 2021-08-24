@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Andrid View 绘制总结
-date: '2016-07-14 17:02'
+date: '2016-05-14 17:02'
 categories: Android
 tags: [Android]
 description: 介绍Andrid View 绘制总结

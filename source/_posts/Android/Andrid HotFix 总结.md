@@ -1,7 +1,11 @@
 ---
 layout: post
-title: Andrid HotFix 总结
+title: Android HotFix 总结
 date: '2016-06-14 14:01'
+categories: Android
+comments: true
+tags: [Android]
+description: Android HotFix 总结
 ---
 
 # Andrid HotFix 总结
