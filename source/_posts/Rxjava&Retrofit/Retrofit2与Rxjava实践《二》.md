@@ -2,6 +2,9 @@
 title: Retrofit2与Rxjava实践《二》
 date: 2016-05-20 23:49:26
 tags:
+tags:
+- Rxjava 
+- Retrofit
 ---
 接着上一结的继续说,实际使用Http过程中，我们经常会遇一些通用的问题。下面一一列举一些。
 # BaseResult类问题

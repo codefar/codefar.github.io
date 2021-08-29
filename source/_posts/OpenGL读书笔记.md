@@ -2,7 +2,11 @@
 layout: post
 title: OpenGL ES 读书笔记
 date: 2017-12-20 18:20:51
-tags:  Android, OpenGL, OpenGL ES, GlSurfaceView
+tags:  
+-Android
+-OpenGL
+-OpenGL ES
+-GlSurfaceView
 ---
 # OpenGL ES 读书笔记
 

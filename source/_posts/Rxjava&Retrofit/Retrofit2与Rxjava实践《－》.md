@@ -2,6 +2,8 @@
 title: Retrofit2与Rxjava实践《－》
 date: 2016-05-19 23:49:26
 tags:
+- Rxjava 
+- Retrofit
 ---
 
 # Retrofit2的基本使用
