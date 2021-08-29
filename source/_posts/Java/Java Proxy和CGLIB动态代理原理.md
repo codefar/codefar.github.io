@@ -1,6 +1,6 @@
 ---
 layout: post
-title:Java Proxy和CGLIB动态代理原理
+title: Java Proxy和CGLIB动态代理原理
 date: '2019-05-14 16:02'
 categories: Java
 tags: [Java]

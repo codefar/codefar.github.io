@@ -1,3 +1,13 @@
+---
+layout: post
+title: Gradle 使用指南 -- Gradle 生命周期
+date: '2020-5-14 16:02'
+categories: Python
+tags: [Gradle]
+description: Gradle
+comments: true
+---
+
 Gradle 使用指南 -- Gradle 生命周期
 
 ## 生命周期概述

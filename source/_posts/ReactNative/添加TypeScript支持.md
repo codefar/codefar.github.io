@@ -1,4 +1,11 @@
-RN 初学
+---
+title: React Native-添加TypeScript支持
+categories: React Native
+comments: true
+tags: [React Native]
+description: 添加TypeScript支持
+date: 2020-01-12 10:00:00
+---
 
 ## 添加TypeScript支持
 

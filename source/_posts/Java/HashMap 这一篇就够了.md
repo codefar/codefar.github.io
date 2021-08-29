@@ -1,6 +1,6 @@
 ---
 layout: post
-title:HashMap
+title: HashMap 这一篇就够了
 date: '2019-04-14 16:02'
 categories: Java
 tags: [Java]

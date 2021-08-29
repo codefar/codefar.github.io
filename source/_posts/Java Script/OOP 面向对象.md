@@ -1,10 +1,10 @@
 ---
 layout: post
-title:OOP 面向对象
+title: OOP 面向对象
 date: '2020-9-14 16:02'
 categories: JavaScript
 tags: [JavaScript]
-description:OOP 面向对象
+description: OOP 面向对象
 comments: true
 ---
 

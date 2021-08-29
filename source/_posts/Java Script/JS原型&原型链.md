@@ -1,10 +1,10 @@
 ---
 layout: post
-title:JS原型&原型链
+title: JS原型&原型链
 date: '2020-10-14 16:02'
 categories: JavaScript
 tags: [JavaScript]
-description:JS原型&原型链
+description: JS原型&原型链
 comments: true
 ---
 

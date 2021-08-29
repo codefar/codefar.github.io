@@ -1,5 +1,12 @@
-
-[TOC]
+---
+title: SQLite Explain（解释）
+categories:
+  - sqlite3
+comments: true
+tags:
+  - sqlite3
+date: 2021-08-27 10:36:10
+---
 
 参考：https://cloud.tencent.com/developer/section/1419999
 

@@ -1,6 +1,13 @@
+---
+title: Sqlite3 简明教程
+categories:
+  - sqlite3
+comments: true
+tags:
+  - sqlite3
+date: 2021-08-27 10:36:10
+---
 # Sqlite3 简明教程
-
-[TOC]
 
 # 命令行基础命令
 

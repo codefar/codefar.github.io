@@ -1,3 +1,10 @@
+---
+title: React Native-启动流程分支-准备
+categories: React Native
+comments: true
+tags: [React Native]
+date: 2017-01-13 12:00:00
+---
 # RN启动流程分支-准备
 
 为了简化分析，使用集成RN ARR的方式准备环境。方式：

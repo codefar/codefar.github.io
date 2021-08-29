@@ -1,6 +1,6 @@
 ---
 layout: post
-title:ArrayList动态扩容机制
+title: ArrayList动态扩容机制
 date: '2019-02-14 16:02'
 categories: Java
 tags: [Java]

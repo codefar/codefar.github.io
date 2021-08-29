@@ -1,5 +1,8 @@
-[TOC]
-
+---
+layout: post
+title: Thrift 简明教程
+date: '2020-5-13 22:02'
+---
 # Thrift 简明教程
 
 # 语法教程

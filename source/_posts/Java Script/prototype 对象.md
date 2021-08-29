@@ -1,10 +1,10 @@
 ---
 layout: post
-title:prototype 对象
+title: prototype 对象
 date: '2020-8-14 16:02'
 categories: JavaScript
 tags: [JavaScript]
-description:prototype 对象
+description: prototype 对象
 comments: true
 ---
 

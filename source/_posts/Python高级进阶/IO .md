@@ -1,5 +1,13 @@
+---
+layout: post
+title: Python高级进阶-IO
+date: '2020-5-14 08:02'
+categories: Python
+tags: [Python]
+description: Python学习
+comments: true
+---
 
-[TOC]
 # IO 
 ## 文件目录操作
 Python内置的os模块提供了调用操作系统提供的接口函数。

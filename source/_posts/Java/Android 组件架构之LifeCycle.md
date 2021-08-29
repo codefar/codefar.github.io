@@ -1,6 +1,6 @@
 ---
 layout: post
-title:Android 组件架构之LifeCycle
+title: Android 组件架构之LifeCycle
 date: '2019-01-14 16:02'
 categories: Java
 tags: [Java]

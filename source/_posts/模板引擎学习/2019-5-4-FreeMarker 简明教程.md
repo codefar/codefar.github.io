@@ -1,5 +1,12 @@
-
-[TOC]
+---
+layout: post
+title: FreeMarker 简明教程
+date: '2019-5-4 16:02'
+categories: Python
+tags: [模版引擎]
+description: 模版引擎
+comments: true
+---
 
 # FreeMarker 简明教程
 

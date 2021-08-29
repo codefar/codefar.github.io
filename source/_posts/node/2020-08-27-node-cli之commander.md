@@ -5,6 +5,7 @@ categories:
 comments: true
 tags:
   - node
+  - cli
 description: node
 date: 2021-08-27 15:37:20
 
@@ -13,7 +14,6 @@ date: 2021-08-27 15:37:20
 # 简介
 
 完整的 node.js 命令行解决方案。
-
 
 
 # 准备

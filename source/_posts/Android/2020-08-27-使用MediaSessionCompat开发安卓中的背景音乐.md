@@ -1,10 +1,10 @@
 ---
 title: 使用MediaSessionCompat开发安卓中的背景音乐
 categories:
-  - android
+  - Android
 comments: true
 tags:
-  - android
+  - Android
   - MediaSessionCompat
 description: node
 date: 2021-08-27 10:36:10

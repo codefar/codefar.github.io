@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  C++学习笔记
+title:  C&&C++学习笔记
 date: '2016-05-14 17:02'
 categories: C++
 tags: [C++]

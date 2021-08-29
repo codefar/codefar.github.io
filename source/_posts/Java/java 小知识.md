@@ -1,6 +1,6 @@
 ---
 layout: post
-title:简单比较 getName()、getCanonicalName()、getSimpleName() 的异同
+title: 简单比较 getName()、getCanonicalName()、getSimpleName() 的异同
 date: '2019-06-14 16:02'
 categories: Java
 tags: [Java]

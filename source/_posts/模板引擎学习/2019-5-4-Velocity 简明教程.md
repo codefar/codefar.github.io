@@ -1,3 +1,13 @@
+---
+layout: post
+title: Velocity 简明教程
+date: '2019-5-4 17:02'
+categories: Python
+tags: [模版引擎]
+description: 模版引擎
+comments: true
+---
+
 # Velocity 简明教程
 
 # 简介
