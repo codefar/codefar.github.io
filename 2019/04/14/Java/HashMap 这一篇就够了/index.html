@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HashMap">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap 这一篇就够了">
+<meta property="og:url" content="http://codefarmer.tech/2019/04/14/Java/HashMap 这一篇就够了/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="HashMap">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-bda10525571a333b96e9e465aaa7e717_1440w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-5e63c4df357c967aafc7fb33a3d1d768_1440w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-550e1f8eb0e154bbec227af617556032_1440w.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-3c9aa56b20ea776bd0ccf1e4584bfff8_1440w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-ef69c71651894ffd5ac56dd17b39e5b2_1440w.jpg">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.382Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HashMap 这一篇就够了">
+<meta name="twitter:description" content="HashMap">
+<meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-bda10525571a333b96e9e465aaa7e717_1440w.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2019/04/14/Java/HashMap 这一篇就够了/">
+
+
+
+
+
+  <title>HashMap 这一篇就够了 | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2019/04/14/Java/HashMap 这一篇就够了/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HashMap 这一篇就够了</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T16:02:00+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/04/14/Java/HashMap 这一篇就够了/" class="leancloud_visitors" data-flag-title="HashMap 这一篇就够了">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  HashMap
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="HashMap-这一篇就够了"><a href="#HashMap-这一篇就够了" class="headerlink" title="HashMap 这一篇就够了"></a>HashMap 这一篇就够了</h1><p><a href="https://zhuanlan.zhihu.com/p/143826469" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/143826469</a></p>
+<h2 id="二狗：先来点简单的，介绍下-HashMap-的底层数据结构吧。"><a href="#二狗：先来点简单的，介绍下-HashMap-的底层数据结构吧。" class="headerlink" title="二狗：先来点简单的，介绍下 HashMap 的底层数据结构吧。"></a>二狗：先来点简单的，介绍下 HashMap 的底层数据结构吧。</h2><p>囧辉：我们现在用的都是 JDK 1.8，底层是由“数组+链表+红黑树”组成，如下图，而在 JDK 1.8 之前是由“数组+链表”组成。</p>
+<p><img src="https://pic4.zhimg.com/80/v2-bda10525571a333b96e9e465aaa7e717_1440w.jpg" alt="https://pic4.zhimg.com/80/v2-bda10525571a333b96e9e465aaa7e717_1440w.jpg"></p>
+<h2 id="二狗：为什么要改成“数组-链表-红黑树”？"><a href="#二狗：为什么要改成“数组-链表-红黑树”？" class="headerlink" title="二狗：为什么要改成“数组+链表+红黑树”？"></a>二狗：为什么要改成“数组+链表+红黑树”？</h2><p>囧辉：主要是为了提升在 hash 冲突严重时（链表过长）的查找性能，使用链表的查找性能是 O(n)，而使用红黑树是 O(logn)。</p>
+<h2 id="二狗：那在什么时候用链表？什么时候用红黑树？"><a href="#二狗：那在什么时候用链表？什么时候用红黑树？" class="headerlink" title="二狗：那在什么时候用链表？什么时候用红黑树？"></a>二狗：那在什么时候用链表？什么时候用红黑树？</h2><p>囧辉：对于插入，默认情况下是使用链表节点。当同一个索引位置的节点在新增后达到9个（阈值8）：如果此时数组长度大于等于 64，则会触发链表节点转红黑树节点（treeifyBin）；而如果数组长度小于64，则不会触发链表转红黑树，而是会进行扩容，因为此时的数据量还比较小。</p>
+<p>对于移除，当同一个索引位置的节点在移除后达到 6 个，并且该索引位置的节点为红黑树节点，会触发红黑树节点转链表节点（untreeify）。</p>
+<h2 id="二狗：为什么链表转红黑树的阈值是8？"><a href="#二狗：为什么链表转红黑树的阈值是8？" class="headerlink" title="二狗：为什么链表转红黑树的阈值是8？"></a>二狗：为什么链表转红黑树的阈值是8？</h2><p>囧辉：我们平时在进行方案设计时，必须考虑的两个很重要的因素是：时间和空间。对于 HashMap 也是同样的道理，简单来说，阈值为8是在时间和空间上权衡的结果（这 B 我装定了）。</p>
+<p>红黑树节点大小约为链表节点的2倍，在节点太少时，红黑树的查找性能优势并不明显，付出2倍空间的代价作者觉得不值得。</p>
+<p>理想情况下，使用随机的哈希码，节点分布在 hash 桶中的频率遵循泊松分布，按照泊松分布的公式计算，链表中节点个数为8时的概率为 0.00000006（跟大乐透一等奖差不多，中大乐透？不存在的），这个概率足够低了，并且到8个节点时，红黑树的性能优势也会开始展现出来，因此8是一个较合理的数字。</p>
+<h2 id="二狗：（呦呦呦，时间和空间上权衡的结果，还装起B来了）那为什么转回链表节点是用的6而不是复用8？"><a href="#二狗：（呦呦呦，时间和空间上权衡的结果，还装起B来了）那为什么转回链表节点是用的6而不是复用8？" class="headerlink" title="二狗：（呦呦呦，时间和空间上权衡的结果，还装起B来了）那为什么转回链表节点是用的6而不是复用8？"></a>二狗：（呦呦呦，时间和空间上权衡的结果，还装起B来了）那为什么转回链表节点是用的6而不是复用8？</h2><p>囧辉：如果我们设置节点多于8个转红黑树，少于8个就马上转链表，当节点个数在8徘徊时，就会频繁进行红黑树和链表的转换，造成性能的损耗。</p>
+<h2 id="二狗：（小菜鸡，懂得还不少）那-HashMap-有哪些重要属性？分别用于做什么的？"><a href="#二狗：（小菜鸡，懂得还不少）那-HashMap-有哪些重要属性？分别用于做什么的？" class="headerlink" title="二狗：（小菜鸡，懂得还不少）那 HashMap 有哪些重要属性？分别用于做什么的？"></a>二狗：（小菜鸡，懂得还不少）那 HashMap 有哪些重要属性？分别用于做什么的？</h2><p>囧辉：除了用来存储我们的节点 table 数组外，HashMap 还有以下几个重要属性：<br>1）size：HashMap 已经存储的节点个数；<br>2）threshold：扩容阈值，当 HashMap 的个数达到该值，触发扩容。<br>3）loadFactor：负载因子，扩容阈值 = 容量 * 负载因子。</p>
+<h2 id="二狗：threshold-除了用于存放扩容阈值还有其他作用吗？"><a href="#二狗：threshold-除了用于存放扩容阈值还有其他作用吗？" class="headerlink" title="二狗：threshold 除了用于存放扩容阈值还有其他作用吗？"></a>二狗：threshold 除了用于存放扩容阈值还有其他作用吗？</h2><p>囧辉：在我们新建 HashMap 对象时， threshold 还会被用来存初始化时的容量。HashMap 直到我们第一次插入节点时，才会对 table 进行初始化，避免不必要的空间浪费。</p>
+<h2 id="二狗：HashMap-的默认初始容量是多少？HashMap-的容量有什么限制吗？"><a href="#二狗：HashMap-的默认初始容量是多少？HashMap-的容量有什么限制吗？" class="headerlink" title="二狗：HashMap 的默认初始容量是多少？HashMap 的容量有什么限制吗？"></a>二狗：HashMap 的默认初始容量是多少？HashMap 的容量有什么限制吗？</h2><p>囧辉：默认初始容量是16。HashMap 的容量必须是2的N次方，HashMap 会根据我们传入的容量计算一个大于等于该容量的最小的2的N次方，例如传 9，容量为16。</p>
+<h2 id="二狗：（你他娘的是在绕口令吧）你这个-￥-amp-的N次方是怎么算的？"><a href="#二狗：（你他娘的是在绕口令吧）你这个-￥-amp-的N次方是怎么算的？" class="headerlink" title="二狗：（你他娘的是在绕口令吧）你这个*@%￥#&amp;的N次方是怎么算的？"></a>二狗：（你他娘的是在绕口令吧）你这个*@%￥#&amp;的N次方是怎么算的？</h2><p>囧辉：Talk is cheap. Show you the code。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n = cap - 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 2;</span><br><span class="line">    n |= n &gt;&gt;&gt; 4;</span><br><span class="line">    n |= n &gt;&gt;&gt; 8;</span><br><span class="line">    n |= n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="二狗：卧槽，还彪英文，来来来，这代码你给我解释下。"><a href="#二狗：卧槽，还彪英文，来来来，这代码你给我解释下。" class="headerlink" title="二狗：卧槽，还彪英文，来来来，这代码你给我解释下。"></a>二狗：卧槽，还彪英文，来来来，这代码你给我解释下。</h2><p>囧辉：我们先不看第一行“int n = cap - 1”，先看下面的5行计算。</p>
+<p>|=（或等于）：这个符号比较少见，但是“+=”应该都见过，看到这你应该明白了。例如：a |= b ，可以转成：a = a | b。</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>（无符号右移）：例如 a &gt;&gt;&gt; b 指的是将 a 向右移动 b 指定的位数，右移后左边空出的位用零来填充，移出右边的位被丢弃。</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>假设 n 的值为 0010 0001，则该计算如下图：<br><img src="https://pic1.zhimg.com/80/v2-5e63c4df357c967aafc7fb33a3d1d768_1440w.jpg" alt="image"></p>
+<p>相信你应该看出来，这5个公式会通过最高位的1，拿到2个1、4个1、8个1、16个1、32个1。当然，有多少个1，取决于我们的入参有多大，但我们肯定的是经过这5个计算，得到的值是一个低位全是1的值，最后返回的时候 +1，则会得到1个比n 大的 2 的N次方。</p>
+<p>这时再看开头的 cap - 1 就很简单了，这是为了处理 cap 本身就是 2 的N次方的情况。</p>
+<p>计算机底层是二进制的，移位和或运算是非常快的，所以这个方法的效率很高。</p>
+<p>PS：这是 HashMap 中我个人最喜欢的设计，非常巧妙，真想给作者一个么么哒（不小心暴露了）。</p>
+<h2 id="二狗：（这叼毛讲的还凑合啊，连我都听懂了）你说-HashMap-的容量必须是-2-的-N-次方，这是为什么？"><a href="#二狗：（这叼毛讲的还凑合啊，连我都听懂了）你说-HashMap-的容量必须是-2-的-N-次方，这是为什么？" class="headerlink" title="二狗：（这叼毛讲的还凑合啊，连我都听懂了）你说 HashMap 的容量必须是 2 的 N 次方，这是为什么？"></a>二狗：（这叼毛讲的还凑合啊，连我都听懂了）你说 HashMap 的容量必须是 2 的 N 次方，这是为什么？</h2><p>囧辉：计算索引位置的公式为：(n - 1) &amp; hash，当 n 为 2 的 N 次方时，n - 1 为低位全是 1 的值，此时任何值跟 n - 1 进行 &amp; 运算会等于其本身，达到了和取模同样的效果，实现了均匀分布。实际上，这个设计就是基于公式：x mod 2^n = x &amp; (2^n - 1)，因为 &amp; 运算比 mod 具有更高的效率。</p>
+<p>如下图，当 n 不为 2 的 N 次方时，hash 冲突的概率明显增大。<br><img src="https://pic3.zhimg.com/80/v2-550e1f8eb0e154bbec227af617556032_1440w.jpg" alt="image"></p>
+<h2 id="二狗：你说-HashMap-的默认初始容量是-16，为什么是16而不是其他的？"><a href="#二狗：你说-HashMap-的默认初始容量是-16，为什么是16而不是其他的？" class="headerlink" title="二狗：你说 HashMap 的默认初始容量是 16，为什么是16而不是其他的？"></a>二狗：你说 HashMap 的默认初始容量是 16，为什么是16而不是其他的？</h2><p>囧辉：（这是什么煞笔问题）我认为是16的原因主要是：16是2的N次方，并且是一个较合理的大小。如果用8或32，我觉得也是OK的。实际上，我们在新建 HashMap 时，最好是根据自己使用情况设置初始容量，这才是最合理的方案。</p>
+<h2 id="二狗：刚才说的负载因子默认初始值又是多少？"><a href="#二狗：刚才说的负载因子默认初始值又是多少？" class="headerlink" title="二狗：刚才说的负载因子默认初始值又是多少？"></a>二狗：刚才说的负载因子默认初始值又是多少？</h2><p>囧辉：负载因子默认值是0.75。</p>
+<p>二狗：为什么是0.75而不是其他的？<br>囧辉：（又问这种憨逼问题）这个也是在时间和空间上权衡的结果。如果值较高，例如1，此时会减少空间开销，但是 hash 冲突的概率会增大，增加查找成本；而如果值较低，例如 0.5 ，此时 hash 冲突会降低，但是有一半的空间会被浪费，所以折衷考虑 0.75 似乎是一个合理的值。</p>
+<h2 id="二狗：那我们换个问题问吧，HashMap-的插入流程是怎么样的？"><a href="#二狗：那我们换个问题问吧，HashMap-的插入流程是怎么样的？" class="headerlink" title="二狗：那我们换个问题问吧，HashMap 的插入流程是怎么样的？"></a>二狗：那我们换个问题问吧，HashMap 的插入流程是怎么样的？</h2><p>囧辉：Talk is cheap. Show you the picture。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-3c9aa56b20ea776bd0ccf1e4584bfff8_1440w.jpg" alt="image"></p>
+<h2 id="二狗：图里刚开始有个计算-key-的-hash-值，是怎么设计的？"><a href="#二狗：图里刚开始有个计算-key-的-hash-值，是怎么设计的？" class="headerlink" title="二狗：图里刚开始有个计算 key 的 hash 值，是怎么设计的？"></a>二狗：图里刚开始有个计算 key 的 hash 值，是怎么设计的？</h2><p>囧辉：拿到 key 的 hashCode，并将 hashCode 的高16位和 hashCode 进行异或（XOR）运算，得到最终的 hash 值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static final int hash(Object key) &#123;</span><br><span class="line">    int h;</span><br><span class="line">    return (key == null) ? 0 : (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="二狗：为什么要将-hashCode-的高16位参与运算？"><a href="#二狗：为什么要将-hashCode-的高16位参与运算？" class="headerlink" title="二狗：为什么要将 hashCode 的高16位参与运算？"></a>二狗：为什么要将 hashCode 的高16位参与运算？</h3><p>囧辉：主要是为了在 table 的长度较小的时候，让高位也参与运算，并且不会有太大的开销。</p>
+<p>例如下图，如果不加入高位运算，由于 n - 1 是 0000 0111，所以结果只取决于 hash 值的低3位，无论高位怎么变化，结果都是一样的。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-ef69c71651894ffd5ac56dd17b39e5b2_1440w.jpg" alt="image"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/14/Java/ASM4 使用指南/" rel="next" title="ASM4 使用指南">
+                <i class="fa fa-chevron-left"></i> ASM4 使用指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/04/模板引擎学习/2019-5-4-FreeMarker 简明教程/" rel="prev" title="FreeMarker 简明教程">
+                FreeMarker 简明教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HashMap-这一篇就够了"><span class="nav-number">1.</span> <span class="nav-text">HashMap 这一篇就够了</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：先来点简单的，介绍下-HashMap-的底层数据结构吧。"><span class="nav-number">1.1.</span> <span class="nav-text">二狗：先来点简单的，介绍下 HashMap 的底层数据结构吧。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：为什么要改成“数组-链表-红黑树”？"><span class="nav-number">1.2.</span> <span class="nav-text">二狗：为什么要改成“数组+链表+红黑树”？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：那在什么时候用链表？什么时候用红黑树？"><span class="nav-number">1.3.</span> <span class="nav-text">二狗：那在什么时候用链表？什么时候用红黑树？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：为什么链表转红黑树的阈值是8？"><span class="nav-number">1.4.</span> <span class="nav-text">二狗：为什么链表转红黑树的阈值是8？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：（呦呦呦，时间和空间上权衡的结果，还装起B来了）那为什么转回链表节点是用的6而不是复用8？"><span class="nav-number">1.5.</span> <span class="nav-text">二狗：（呦呦呦，时间和空间上权衡的结果，还装起B来了）那为什么转回链表节点是用的6而不是复用8？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：（小菜鸡，懂得还不少）那-HashMap-有哪些重要属性？分别用于做什么的？"><span class="nav-number">1.6.</span> <span class="nav-text">二狗：（小菜鸡，懂得还不少）那 HashMap 有哪些重要属性？分别用于做什么的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：threshold-除了用于存放扩容阈值还有其他作用吗？"><span class="nav-number">1.7.</span> <span class="nav-text">二狗：threshold 除了用于存放扩容阈值还有其他作用吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：HashMap-的默认初始容量是多少？HashMap-的容量有什么限制吗？"><span class="nav-number">1.8.</span> <span class="nav-text">二狗：HashMap 的默认初始容量是多少？HashMap 的容量有什么限制吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：（你他娘的是在绕口令吧）你这个-￥-amp-的N次方是怎么算的？"><span class="nav-number">1.9.</span> <span class="nav-text">二狗：（你他娘的是在绕口令吧）你这个*@%￥#&amp;的N次方是怎么算的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：卧槽，还彪英文，来来来，这代码你给我解释下。"><span class="nav-number">1.10.</span> <span class="nav-text">二狗：卧槽，还彪英文，来来来，这代码你给我解释下。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：（这叼毛讲的还凑合啊，连我都听懂了）你说-HashMap-的容量必须是-2-的-N-次方，这是为什么？"><span class="nav-number">1.11.</span> <span class="nav-text">二狗：（这叼毛讲的还凑合啊，连我都听懂了）你说 HashMap 的容量必须是 2 的 N 次方，这是为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：你说-HashMap-的默认初始容量是-16，为什么是16而不是其他的？"><span class="nav-number">1.12.</span> <span class="nav-text">二狗：你说 HashMap 的默认初始容量是 16，为什么是16而不是其他的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：刚才说的负载因子默认初始值又是多少？"><span class="nav-number">1.13.</span> <span class="nav-text">二狗：刚才说的负载因子默认初始值又是多少？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：那我们换个问题问吧，HashMap-的插入流程是怎么样的？"><span class="nav-number">1.14.</span> <span class="nav-text">二狗：那我们换个问题问吧，HashMap 的插入流程是怎么样的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二狗：图里刚开始有个计算-key-的-hash-值，是怎么设计的？"><span class="nav-number">1.15.</span> <span class="nav-text">二狗：图里刚开始有个计算 key 的 hash 值，是怎么设计的？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二狗：为什么要将-hashCode-的高16位参与运算？"><span class="nav-number">1.15.1.</span> <span class="nav-text">二狗：为什么要将 hashCode 的高16位参与运算？</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

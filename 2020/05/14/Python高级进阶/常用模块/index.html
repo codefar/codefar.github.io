@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Python学习">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python高级进阶-常用模块">
+<meta property="og:url" content="http://codefarmer.tech/2020/05/14/Python高级进阶/常用模块/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="Python学习">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.390Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python高级进阶-常用模块">
+<meta name="twitter:description" content="Python学习">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2020/05/14/Python高级进阶/常用模块/">
+
+
+
+
+
+  <title>Python高级进阶-常用模块 | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2020/05/14/Python高级进阶/常用模块/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python高级进阶-常用模块</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-14T16:02:00+08:00">
+                2020-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/14/Python高级进阶/常用模块/" class="leancloud_visitors" data-flag-title="Python高级进阶-常用模块">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Python学习
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Python-常用模块"><a href="#Python-常用模块" class="headerlink" title="Python 常用模块"></a>Python 常用模块</h1><p>[TOC]</p>
+<h2 id="Http"><a href="#Http" class="headerlink" title="Http"></a>Http</h2><p>Python标准库中提供了：urllib等模块以供Http请求。</p>
+<p>Requests模块，使用Requests可以轻而易举的完成浏览器可有的任何操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line"> </span><br><span class="line">ret = requests.get(&apos;https://github.com/timeline.json&apos;)</span><br><span class="line"> </span><br><span class="line">print(ret.url)</span><br><span class="line">print(ret.text)</span><br><span class="line"> </span><br><span class="line">payload = &#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&#125;</span><br><span class="line">ret = requests.get(&quot;http://httpbin.org/get&quot;, params=payload)</span><br><span class="line"> </span><br><span class="line">print(ret.url)</span><br><span class="line">print(ret.text)</span><br><span class="line"></span><br><span class="line">payload = &#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&#125;</span><br><span class="line">ret = requests.post(&quot;http://httpbin.org/post&quot;, data=payload)</span><br><span class="line"> </span><br><span class="line">print(ret.text)</span><br><span class="line"> </span><br><span class="line">url = &apos;https://api.github.com/some/endpoint&apos;</span><br><span class="line">payload = &#123;&apos;some&apos;: &apos;data&apos;&#125;</span><br><span class="line">headers = &#123;&apos;content-type&apos;: &apos;application/json&apos;&#125;</span><br><span class="line"> </span><br><span class="line">ret = requests.post(url, data=json.dumps(payload), headers=headers)</span><br><span class="line"> </span><br><span class="line">print(ret.text)</span><br><span class="line">print(ret.cookies</span><br><span class="line"></span><br><span class="line">requests.get(url, params=None, **kwargs)</span><br><span class="line">requests.post(url, data=None, json=None, **kwargs)</span><br><span class="line">requests.put(url, data=None, **kwargs)</span><br><span class="line">requests.head(url, **kwargs)</span><br><span class="line">requests.delete(url, **kwargs)</span><br><span class="line">requests.patch(url, data=None, **kwargs)</span><br><span class="line">requests.options(url, **kwargs)</span><br><span class="line"> </span><br><span class="line"># 以上方法均是在此方法的基础上构建</span><br><span class="line">requests.request(method, url, **kwargs)</span><br></pre></td></tr></table></figure>
+<h2 id="XML处理"><a href="#XML处理" class="headerlink" title="XML处理"></a>XML处理</h2><p>Python有三种方法解析XML，SAX，DOM，以及ElementTree:</p>
+<p>1.SAX (simple API for XML )<br>python 标准库包含SAX解析器，SAX用事件驱动模型，通过在解析XML的过程中触发一个个的事件并调用用户定义的回调函数来处理XML文件。</p>
+<p>2.DOM(Document Object Model)<br>将XML数据在内存中解析成一个树，通过对树的操作来操作XML。</p>
+<p>3.ElementTree(元素树)<br>ElementTree就像一个轻量级的DOM，具有方便友好的API。代码可用性好，速度快，消耗内存少。</p>
+<p>注：因DOM需要将XML数据映射到内存中的树，一是比较慢，二是比较耗内存，而SAX流式读取XML文件，比较快，占用内存少，但需要用户实现回调函数（handler）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;collection shelf=&quot;New Arrivals&quot;&gt;</span><br><span class="line">    &lt;movie title=&quot;Enemy Behind&quot;&gt;</span><br><span class="line">        &lt;type&gt;War, Thriller&lt;/type&gt;</span><br><span class="line">        &lt;format&gt;DVD&lt;/format&gt;</span><br><span class="line">        &lt;year&gt;2003&lt;/year&gt;</span><br><span class="line">        &lt;rating&gt;PG&lt;/rating&gt;</span><br><span class="line">        &lt;stars&gt;10&lt;/stars&gt;</span><br><span class="line">        &lt;description&gt;Talk about a US-Japan war&lt;/description&gt;</span><br><span class="line">    &lt;/movie&gt;</span><br><span class="line">    &lt;movie title=&quot;Transformers&quot;&gt;</span><br><span class="line">        &lt;type&gt;Anime, Science Fiction&lt;/type&gt;</span><br><span class="line">        &lt;format&gt;DVD&lt;/format&gt;</span><br><span class="line">        &lt;year&gt;1989&lt;/year&gt;</span><br><span class="line">        &lt;rating&gt;R&lt;/rating&gt;</span><br><span class="line">        &lt;stars&gt;8&lt;/stars&gt;</span><br><span class="line">        &lt;description&gt;A schientific fiction&lt;/description&gt;</span><br><span class="line">    &lt;/movie&gt;</span><br><span class="line">    &lt;movie title=&quot;Trigun&quot;&gt;</span><br><span class="line">        &lt;type&gt;Anime, Action&lt;/type&gt;</span><br><span class="line">        &lt;format&gt;DVD&lt;/format&gt;</span><br><span class="line">        &lt;episodes&gt;4&lt;/episodes&gt;</span><br><span class="line">        &lt;rating&gt;PG&lt;/rating&gt;</span><br><span class="line">        &lt;stars&gt;10&lt;/stars&gt;</span><br><span class="line">        &lt;description&gt;Vash the Stampede!&lt;/description&gt;</span><br><span class="line">    &lt;/movie&gt;</span><br><span class="line">    &lt;movie title=&quot;Ishtar&quot;&gt;</span><br><span class="line">        &lt;type&gt;Comedy&lt;/type&gt;</span><br><span class="line">        &lt;format&gt;VHS&lt;/format&gt;</span><br><span class="line">        &lt;rating&gt;PG&lt;/rating&gt;</span><br><span class="line">        &lt;stars&gt;2&lt;/stars&gt;</span><br><span class="line">        &lt;description&gt;Viewable boredom&lt;/description&gt;</span><br><span class="line">    &lt;/movie&gt;</span><br><span class="line">&lt;/collection&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="使用SAX解析xml"><a href="#使用SAX解析xml" class="headerlink" title="使用SAX解析xml"></a>使用SAX解析xml</h3><p>SAX是一种基于事件驱动的API。</p>
+<p>利用SAX解析XML文档牵涉到两个部分:解析器和事件处理器。</p>
+<p>解析器负责读取XML文档,并向事件处理器发送事件,如元素开始跟元素结束事件;</p>
+<p>而事件处理器则负责对事件作出相应,对传递的XML数据进行处理。</p>
+<p>1、对大型文件进行处理；<br>2、只需要文件的部分内容，或者只需从文件中得到特定信息。<br>3、想建立自己的对象模型的时候。</p>
+<p>在python中使用sax方式处理xml要先引入xml.sax中的parse函数，还有xml.sax.handler中的ContentHandler。</p>
+<p>ContentHandler类方法介绍  </p>
+<ul>
+<li><p>characters(content)方法</p>
+<p>  调用时机<br>  从行开始，遇到标签之前，存在字符，content的值为这些字符串。<br>  从一个标签，遇到下一个标签之前，存在字符，content的值为这些字符串。<br>  从一个标签，遇到行结束符之前，存在字符，content的值为这些字符串。  </p>
+<p>  标签可以是开始标签，也可以是结束标签。</p>
+</li>
+<li><p>startDocument()方法</p>
+</li>
+</ul>
+<p>文档启动的时候调用。</p>
+<ul>
+<li>endDocument()方法</li>
+</ul>
+<p>解析器到达文档结尾时调用。</p>
+<ul>
+<li>startElement(name, attrs)方法</li>
+</ul>
+<p>遇到XML开始标签时调用，name是标签的名字，attrs是标签的属性值字典。</p>
+<ul>
+<li>endElement(name)方法</li>
+</ul>
+<p>遇到XML结束标签时调用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">import xml.sax</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MovieHandler(xml.sax.ContentHandler):</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(self)</span><br><span class="line">        self.CurrentData = &quot;&quot;</span><br><span class="line">        self.type = &quot;&quot;</span><br><span class="line">        self.format = &quot;&quot;</span><br><span class="line">        self.year = &quot;&quot;</span><br><span class="line">        self.rating = &quot;&quot;</span><br><span class="line">        self.stars = &quot;&quot;</span><br><span class="line">        self.description = &quot;&quot;</span><br><span class="line"></span><br><span class="line">    # 元素开始事件处理</span><br><span class="line">    def startElement(self, tag, attributes):</span><br><span class="line">        self.CurrentData = tag</span><br><span class="line">        if tag == &quot;movie&quot;:</span><br><span class="line">            print &quot;*****Movie*****&quot;</span><br><span class="line">            title = attributes[&quot;title&quot;]</span><br><span class="line">            print &quot;Title:&quot;, title</span><br><span class="line"></span><br><span class="line">    # 元素结束事件处理</span><br><span class="line">    def endElement(self, tag):</span><br><span class="line">        if self.CurrentData == &quot;type&quot;:</span><br><span class="line">            print &quot;Type:&quot;, self.type</span><br><span class="line">        elif self.CurrentData == &quot;format&quot;:</span><br><span class="line">            print &quot;Format:&quot;, self.format</span><br><span class="line">        elif self.CurrentData == &quot;year&quot;:</span><br><span class="line">            print &quot;Year:&quot;, self.year</span><br><span class="line">        elif self.CurrentData == &quot;rating&quot;:</span><br><span class="line">            print &quot;Rating:&quot;, self.rating</span><br><span class="line">        elif self.CurrentData == &quot;stars&quot;:</span><br><span class="line">            print &quot;Stars:&quot;, self.stars</span><br><span class="line">        elif self.CurrentData == &quot;description&quot;:</span><br><span class="line">            print &quot;Description:&quot;, self.description</span><br><span class="line">        self.CurrentData = &quot;&quot;</span><br><span class="line"></span><br><span class="line">    # 内容事件处理</span><br><span class="line">    def characters(self, content):</span><br><span class="line">        if self.CurrentData == &quot;type&quot;:</span><br><span class="line">            self.type = content</span><br><span class="line">        elif self.CurrentData == &quot;format&quot;:</span><br><span class="line">            self.format = content</span><br><span class="line">        elif self.CurrentData == &quot;year&quot;:</span><br><span class="line">            self.year = content</span><br><span class="line">        elif self.CurrentData == &quot;rating&quot;:</span><br><span class="line">            self.rating = content</span><br><span class="line">        elif self.CurrentData == &quot;stars&quot;:</span><br><span class="line">            self.stars = content</span><br><span class="line">        elif self.CurrentData == &quot;description&quot;:</span><br><span class="line">            self.description = content</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line"></span><br><span class="line">    # 创建一个 XMLReader</span><br><span class="line">    parser = xml.sax.make_parser()</span><br><span class="line">    # turn off namepsaces</span><br><span class="line">    parser.setFeature(xml.sax.handler.feature_namespaces, 0)</span><br><span class="line"></span><br><span class="line">    # 重写 ContextHandler</span><br><span class="line">    Handler = MovieHandler()</span><br><span class="line">    parser.setContentHandler(Handler)</span><br><span class="line"></span><br><span class="line">    parser.parse(&quot;movies.xml&quot;)</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+<h3 id="xml-dom解析xml"><a href="#xml-dom解析xml" class="headerlink" title="xml.dom解析xml"></a>xml.dom解析xml</h3><p>DOM解析是将整个文件读入内存，因此可随机访问标签。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from xml.dom.minidom import parse</span><br><span class="line">import xml.dom.minidom</span><br><span class="line"> </span><br><span class="line"># 使用minidom解析器打开 XML 文档</span><br><span class="line">DOMTree = xml.dom.minidom.parse(&quot;movies.xml&quot;)</span><br><span class="line">collection = DOMTree.documentElement</span><br><span class="line">if collection.hasAttribute(&quot;shelf&quot;):</span><br><span class="line">   print &quot;Root element : %s&quot; % collection.getAttribute(&quot;shelf&quot;)</span><br><span class="line"> </span><br><span class="line"># 在集合中获取所有电影</span><br><span class="line">movies = collection.getElementsByTagName(&quot;movie&quot;)</span><br><span class="line"> </span><br><span class="line"># 打印每部电影的详细信息</span><br><span class="line">for movie in movies:</span><br><span class="line">   print &quot;*****Movie*****&quot;</span><br><span class="line">   if movie.hasAttribute(&quot;title&quot;):</span><br><span class="line">      print &quot;Title: %s&quot; % movie.getAttribute(&quot;title&quot;)</span><br><span class="line"> </span><br><span class="line">   type = movie.getElementsByTagName(&apos;type&apos;)[0]</span><br><span class="line">   print &quot;Type: %s&quot; % type.childNodes[0].data</span><br><span class="line">   format = movie.getElementsByTagName(&apos;format&apos;)[0]</span><br><span class="line">   print &quot;Format: %s&quot; % format.childNodes[0].data</span><br><span class="line">   rating = movie.getElementsByTagName(&apos;rating&apos;)[0]</span><br><span class="line">   print &quot;Rating: %s&quot; % rating.childNodes[0].data</span><br><span class="line">   description = movie.getElementsByTagName(&apos;description&apos;)[0]</span><br><span class="line">   print &quot;Description: %s&quot; % description.childNodes[0].data</span><br></pre></td></tr></table></figure>
+<h3 id="ElementTree"><a href="#ElementTree" class="headerlink" title="ElementTree"></a>ElementTree</h3><p>对比其他 Python 处理 XML 的方案，xml.etree.ElementTree 模块（下文我们以 ET 来表示）相对来说比较简单，接口也较友好。<br>官方文档 里面对 ET 模块进行了较为详细的描述，总的来说，ET 模块可以归纳为三个部分：ElementTree类，Element类以及一些操作 XML 的函数。<br>XML 可以看成是一种树状结构，ET 使用ElementTree类来表示整个 XML 文档，使用Element类来表示 XML 的一个结点。对整 XML 文档的操作一般是对ElementTree对象进行，而对 XML 结点的操作一般是对Element对象进行。</p>
+<p>example.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;data&gt;</span><br><span class="line">    &lt;country name=&quot;Liechtenstein&quot;&gt;</span><br><span class="line">        &lt;rank&gt;1&lt;/rank&gt;</span><br><span class="line">        &lt;year&gt;2008&lt;/year&gt;</span><br><span class="line">        &lt;gdppc&gt;141100&lt;/gdppc&gt;</span><br><span class="line">        &lt;neighbor name=&quot;Austria&quot; direction=&quot;E&quot;/&gt;</span><br><span class="line">        &lt;neighbor name=&quot;Switzerland&quot; direction=&quot;W&quot;/&gt;</span><br><span class="line">    &lt;/country&gt;</span><br><span class="line">    &lt;country name=&quot;Singapore&quot;&gt;</span><br><span class="line">        &lt;rank&gt;4&lt;/rank&gt;</span><br><span class="line">        &lt;year&gt;2011&lt;/year&gt;</span><br><span class="line">        &lt;gdppc&gt;59900&lt;/gdppc&gt;</span><br><span class="line">        &lt;neighbor name=&quot;Malaysia&quot; direction=&quot;N&quot;/&gt;</span><br><span class="line">    &lt;/country&gt;</span><br><span class="line">&lt;/data&gt;</span><br></pre></td></tr></table></figure></p>
+<p>解析文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import xml.etree.ElementTree as ET</span><br><span class="line"></span><br><span class="line"># 获取 XML 文档对象 ElementTree</span><br><span class="line">tree = ET.parse(&apos;example.xml&apos;)</span><br><span class="line"># 获取 XML 文档对象的根结点 Element</span><br><span class="line">root = tree.getroot()</span><br><span class="line"># 打印根结点的名称</span><br><span class="line">print root.tag</span><br></pre></td></tr></table></figure></p>
+<p>解析字符窜<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xml_str = ET.tostring(root)</span><br><span class="line">print xml_str</span><br><span class="line">root = ET.fromstring(xml_str)</span><br><span class="line">print root.tag</span><br></pre></td></tr></table></figure></p>
+<p>构造 XML</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a = ET.Element(&apos;a&apos;)</span><br><span class="line">b = ET.SubElement(a, &apos;b&apos;)</span><br><span class="line">b.text = &apos;leehao.me&apos;</span><br><span class="line">c = ET.SubElement(a, &apos;c&apos;)</span><br><span class="line">c.attrib[&apos;greeting&apos;] = &apos;hello&apos;</span><br><span class="line">d = ET.SubElement(a, &apos;d&apos;)</span><br><span class="line">d.text = &apos;www.leehao.me&apos;</span><br><span class="line">xml_str = ET.tostring(a, encoding=&apos;UTF-8&apos;)</span><br><span class="line">print xml_str</span><br><span class="line"></span><br><span class="line"># 先构造一个 ElementTree 以便使用其 write 方法</span><br><span class="line">tree = ET.ElementTree(a)</span><br><span class="line">tree.write(&apos;a.xml&apos;, encoding=&apos;UTF-8&apos;)</span><br></pre></td></tr></table></figure>
+<p>查找与更新</p>
+<p>Element类提供了Element.iter()方法来查找指定的结点。<br><strong>Element.iter()会递归查找所有的子结点，以便查找到所有符合条件的结点。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 获取 XML 文档对象 ElementTree</span><br><span class="line">tree = ET.parse(&apos;example.xml&apos;)</span><br><span class="line"># 获取 XML 文档对象的根结点 Element</span><br><span class="line">root = tree.getroot()</span><br><span class="line"># 递归查找所有的 neighbor 子结点</span><br><span class="line">for neighbor in root.iter(&apos;neighbor&apos;):</span><br><span class="line">    print neighbor.attrib</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&apos;direction&apos;: &apos;E&apos;, &apos;name&apos;: &apos;Austria&apos;&#125;</span><br><span class="line">&#123;&apos;direction&apos;: &apos;W&apos;, &apos;name&apos;: &apos;Switzerland&apos;&#125;</span><br><span class="line">&#123;&apos;direction&apos;: &apos;N&apos;, &apos;name&apos;: &apos;Malaysia&apos;&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>使用Element.findall()或者Element.find()方法，则只会从结点的直接子结点中查找，并不会递归查找。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">country = root.find(&apos;country&apos;)</span><br><span class="line">rank = country.find(&apos;rank&apos;).text</span><br><span class="line">name = country.get(&apos;name&apos;)</span><br><span class="line">print name, rank</span><br></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Liechtenstein 1</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for country in root.findall(&apos;country&apos;):</span><br><span class="line">    rank = country.find(&apos;rank&apos;).text</span><br><span class="line">    name = country.get(&apos;name&apos;)</span><br><span class="line">    print name, rank</span><br></pre></td></tr></table></figure>
+<p>输出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Liechtenstein 1</span><br><span class="line">Singapore 4</span><br></pre></td></tr></table></figure></p>
+<p>更新结点</p>
+<p>如果需要更新结点的文本，可以通过直接修改Element.text来实现。<br>如果需要更新结点的属性，可以通过直接修改Element.attrib来实现或 (Element.set() )。<br>添加节点孩子（例如 Element.append()).<br>删除节点孩子（例如 Element.append()).</p>
+<p>对结点进行更新后，可以使用ElementTree.write()方法将更新后的 XML 文档写入文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 获取 XML 文档对象 ElementTree</span><br><span class="line">tree = ET.parse(&apos;example.xml&apos;)</span><br><span class="line"># 获取 XML 文档对象的根结点 Element</span><br><span class="line">root = tree.getroot()</span><br><span class="line">for rank in root.iter(&apos;rank&apos;):</span><br><span class="line">    new_rank = int(rank.text) + 1</span><br><span class="line">    rank.text = str(new_rank) ## 更新节点值</span><br><span class="line">    rank.attrib[&apos;updated&apos;] = &apos;yes&apos; ## 添加或更新节点属性值</span><br><span class="line">    ## rank.set(&apos;updated&apos;, &apos;yes&apos;)</span><br><span class="line">    root.remove(country) ## 删除节点</span><br><span class="line">    </span><br><span class="line">tree.write(&apos;output.xml&apos;, encoding=&apos;UTF-8&apos;)</span><br><span class="line"></span><br><span class="line">for country in root.findall(&apos;country&apos;):</span><br><span class="line">    rank = country.find(&apos;rank&apos;)</span><br><span class="line">    name = country.get(&apos;name&apos;) </span><br><span class="line">    if int(rank.text) &gt;= 4:</span><br><span class="line">        country.remove(rank) ## 删除节点</span><br><span class="line">    else:</span><br><span class="line">        element = Element(&quot;addednode&quot;, &#123;&#125;)</span><br><span class="line">        element.text = &apos;content&apos;</span><br><span class="line">        country.append(element) ## 增加节点</span><br><span class="line">        pass</span><br><span class="line">    print name, rank</span><br></pre></td></tr></table></figure>
+<p>新生成的output.xml文件以下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;</span><br><span class="line">&lt;data&gt;</span><br><span class="line">    &lt;country name=&quot;Liechtenstein&quot;&gt;</span><br><span class="line">        &lt;rank updated=&quot;yes&quot;&gt;2&lt;/rank&gt;</span><br><span class="line">        &lt;year&gt;2008&lt;/year&gt;</span><br><span class="line">        &lt;gdppc&gt;141100&lt;/gdppc&gt;</span><br><span class="line">        &lt;neighbor direction=&quot;E&quot; name=&quot;Austria&quot; /&gt;</span><br><span class="line">        &lt;neighbor direction=&quot;W&quot; name=&quot;Switzerland&quot; /&gt;</span><br><span class="line">    &lt;/country&gt;</span><br><span class="line">    &lt;country name=&quot;Singapore&quot;&gt;</span><br><span class="line">        &lt;rank updated=&quot;yes&quot;&gt;5&lt;/rank&gt;</span><br><span class="line">        &lt;year&gt;2011&lt;/year&gt;</span><br><span class="line">        &lt;gdppc&gt;59900&lt;/gdppc&gt;</span><br><span class="line">        &lt;neighbor direction=&quot;N&quot; name=&quot;Malaysia&quot; /&gt;</span><br><span class="line">    &lt;/country&gt;</span><br><span class="line">&lt;/data&gt;</span><br></pre></td></tr></table></figure>
+<p>对比example.xml文件，可以看到output.xml文件已更新。</p>
+<blockquote>
+<p>参考: <a href="https://blog.csdn.net/lihao21/article/details/72891932" target="_blank" rel="noopener">https://blog.csdn.net/lihao21/article/details/72891932</a></p>
+</blockquote>
+<h2 id="argparse"><a href="#argparse" class="headerlink" title="argparse"></a>argparse</h2><p>argparse 是 Python标准库中用来解析命令行参数和选项的模块，其是为替代已经过时的 optparse 模块而生的，该模块在 Python2.7 中被引入。argparse模块的作用是用于解析命令行参数。</p>
+<ul>
+<li>创建 ArgumentParser() 对象  </li>
+<li>调用 add_argument() 方法添加参数  </li>
+<li>使用 parse_args() 解析添加的参数</li>
+</ul>
+<h3 id="创建解析器"><a href="#创建解析器" class="headerlink" title="创建解析器"></a>创建解析器</h3><p>使用 argparse 解析命令行参数时，首先需要创建一个解析器，创建方式如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line">parser = argparse.ArgumentParser()</span><br></pre></td></tr></table></figure>
+<p>argparse_usage.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line">parser.add_argument(&apos;integer&apos;, type=int, help=&apos;display an integer&apos;)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">print args.integer</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python argparse_usage.py 10</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>定位参数<br>上面的实例展示了定位参数的用法。</li>
+<li>可选参数<br>所谓可选参数，也就是命令行参数是可选的：参数名前加– 标识使用可选参数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser()</span><br><span class="line"></span><br><span class="line">parser.add_argument(&quot;--square&quot;, help=&quot;display a square of a given number&quot;, type=int)</span><br><span class="line">parser.add_argument(&quot;--cubic&quot;, help=&quot;display a cubic of a given number&quot;, type=int)</span><br><span class="line"></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">if args.square:</span><br><span class="line">    print args.square**2</span><br><span class="line"></span><br><span class="line">if args.cubic:</span><br><span class="line">    print args.cubic**3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ python argparse_usage.py --square 8</span><br><span class="line">64</span><br><span class="line"></span><br><span class="line">$ python argparse_usage.py --cubic 8</span><br><span class="line">512</span><br></pre></td></tr></table></figure>
+<h3 id="混合使用"><a href="#混合使用" class="headerlink" title="混合使用"></a>混合使用</h3><p>定位参数和选项参数可以混合使用，看下面一个例子，给一个整数序列，输出它们的和或最大值（默认）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=&apos;Process some integers.&apos;)</span><br><span class="line">parser.add_argument(&apos;integers&apos;, metavar=&apos;N&apos;, type=int, nargs=&apos;+&apos;,</span><br><span class="line">                   help=&apos;an integer for the accumulator&apos;)</span><br><span class="line">parser.add_argument(&apos;--sum&apos;, dest=&apos;accumulate&apos;, action=&apos;store_const&apos;,</span><br><span class="line">                   const=sum, default=max,</span><br><span class="line">                   help=&apos;sum the integers (default: find the max)&apos;)</span><br><span class="line"></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">print args.accumulate(args.integers)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ python argparse_usage.py</span><br><span class="line">usage: argparse_usage.py [-h] [--sum] N [N ...]</span><br><span class="line">argparse_usage.py: error: too few arguments</span><br><span class="line"></span><br><span class="line">$ python argparse_usage.py 1 2 3 4</span><br><span class="line">4</span><br><span class="line">$ python argparse_usage.py 1 2 3 4 --sum</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+<h3 id="add-argument-方法"><a href="#add-argument-方法" class="headerlink" title="add_argument() 方法"></a>add_argument() 方法</h3><p>add_argument() 方法定义如何解析命令行参数：</p>
+<p>ArgumentParser.add_argument(name or flags…[, action][, nargs][, const][, default][, type][, choices][, required][, help][, metavar][, dest])<br>每个参数解释如下:</p>
+<ul>
+<li>name or flags - 选项字符串的名字或者列表，例如 foo 或者 -f, –foo。</li>
+<li>action - 命令行遇到参数时的动作，默认值是 store。</li>
+<li>store_const，表示赋值为const；</li>
+<li>append，将遇到的值存储成列表，也就是如果参数重复则会保存多个值;</li>
+<li>append_const，将参数规范中定义的一个值保存到一个列表；</li>
+<li>count，存储遇到的次数；此外，也可以继承 argparse.Action 自定义参数解析；</li>
+<li>nargs - 应该读取的命令行参数个数，可以是具体的数字，或者是?号，当不指定值时对于 Positional argument 使用 default，对于 Optional argument 使用 const；或者是 * 号，表示 0 或多个参数；或者是 + 号表示 1 或多个参数。</li>
+<li>const - action 和 nargs 所需要的常量值。</li>
+<li>default - 不指定参数时的默认值。</li>
+<li>type - 命令行参数应该被转换成的类型。</li>
+<li>choices - 参数可允许的值的一个容器。</li>
+<li>required - 可选参数是否可以省略 (仅针对可选参数)。</li>
+<li>help - 参数的帮助信息，当指定为 argparse.SUPPRESS 时表示不显示该参数的帮助信息.</li>
+<li>metavar - 在 usage 说明中的参数名称，对于必选参数默认就是参数名称，对于可选参数默认是全大写的参数名称.</li>
+<li>dest - 解析后的参数名称，默认情况下，对于可选参数选取最长的名称，中划线转换为下划线.：</li>
+</ul>
+<h2 id="time-datetime模块"><a href="#time-datetime模块" class="headerlink" title="time/datetime模块"></a>time/datetime模块</h2><p>时间有三种格式：第一种是时间戳、第二种是格式化时间、第三种就是时间元组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import time,datetime  </span><br><span class="line"></span><br><span class="line">time.sleep(1)#程序休息几秒</span><br><span class="line">print(time.time())#获取当前时间戳</span><br><span class="line">print(time.localtime(1497950139))#获取时间元组,其中1497950139是时间戳；默认是当前时区UTC+8</span><br><span class="line">print(time.localtime())#时间戳不写的话，默认获取当前时间元组</span><br><span class="line">print(time.gmtime(1498732057.6223967))#获取时间元组，默认是标准时区UTC</span><br><span class="line">print(time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;,time.gmtime(1498732057.6223967)))</span><br><span class="line"># #将时间元组1498732057.6223967转换成格式化时间   2017-06-29 10:27:37</span><br><span class="line">print(time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;))#时间元组不写的话，默认获取当前格式化时间</span><br><span class="line">print(time.asctime())#将时间元组转换成格式化时间，括号里不写默认当前时间。比如输出：Fri Jul 14 14:36:57 2017</span><br><span class="line">print(time.ctime(1498732057.6223967))#讲时间戳转换成格式化时间，括号里不写默认当前时间。比如输出：Thu Jun 29 18:27:37 2017</span><br><span class="line">print(datetime.datetime.now())#将当前时间格式化输出  2017-06-29 18:35:24.570104</span><br><span class="line">print(datetime.datetime.now()+datetime.timedelta(3))#3天后的时间</span><br><span class="line">print(datetime.datetime.now()+datetime.timedelta(-3))#3天前的时间</span><br></pre></td></tr></table></figure>
+<h2 id="os-sys模块"><a href="#os-sys模块" class="headerlink" title="os/sys模块"></a>os/sys模块</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">print(sys.argv)#获取命令行参数list，第一个元素是程序本身路径，后面的元素是参数</span><br><span class="line">print(sys.version)#获取Python解释程序的版本信息</span><br><span class="line">print(sys.path)#返回模块的搜索路径，初始化使用PYTHONPATH环境变量的值</span><br><span class="line">print(sys.platform)#返回操作系统平台名称</span><br><span class="line">sys.stdout.write(&apos;please:&apos;)#向屏幕输出一句话,等价于：print(&apos;please:&apos;)</span><br><span class="line">val=sys.stdin.readline()[:-1]#获取输入的</span><br><span class="line">sys.exit(0)#退出程序，正常退出时exit(0)</span><br><span class="line"></span><br><span class="line">import  os,time</span><br><span class="line">print(os.getcwd())#获取当前工作目录，绝对路径</span><br><span class="line">os.chmod(&apos;\user\bin&apos;,7)#linux环境下，给文件/目录加权限</span><br><span class="line">print(os.chdir(r&apos;D:\learning\huhy&apos;))</span><br><span class="line">#更改当前目录，到指定目录中</span><br><span class="line">print(os.makedirs(&quot;OS/huhy1/hat1&quot;))#在父目录下递归创建文件夹</span><br><span class="line">print(os.removedirs(&quot;OS/file&quot;))#递归删除空目录，若不是空目录无法删除，会报错</span><br><span class="line">print(os.mkdir(&apos;huat&apos;))#创建文件夹，若文件夹已存在则会报错</span><br><span class="line">os.rmdir(r&quot;D:\learning\huhy\sample\huat&quot;)#删除文件夹</span><br><span class="line">print(os.remove(r&apos;D:\learning\huhy\sample\huat\sss.txt&apos;))#删除文件，若文件找不到会报错</span><br><span class="line">os.rename(r&apos;huat\test.txt&apos;,r&apos;huat\case.txt&apos;)#重命名文件的名称</span><br><span class="line">print(os.stat(r&apos;huat\case.txt&apos;))#获取文件信息</span><br><span class="line">print(os.name)#显示当前使用的平台</span><br><span class="line">print(os.sep)#当前操作系统的路径分隔符</span><br><span class="line">print(os.environ)#当前系统的环境变量</span><br><span class="line">print(os.pathsep)#当前系统的环境变量中每个路径的分隔符，linux是‘，’，windows是‘；’</span><br><span class="line">print(os.linesep)#当前操作系统的换行符</span><br><span class="line">with open(&apos;huat\case.txt&apos;,&apos;w&apos;,encoding=&apos;utf-8&apos;) as fw:</span><br><span class="line">    fw.write(&apos;ddddd&apos;)</span><br><span class="line">    fw.write(os.linesep)</span><br><span class="line">    fw.write(&apos;taayy&apos;)</span><br><span class="line">print(os.path.abspath(__file__))#获取当前文件的绝对路径</span><br><span class="line"></span><br><span class="line">print(__file__)#这个也会获取到当前文件的路径，但是路径里面的斜杠不符合路径格式</span><br><span class="line">print(os.path.split(&apos;huat\case.txt&apos;))#分割文件和路径名称</span><br><span class="line">print(os.path.dirname(r&apos;\usr\local\bin&apos;))#获取父目录</span><br><span class="line">print(os.path.exists(r&apos;\usr\local\bin\a.txt&apos;))#判断文件目录/文件是否存在，存在就返回True,否则返回False</span><br><span class="line">print(os.path.join(os.path.dirname(os.path.abspath(__file__)),&apos;huat&apos;))#拼接成一个路径</span><br><span class="line">print(os.path.join(r&apos;D:\learning\huhy\sample&apos;,&apos;huat&apos;))#同上，拼接路径</span><br><span class="line">print(os.listdir(&apos;.&apos;))#列出当前目录下的所有文件</span><br><span class="line">print(os.listdir(&apos;..&apos;))#列出父目录下的所有文件</span><br><span class="line">print(os.path.getatime(r&apos;D:\learning\huhy\day\login.py&apos;))</span><br><span class="line">print(time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;,time.localtime(os.path.getatime(r&apos;D:\learning\huhy\day\login.py&apos;))))</span><br><span class="line">#os.path.getatime输出最近访问时间戳</span><br><span class="line">print(time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;,time.localtime(os.path.getmtime(r&apos;D:\learning\huhy\day\login.py&apos;))))</span><br><span class="line">#os.path.getmtime输出最近修改时间戳</span><br><span class="line">print(time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;,time.localtime(os.path.getctime(r&apos;D:\learning\huhy\day\login.py&apos;))))</span><br><span class="line">#os.path.getctime输出文件创建时间戳</span><br><span class="line">print(os.curdir)#当前目录</span><br><span class="line">print(os.pardir)#父目录</span><br><span class="line">print(os.path.basename(r&apos;\usr\local\bin\a.txt&apos;))#获取最后一级,如果是文件显示文件名，如果是目录显示目录名</span><br><span class="line">print(os.path.isabs(r&apos;D:\sample\huat\sss.txt&apos;))#判断是否是绝对路径,是绝对路径返回True,否则返回False</span><br><span class="line">print(os.path.isfile(r&apos;D:\learning\huhy\sample\huat\case.txt&apos;))#判断该绝对路径是否是文件</span><br><span class="line">print(os.path.isdir(r&apos;D:\learning\huhy\sample\huat&apos;))#判断是否是路径</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/14/Python高级进阶/迭代器与生成器/" rel="next" title="Python高级进阶-迭代器与生成器">
+                <i class="fa fa-chevron-left"></i> Python高级进阶-迭代器与生成器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/14/Android/Gradle 使用指南 -- Gradle 生命周期/" rel="prev" title="Gradle 使用指南 -- Gradle 生命周期">
+                Gradle 使用指南 -- Gradle 生命周期 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python-常用模块"><span class="nav-number">1.</span> <span class="nav-text">Python 常用模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Http"><span class="nav-number">1.1.</span> <span class="nav-text">Http</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML处理"><span class="nav-number">1.2.</span> <span class="nav-text">XML处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用SAX解析xml"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用SAX解析xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xml-dom解析xml"><span class="nav-number">1.2.2.</span> <span class="nav-text">xml.dom解析xml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ElementTree"><span class="nav-number">1.2.3.</span> <span class="nav-text">ElementTree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#argparse"><span class="nav-number">1.3.</span> <span class="nav-text">argparse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建解析器"><span class="nav-number">1.3.1.</span> <span class="nav-text">创建解析器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#混合使用"><span class="nav-number">1.3.2.</span> <span class="nav-text">混合使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add-argument-方法"><span class="nav-number">1.3.3.</span> <span class="nav-text">add_argument() 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#time-datetime模块"><span class="nav-number">1.4.</span> <span class="nav-text">time/datetime模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#os-sys模块"><span class="nav-number">1.5.</span> <span class="nav-text">os/sys模块</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

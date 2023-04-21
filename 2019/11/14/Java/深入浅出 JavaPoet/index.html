@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="深入浅出 JavaPoet">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出 JavaPoet">
+<meta property="og:url" content="http://codefarmer.tech/2019/11/14/Java/深入浅出 JavaPoet/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="深入浅出 JavaPoet">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/sync?method=download&fileId=WEBf1df54081b60e10574b2792e45c92d68&version=2243&cstk=cTSa6w9t&keyfrom=web">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入浅出 JavaPoet">
+<meta name="twitter:description" content="深入浅出 JavaPoet">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/sync?method=download&fileId=WEBf1df54081b60e10574b2792e45c92d68&version=2243&cstk=cTSa6w9t&keyfrom=web">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2019/11/14/Java/深入浅出 JavaPoet/">
+
+
+
+
+
+  <title>深入浅出 JavaPoet | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2019/11/14/Java/深入浅出 JavaPoet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入浅出 JavaPoet</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-14T16:02:00+08:00">
+                2019-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/11/14/Java/深入浅出 JavaPoet/" class="leancloud_visitors" data-flag-title="深入浅出 JavaPoet">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  深入浅出 JavaPoet
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>深入浅出 JavaPoet</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>JavaPoet 是生成Java 源文件的工具。</p>
+<p>JavaPoet官方地址：<a href="https://github.com/square/javapoet" target="_blank" rel="noopener">https://github.com/square/javapoet</a></p>
+<h2 id="API-速揽"><a href="#API-速揽" class="headerlink" title="API 速揽"></a>API 速揽</h2><p>类图：<br><img src="https://note.youdao.com/yws/api/personal/sync?method=download&amp;fileId=WEBf1df54081b60e10574b2792e45c92d68&amp;version=2243&amp;cstk=cTSa6w9t&amp;keyfrom=web" alt="image"></p>
+<p>在JavaPoet中，我们通过各种Spec类最终生成我们的JavaFile. Spec类型包括如下。</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>描述</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JavaFile</td>
+<td>A Java file containing a single top level class.</td>
+<td>JavaFile代表一个最终生成的Java源码文件, 源码文件里包含Class,接口，枚举.</td>
+</tr>
+<tr>
+<td>TypeSpec</td>
+<td>A generated class, interface, or enum declaration.</td>
+<td>用来生成Class, 接口，枚举 对象</td>
+</tr>
+<tr>
+<td>MethodSpec</td>
+<td>A generated constructor or method declaration</td>
+<td>用来生成方法</td>
+</tr>
+<tr>
+<td>FieldSpec</td>
+<td>A generated field declaration.</td>
+<td>用来生成域（成员）声明</td>
+</tr>
+<tr>
+<td>ParameterSpec</td>
+<td>A generated parameter declaration.</td>
+<td>用来生成参数</td>
+</tr>
+<tr>
+<td>AnnotationSpec</td>
+<td>A generated annotation on a declaration.</td>
+<td>用来生成注解</td>
+</tr>
+</tbody>
+</table>
+<p>JavaPoet中数据类型</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>生成的类型</th>
+<th>JavaPoet 写法</th>
+<th>等效的 Java 写法）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>内置类型</td>
+<td>int</td>
+<td>TypeName.INT</td>
+<td>int.class</td>
+</tr>
+<tr>
+<td>数组类型</td>
+<td>int[]</td>
+<td>ArrayTypeName.of(int.class)</td>
+<td>int[].class</td>
+</tr>
+<tr>
+<td>需要引入包名的类型</td>
+<td>java.io.File</td>
+<td>ClassName.get(“java.io”, “File”)</td>
+<td>java.io.File.class</td>
+</tr>
+<tr>
+<td>参数化类型 （ParameterizedType）</td>
+<td>List</td>
+<td>ParameterizedTypeName.get(List.class, String.class)</td>
+<td>–</td>
+</tr>
+<tr>
+<td>类型变量（WildcardType）</td>
+<td>用于声明泛型    T</td>
+<td>TypeVariableName.get(“T”)</td>
+<td>–</td>
+</tr>
+<tr>
+<td>通配符类型</td>
+<td>? extends String</td>
+<td>WildcardTypeName.subtypeOf(String.class)</td>
+<td>–</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>List.class 等价于 ClassName.get(“java.util”, “List”)。</li>
+<li>ParameterizedTypeName.get(List.class, String.class)<br>等价于<br>ParameterizedTypeName.get(ClassName.get(“java.util”, “List”), ClassName.get(“java.lang”, “String”))。</li>
+</ul>
+<p>JavaPoet其它类</p>
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>描述</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LineWrapper</td>
+<td>Implements soft line wrapping on an appendable.</td>
+<td>用来生成行</td>
+</tr>
+<tr>
+<td>CodeBlock</td>
+<td>A fragment of a .java file,</td>
+<td>源码中的代码块</td>
+</tr>
+<tr>
+<td>TypeName</td>
+<td>Any type in Java’s type system</td>
+<td>Java中的类型名</td>
+</tr>
+</tbody>
+</table>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>Gradle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.squareup:javapoet:1.10.0&apos;</span><br></pre></td></tr></table></figure></p>
+<p>Maven<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.squareup&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;javapoet&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;1.10.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="HelloWorld"><a href="#HelloWorld" class="headerlink" title="HelloWorld"></a>HelloWorld</h3><p>我们要生成的源码文件如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package com.example.helloworld;</span><br><span class="line"></span><br><span class="line">public final class HelloWorld &#123;</span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    System.out.println(&quot;Hello, JavaPoet!&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import com.squareup.javapoet.JavaFile;</span><br><span class="line">import com.squareup.javapoet.MethodSpec;</span><br><span class="line">import com.squareup.javapoet.TypeSpec;</span><br><span class="line">import javax.lang.model.element.Modifier;</span><br><span class="line"></span><br><span class="line">MethodSpec main = MethodSpec.methodBuilder(&quot;main&quot;)</span><br><span class="line">    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)</span><br><span class="line">    .returns(void.class)</span><br><span class="line">    .addParameter(String[].class, &quot;args&quot;)</span><br><span class="line">    .addStatement(&quot;$T.out.println($S)&quot;, System.class, &quot;Hello, JavaPoet!&quot;)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">TypeSpec helloWorld = TypeSpec.classBuilder(&quot;HelloWorld&quot;)</span><br><span class="line">    .addModifiers(Modifier.PUBLIC, Modifier.FINAL)</span><br><span class="line">    .addMethod(main)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">JavaFile javaFile = JavaFile.builder(&quot;com.example.helloworld&quot;, helloWorld)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">javaFile.writeTo(System.out);</span><br></pre></td></tr></table></figure>
+<h3 id="类型占位符"><a href="#类型占位符" class="headerlink" title="类型占位符"></a>类型占位符</h3><p>在 Statement 中使用类型占位符.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MethodSpec.methodBuilder(&quot;method&quot;)</span><br><span class="line">    .addStatement(&quot;$T file&quot;, File.class)            // File file;</span><br><span class="line">    .addStatement(&quot;$L = null&quot;, &quot;file&quot;)              // file = null;</span><br><span class="line">    .addStatement(&quot;file = new File($S)&quot;, &quot;foo/bar&quot;) // file = new File(&quot;foo/bar&quot;);</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>$T 代表Types就是类型替换, 用参数的类型替换$T 。</p>
+<p>  一般用于 (“$T foo”, List.class) =&gt; List foo. 使用$T ，JavaPoet 会自动帮你补全文件开头的 import.<br>  直接写 (“List foo”) 虽然也能生成 List foo， JavaPoet不会自动帮你添加 import java.util.List.</p>
+</li>
+<li><p>$L 代表 Literals，就是用参数的字面值替换$L。</p>
+<p>  示例：(“abc$L123”, “FOO”) =&gt; abcFOO123. 也就是直接替换.</p>
+</li>
+<li><p>$S 是字符串替换, 用字符串参数替换$S。</p>
+<p>  示例: (“$S.length()”, “foo”) =&gt; “foo”.length() 注意 $S 是将参数替换为了一个带双引号的字符串。 <strong>需要注意的是：与$L 相比，$S是带双引号的。</strong></p>
+</li>
+<li><p>$N 代表 Names。自引用，也就是引用我们生成的代码。  </p>
+<p>  比如你之前定义了一个函数 MethodSpec methodSpec = MethodSpec.methodBuilder(“foo”).build(); 现在你可以通过 $N 获取这个函数的名称 (“$N”, methodSpec) =&gt; foo.</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public String byteToHex(int b) &#123;</span><br><span class="line">  char[] result = new char[2];</span><br><span class="line">  result[0] = hexDigit((b &gt;&gt;&gt; 4) &amp; 0xf);</span><br><span class="line">  result[1] = hexDigit(b &amp; 0xf);</span><br><span class="line">  return new String(result);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public char hexDigit(int i) &#123;</span><br><span class="line">  return (char) (i &lt; 10 ? i + &apos;0&apos; : i - 10 + &apos;a&apos;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">MethodSpec hexDigit = MethodSpec.methodBuilder(&quot;hexDigit&quot;)</span><br><span class="line">    .addParameter(int.class, &quot;i&quot;)</span><br><span class="line">    .returns(char.class)</span><br><span class="line">    .addStatement(&quot;return (char) (i &lt; 10 ? i + &apos;0&apos; : i - 10 + &apos;a&apos;)&quot;)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">MethodSpec byteToHex = MethodSpec.methodBuilder(&quot;byteToHex&quot;)</span><br><span class="line">    .addParameter(int.class, &quot;b&quot;)</span><br><span class="line">    .returns(String.class)</span><br><span class="line">    .addStatement(&quot;char[] result = new char[2]&quot;)</span><br><span class="line">    .addStatement(&quot;result[0] = $N((b &gt;&gt;&gt; 4) &amp; 0xf)&quot;, hexDigit)</span><br><span class="line">    .addStatement(&quot;result[1] = $N(b &amp; 0xf)&quot;, hexDigit)</span><br><span class="line">    .addStatement(&quot;return new String(result)&quot;)</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<h3 id="生成代码，流程控制"><a href="#生成代码，流程控制" class="headerlink" title="生成代码，流程控制"></a>生成代码，流程控制</h3><ul>
+<li>JavaPoet生成代码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void main() &#123;</span><br><span class="line">  int total = 0;</span><br><span class="line">  for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">    total += i;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以使用MethodSpec的addCode来添加代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MethodSpec main = MethodSpec.methodBuilder(&quot;main&quot;)</span><br><span class="line">    .addCode(&quot;&quot;</span><br><span class="line">        + &quot;int total = 0;\n&quot;</span><br><span class="line">        + &quot;for (int i = 0; i &lt; 10; i++) &#123;\n&quot;</span><br><span class="line">        + &quot;  total += i;\n&quot;</span><br><span class="line">        + &quot;&#125;\n&quot;)</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>JavaPoet生成控制流代码：</li>
+</ul>
+<p>生成for 循环</p>
+<p>可以使用MethodSpec的beginControlFlow来开始控制流，endControlFlow结束控制流。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MethodSpec main = MethodSpec.methodBuilder(&quot;main&quot;)</span><br><span class="line">    .addStatement(&quot;int total = 0&quot;)</span><br><span class="line">    .beginControlFlow(&quot;for (int i = 0; i &lt; 10; i++)&quot;)</span><br><span class="line">    .addStatement(&quot;total += i&quot;)</span><br><span class="line">    .endControlFlow()</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<ul>
+<li></li>
+</ul>
+<h2 id="Import-static"><a href="#Import-static" class="headerlink" title="Import static"></a>Import static</h2><p>JavaPoet支持静态引用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">ClassName namedBoards = ClassName.get(&quot;com.mattel&quot;, &quot;Hoverboard&quot;, &quot;Boards&quot;);</span><br><span class="line"></span><br><span class="line">MethodSpec beyond = MethodSpec.methodBuilder(&quot;beyond&quot;)</span><br><span class="line">    .returns(listOfHoverboards)</span><br><span class="line">    .addStatement(&quot;$T result = new $T&lt;&gt;()&quot;, listOfHoverboards, arrayList)</span><br><span class="line">    .addStatement(&quot;result.add($T.createNimbus(2000))&quot;, hoverboard)</span><br><span class="line">    .addStatement(&quot;result.add($T.createNimbus(\&quot;2001\&quot;))&quot;, hoverboard)</span><br><span class="line">    .addStatement(&quot;result.add($T.createNimbus($T.THUNDERBOLT))&quot;, hoverboard, namedBoards)</span><br><span class="line">    .addStatement(&quot;$T.sort(result)&quot;, Collections.class)</span><br><span class="line">    .addStatement(&quot;return result.isEmpty() ? $T.emptyList() : result&quot;, Collections.class)</span><br><span class="line">    .build();</span><br><span class="line"></span><br><span class="line">TypeSpec hello = TypeSpec.classBuilder(&quot;HelloWorld&quot;)</span><br><span class="line">    .addMethod(beyond)</span><br><span class="line">    .build();</span><br><span class="line">    </span><br><span class="line">JavaFile.builder(&quot;com.example.helloworld&quot;, hello)</span><br><span class="line">    .addStaticImport(hoverboard, &quot;createNimbus&quot;)</span><br><span class="line">    .addStaticImport(namedBoards, &quot;*&quot;)</span><br><span class="line">    .addStaticImport(Collections.class, &quot;*&quot;)</span><br><span class="line">    .build();</span><br></pre></td></tr></table></figure>
+<p>生成的代码就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">package com.example.helloworld;</span><br><span class="line"></span><br><span class="line">import static com.mattel.Hoverboard.Boards.*;</span><br><span class="line">import static com.mattel.Hoverboard.createNimbus;</span><br><span class="line">import static java.util.Collections.*;</span><br></pre></td></tr></table></figure>
+<p>参考：</p>
+<ul>
+<li><a href="https://juejin.im/entry/58fefebf8d6d810058a610de" target="_blank" rel="noopener">https://juejin.im/entry/58fefebf8d6d810058a610de</a></li>
+<li><a href="https://github.com/square/javapoet" target="_blank" rel="noopener">https://github.com/square/javapoet</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/14/Java/深入浅出 Java Writer/" rel="next" title="深入浅出 Java Writer">
+                <i class="fa fa-chevron-left"></i> 深入浅出 Java Writer
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/12/ReactNative/添加TypeScript支持/" rel="prev" title="React Native-添加TypeScript支持">
+                React Native-添加TypeScript支持 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#API-速揽"><span class="nav-number">1.1.</span> <span class="nav-text">API 速揽</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">2.1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">2.2.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HelloWorld"><span class="nav-number">2.2.1.</span> <span class="nav-text">HelloWorld</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型占位符"><span class="nav-number">2.2.2.</span> <span class="nav-text">类型占位符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成代码，流程控制"><span class="nav-number">2.2.3.</span> <span class="nav-text">生成代码，流程控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Import-static"><span class="nav-number">2.3.</span> <span class="nav-text">Import static</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

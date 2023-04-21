@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,MediaSessionCompat,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="node">
+<meta name="keywords" content="Android,MediaSessionCompat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用MediaSessionCompat开发安卓中的背景音乐">
+<meta property="og:url" content="http://codefarmer.tech/2021/08/27/Android/2020-08-27-使用MediaSessionCompat开发安卓中的背景音乐/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="node">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.367Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用MediaSessionCompat开发安卓中的背景音乐">
+<meta name="twitter:description" content="node">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2021/08/27/Android/2020-08-27-使用MediaSessionCompat开发安卓中的背景音乐/">
+
+
+
+
+
+  <title>使用MediaSessionCompat开发安卓中的背景音乐 | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2021/08/27/Android/2020-08-27-使用MediaSessionCompat开发安卓中的背景音乐/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用MediaSessionCompat开发安卓中的背景音乐</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-27T10:36:10+08:00">
+                2021-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2021/08/27/Android/2020-08-27-使用MediaSessionCompat开发安卓中的背景音乐/" class="leancloud_visitors" data-flag-title="使用MediaSessionCompat开发安卓中的背景音乐">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  node
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>移动设备最受欢迎的用途之一是通过音乐流媒体服务播放音乐，下载音乐或其他音频源。  虽然这个功能很常见，但是很难实现，因为需要正确构建许多不同的部分以便为用户提供完整的Android体验。 </p>
+<p>在本教程中，您将了解如何使用Android支持库中的MediaSessionCompat为用户创建合适的后台音频服务。</p>
+<h1 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h1><p>需要做的第一件事是将Android支持库引入项目。 将以下行添加到module级的build.gradle文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.android.support:support-v13:24.2.1&apos;</span><br></pre></td></tr></table></figure>
+<p>同步项目之后，创建一个新的Java类。 对于这个例子我将调用类<figure class="highlight plain"><figcaption><span>我们还将实现以下接口：```MediaPlayer.OnCompletionListener和AudioManager.OnAudioFocusChangeListener```。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">现在```MediaBrowserServiceCompat```实现已创建，让我们花点时间更新**AndroidManifest.xml**，然后返回此类。  在xml文件中，您需要申请WAKE_LOCK权限。</span><br></pre></td></tr></table></figure></p>
+<p><uses-permission android:name="android.permission.WAKE_LOCK"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">接下来，在```application```节点内，使用以下```intent-filter```项目声明新服务。  这些将允许服务拦截设备的控制按钮，耳机事件和媒体浏览，例如Android Auto（尽管我们不会在本教程中对Android Auto做任何事情，但仍然需要```MediaBrowserServiceCompat```的基本支持）。</span><br></pre></td></tr></table></figure></uses-permission></p>
+<p><service android:name=".BackgroundAudioService"><br>    <intent-filter><br>        <action android:name="android.intent.action.MEDIA_BUTTON"><br>        <action android:name="android.media.AUDIO_BECOMING_NOISY"><br>        <action android:name="android.media.browse.MediaBrowserService"><br>    </action></action></action></intent-filter><br></service><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">最后，需要声明使用```MediaButtonReceiver``` Android支持库。  这将允许您拦截运行在KitKat系统和更早版本设备上的媒体控制按钮交互和耳机事件。</span><br></pre></td></tr></table></figure></p>
+<p><receiver android:name="androidx.media.session.MediaButtonReceiver"><br>    <intent-filter><br>        <action android:name="android.intent.action.MEDIA_BUTTON"><br>        <action android:name="android.media.AUDIO_BECOMING_NOISY"><br>    </action></action></intent-filter><br></receiver><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">现在***AndroidManifest.xml***文件已经完成，可以关闭它了。  我们还将创建一个名为```MediaStyleHelper```的类，这是由Google开发者倡导者Ian Lake撰写用来清理媒体样式通知的。</span><br></pre></td></tr></table></figure></p>
+<p>import android.content.Context;<br>import android.support.v4.media.MediaDescriptionCompat;<br>import android.support.v4.media.MediaMetadataCompat;<br>import android.support.v4.media.session.MediaControllerCompat;<br>import android.support.v4.media.session.MediaSessionCompat;<br>import android.support.v4.media.session.PlaybackStateCompat;</p>
+<p>import androidx.core.app.NotificationCompat;<br>import androidx.media.session.MediaButtonReceiver;</p>
+<p>public class MediaStyleHelper {<br>    /**</p>
+<pre><code> * Build a notification using the information from the given media session. Makes heavy use
+ * of {@link MediaMetadataCompat#getDescription()} to extract the appropriate information.
+ * @param context Context used to construct the notification.
+ * @param mediaSession Media session to get information.
+ * @return A pre-built notification with information from the given media session.
+ */
+public static NotificationCompat.Builder from(
+        Context context, MediaSessionCompat mediaSession) {
+    MediaControllerCompat controller = mediaSession.getController();
+    MediaMetadataCompat mediaMetadata = controller.getMetadata();
+    MediaDescriptionCompat description = mediaMetadata.getDescription();
+
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+    builder
+            .setContentTitle(description.getTitle())
+            .setContentText(description.getSubtitle())
+            .setSubText(description.getDescription())
+            .setLargeIcon(description.getIconBitmap())
+            .setContentIntent(controller.getSessionActivity())
+            .setDeleteIntent(
+                    MediaButtonReceiver.buildMediaButtonPendingIntent(context, PlaybackStateCompat.ACTION_STOP))
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+    return builder;
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">一旦创建，请关闭该文件。  下一节将介绍背景音频服务。</span><br><span class="line"></span><br><span class="line"># 构建背景音频服务</span><br><span class="line"></span><br><span class="line">现在是时候介绍创建媒体应用程序的核心了。  有几个成员变量需要首先声明：```MediaPlayer``` 用于实际播放以及```MediaSessionCompat```用于管理元数据和播放控件状态的对象。</span><br></pre></td></tr></table></figure></p>
+<p>private MediaPlayer mMediaPlayer;<br>private MediaSessionCompat mMediaSessionCompat;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">此外，还需要```BroadcastReceiver```来监听耳机状态的更改。  为了简单起见，该接收者将暂停MediaPlayer播放。</span><br></pre></td></tr></table></figure></p>
+<p>private BroadcastReceiver mNoisyReceiver = new BroadcastReceiver() {<br>    @Override<br>    public void onReceive(Context context, Intent intent) {<br>        if( mMediaPlayer != null &amp;&amp; mMediaPlayer.isPlaying() ) {<br>            mMediaPlayer.pause();<br>        }<br>    }<br>};<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对于final类型的成员变量，需要创建  ```MediaSessionCompat.Callback```对象，用于在媒体会话变化时处理播放状态</span><br></pre></td></tr></table></figure></p>
+<p>private MediaSessionCompat.Callback mMediaSessionCallback = new MediaSessionCompat.Callback() {</p>
+<pre><code>@Override
+public void onPlay() {
+    super.onPlay();
+}
+
+@Override
+public void onPause() {
+    super.onPause();
+}
+
+@Override
+public void onPlayFromMediaId(String mediaId, Bundle extras) {
+    super.onPlayFromMediaId(mediaId, extras);
+}
+</code></pre><p>};<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我们将在本教程的后面重新阅读上述方法，因为它们将用于驱动我们的媒体应用程序。</span><br><span class="line"></span><br><span class="line">我们还需要声明两个方法，虽然它们不需要为本教程做任何事情：```onGetRoot()```和```nLoadChildren()```。  可以默认使用以下代码。</span><br></pre></td></tr></table></figure></p>
+<p>@Nullable<br>@Override<br>public BrowserRoot onGetRoot(@NonNull String clientPackageName, int clientUid, @Nullable Bundle rootHints) {<br>    if(TextUtils.equals(clientPackageName, getPackageName())) {<br>        return new BrowserRoot(getString(R.string.app_name), null);<br>    }</p>
+<pre><code>return null;
+</code></pre><p>}</p>
+<p>//Not important for general audio service, required for class<br>@Override<br>public void onLoadChildren(@NonNull String parentId, @NonNull Result&lt;List&lt;MediaBrowserCompat.MediaItem&gt;&gt; result) {<br>    result.sendResult(null);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">最后，需要重写```onStartCommand()```方法，这是```Service```的入口。  该方法将使用传递给```Service```并将其发送到```MediaButtonReceiver```类的```Intent``` 。</span><br></pre></td></tr></table></figure>
+<p>@Override<br>public int onStartCommand(Intent intent, int flags, int startId) {<br>    MediaButtonReceiver.handleIntent(mMediaSessionCompat, intent);<br>    return super.onStartCommand(intent, flags, startId);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 初始化</span><br><span class="line">现在，基本成员变量已经创建了，是时候初始化所有内容了。  我们将调用```onCreate()```里面的各种辅助方法来完成初始化。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onCreate() {<br>    super.onCreate();</p>
+<pre><code>initMediaPlayer();
+initMediaSession();
+initNoisyReceiver();
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">第一个方法```initMediaPlayer()```将初始化我们在类顶部创建的**MediaPlayer**对象，请求部分唤醒锁（这就是为什么我们需要在AndroidManifest.xml中需要相关权限），并设置播放器的音量。</span><br></pre></td></tr></table></figure></p>
+<p>private void initMediaPlayer() {<br>    mMediaPlayer = new MediaPlayer();<br>    mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);<br>    mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);<br>    mMediaPlayer.setVolume(1.0f, 1.0f);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">第二个方法```initMediaSession(```)是初始化```MediaSessionCompat```对象并将其连接到允许我们处理播放和用户输入的媒体按钮和控制方法。  该方法首先创建一个指向Android支持库的```MediaButtonReceiver```类的```ComponentName```对象，并使用它来创建一个新的```MediaSessionCompat```。  然后我们将之前创建的```MediaSession.Callback```对象传递给它，并设置接收媒体按钮输入和控制信号所需的标志。  接下来，我们创建一个新的```Intent```用于处理在```Lollipo```设备之前的媒体按钮输入，并为我们的服务设置媒体会话令牌。</span><br></pre></td></tr></table></figure></p>
+<p>private void initMediaSession() {<br>    ComponentName mediaButtonReceiver = new ComponentName(getApplicationContext(), MediaButtonReceiver.class);<br>    mMediaSessionCompat = new MediaSessionCompat(getApplicationContext(), “Tag”, mediaButtonReceiver, null);</p>
+<pre><code>mMediaSessionCompat.setCallback(mMediaSessionCallback);
+mMediaSessionCompat.setFlags( MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS );
+
+Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
+mediaButtonIntent.setClass(this, MediaButtonReceiver.class);
+PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, mediaButtonIntent, 0);
+mMediaSessionCompat.setMediaButtonReceiver(pendingIntent);
+
+setSessionToken(mMediaSessionCompat.getSessionToken());
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">最后，注册我们在类顶部创建的```BroadcastReceiver```以便监听耳机更改事件。</span><br></pre></td></tr></table></figure></p>
+<p>private void initNoisyReceiver() {<br>    //Handles headphones coming unplugged. cannot be done through a manifest receiver<br>    IntentFilter filter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);<br>    registerReceiver(mNoisyReceiver, filter);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 处理音频焦点</span><br><span class="line"></span><br><span class="line">现在，已经初始化了```BroadcastReceiver```、MediaSessionCompat``````和```MediaPlayer```对象，是时候处理音频的焦点了。 </span><br><span class="line"></span><br><span class="line">虽然我们可能会认为自己的音频应用程序是当前最重要的，但是设备上的其他音频应用程序会竞争，例如电子邮件通知或手机游戏。  为了处理这些情况，Android系统使用音频焦点来确定如何处理音频。 </span><br><span class="line"></span><br><span class="line">我们要处理的第一种情况是开始播放并尝获取设备焦点。  在```MediaSessionCompat.Callback```对象中，进入```onPlay()```方法并添加以下条件检查。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onPlay() {<br>    super.onPlay();<br>    if( !successfullyRetrievedAudioFocus() ) {<br>        return;<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">上面的代码将调用一个辅助程序尝试获取焦点，如果失败它将return。  在真正的应用程序中，会更加优雅地处理失败的音频播放。   ```successfullyRetrievedAudioFocus()```方法将获得对系统```AudioManager```的引用，并尝试请求音频焦点用于流式音乐。  然后它将返回一个```boolean```值来表示是否请求成功。</span><br></pre></td></tr></table></figure></p>
+<p>private boolean successfullyRetrievedAudioFocus() {<br>    AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);</p>
+<pre><code>int result = audioManager.requestAudioFocus(this,
+        AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+
+return result == AudioManager.AUDIOFOCUS_GAIN;
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">你会注意到，我们也在传递this给与服务 *```OnAudioFocusChangeListener```关联的```requestAudioFocus()```方法 。  你需要监听几种不同的状态以便遵循设备应用程序生态系统。</span><br><span class="line"></span><br><span class="line"> *```AudioManager.AUDIOFOCUS_LOSS```：当另一个应用程序请求音频焦点时发生这种情况 。  发生这种情况时，您应该停止在应用程序中播放音频。</span><br><span class="line"> *```AudioManager.AUDIOFOCUS_LOSS_TRANSIENT```：当另一个应用程序想要播放音频时进入此状态，但它只需要短时间内需要对焦。  您可以使用此状态来暂停音频播放。</span><br><span class="line"> *```AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK```：当请求音频焦点时，会引发“可以”的状态，这意味着可以继续播放，但应将音量降低一点。  当设备播放通知声音时，可能会发生这种情况。</span><br><span class="line"> *```AudioManager.AUDIOFOCUS_GAIN```我们将讨论的最终状态是```AUDIOFOCUS_GAIN```。  当可以播放的音频播放完成后，应用程序可以恢复到以前的级别。</span><br><span class="line">```onAudioFocusChange()```回调可能如下所示：</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onAudioFocusChange(int focusChange) {<br>    switch( focusChange ) {<br>        case AudioManager.AUDIOFOCUS_LOSS: {<br>            if( mMediaPlayer.isPlaying() ) {<br>                mMediaPlayer.stop();<br>            }<br>            break;<br>        }<br>        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT: {<br>            mMediaPlayer.pause();<br>            break;<br>        }<br>        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK: {<br>            if( mMediaPlayer != null ) {<br>                mMediaPlayer.setVolume(0.3f, 0.3f);<br>            }<br>            break;<br>        }<br>        case AudioManager.AUDIOFOCUS_GAIN: {<br>            if( mMediaPlayer != null ) {<br>                if( !mMediaPlayer.isPlaying() ) {<br>                    mMediaPlayer.start();<br>                }<br>                mMediaPlayer.setVolume(1.0f, 1.0f);<br>            }<br>            break;<br>        }<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 理解MediaSessionCompat.Callback</span><br><span class="line"></span><br><span class="line">现在有了```Service的基本结构```，是时候研究```MediaSessionCompat.Callback```了。  在最后一节，给```onPlay()```添加代码以检查音频焦点是否被授予。  在条件语句下面，需要将```MediaSessionCompat```对象设置为活动状态```STATE_PLAYING```，指定合适的```action```在```Lollipop```版本以前创建暂停按钮。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onPlay() {<br>    super.onPlay();<br>    if( !successfullyRetrievedAudioFocus() ) {<br>        return;<br>    }</p>
+<pre><code>mMediaSessionCompat.setActive(true);
+setMediaPlaybackState(PlaybackStateCompat.STATE_PLAYING);
+
+...
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```setMediaPlaybackState()```方法用来辅助创建PlaybackStateCompat.Builder``````对象，并给它指定适当的动作和状态，然后构建```PlaybackStateCompat```并将其与```MediaSessionCompat```对象关联。</span><br></pre></td></tr></table></figure></p>
+<p>private void setMediaPlaybackState(int state) {<br>    PlaybackStateCompat.Builder playbackstateBuilder = new PlaybackStateCompat.Builder();<br>    if( state == PlaybackStateCompat.STATE_PLAYING ) {<br>        playbackstateBuilder.setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE | PlaybackStateCompat.ACTION_PAUSE);<br>    } else {<br>        playbackstateBuilder.setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE | PlaybackStateCompat.ACTION_PLAY);<br>    }<br>    playbackstateBuilder.setState(state, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, 0);<br>    mMediaSessionCompat.setPlaybackState(playbackstateBuilder.build());<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">重要的是要注意，需要在操作中同时使用```ACTION_PLAY_PAUSE``` 和```ACTION_PAUSE```或```ACTION_PLAY```标记以便在```Android Wear```上获得正确的控制。</span><br><span class="line"></span><br><span class="line">Media notification on Android Wear</span><br><span class="line">https://cms-assets.tutsplus.com/cdn-cgi/image/width=1700/uploads/users/798/posts/27030/image/wear.png</span><br><span class="line"></span><br><span class="line">回到```onPlay()```中，您将希望通过使用我们之前定义的```MediaStyleHelper```类来显示与```MediaSessionCompat```对象关联的播放通知，然后显示该通知。</span><br></pre></td></tr></table></figure></p>
+<p>private void showPlayingNotification() {<br>    NotificationCompat.Builder builder = MediaStyleHelper.from(BackgroundAudioService.this, mMediaSessionCompat);<br>    if( builder == null ) {<br>        return;<br>    }</p>
+<pre><code>builder.addAction(new NotificationCompat.Action(android.R.drawable.ic_media_pause, &quot;Pause&quot;, MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
+builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
+builder.setSmallIcon(R.mipmap.ic_launcher);
+NotificationManagerCompat.from(BackgroundAudioService.this).notify(1, builder.build());
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最后，在```onPlay()```方法启动```MediaPlayer```。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onPlay() {<br>    super.onPlay();</p>
+<pre><code>...
+
+showPlayingNotification();
+mMediaPlayer.start();
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Media control notification on an Android Nougat device</span><br><span class="line">https://cms-assets.tutsplus.com/cdn-cgi/image/width=1700/uploads/users/798/posts/27030/image/lollipop.png</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">当回调接收到暂停命令时，调用```onPause()```方法。  在这里，您将暂停```MediaPlayer```，将状态设置为```STATE_PAUSED```，并显示已暂停的通知。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onPause() {<br>    super.onPause();</p>
+<pre><code>if( mMediaPlayer.isPlaying() ) {
+    mMediaPlayer.pause();
+    setMediaPlaybackState(PlaybackStateCompat.STATE_PAUSED);
+    showPausedNotification();
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```showPausedNotification()```辅助方法看起来类似于```showPlayNotification()```方法。</span><br></pre></td></tr></table></figure></p>
+<p>private void showPausedNotification() {<br>    NotificationCompat.Builder builder = MediaStyleHelper.from(this, mMediaSessionCompat);<br>    if( builder == null ) {<br>        return;<br>    }</p>
+<pre><code>builder.addAction(new NotificationCompat.Action(android.R.drawable.ic_media_play, &quot;Play&quot;, MediaButtonReceiver.buildMediaButtonPendingIntent(this, PlaybackStateCompat.ACTION_PLAY_PAUSE)));
+builder.setStyle(new NotificationCompat.MediaStyle().setShowActionsInCompactView(0).setMediaSession(mMediaSessionCompat.getSessionToken()));
+builder.setSmallIcon(R.mipmap.ic_launcher);
+NotificationManagerCompat.from(this).notify(1, builder.build());
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">我们将讨论回调中的下一个方法  ```onPlayFromMediaId()```，以``` String```和 ```Bundle```为参数。  这是用来更改应用程序中音轨/内容的回调方法。 </span><br><span class="line"></span><br><span class="line">对于本教程，我们将简单地接受原始资源ID并尝试播放，然后重新初始化会话的元数据。  当被允许将Bundle传入此方法时，可以使用它来自定义媒体播放的其他方面，例如为曲目设置自定义背景音。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onPlayFromMediaId(String mediaId, Bundle extras) {<br>    super.onPlayFromMediaId(mediaId, extras);</p>
+<pre><code>try {
+    AssetFileDescriptor afd = getResources().openRawResourceFd(Integer.valueOf(mediaId));
+    if( afd == null ) {
+        return;
+    }
+
+    try {
+        mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+
+    } catch( IllegalStateException e ) {
+        mMediaPlayer.release();
+        initMediaPlayer();
+        mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+    }
+
+    afd.close();
+    initMediaSessionMetadata();
+
+} catch (IOException e) {
+    return;
+}
+
+try {
+    mMediaPlayer.prepare();
+} catch (IOException e) {}
+
+//Work with extras here if you want
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">现在，我们已经讨论了该回调中使用的两个主要方法，重要的是要知道还有其他可选的方法用来自定义服务。  包括```onSeekTo()```方法，它允许更改内容的播放位置，```onCommand()```方法接受```String```表示命令的类型，```Bundle```表示有关该命令的额外信息，最后是```ResultReceiver```回调方法，允许发送自定义命令到```Service```。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onCommand(String command, Bundle extras, ResultReceiver cb) {<br>    super.onCommand(command, extras, cb);<br>    if( COMMAND_EXAMPLE.equalsIgnoreCase(command) ) {<br>        //Custom command here<br>    }<br>}</p>
+<p>@Override<br>public void onSeekTo(long pos) {<br>    super.onSeekTo(pos);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 撕毁</span><br><span class="line">当我们的音频文件完成后，我们将要决定我们的下一个动作是什么。  虽然你可能想在你的应用程序中播放下一个音频，但是为了简单起见就释放MediaPlayer。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onCompletion(MediaPlayer mediaPlayer) {<br>    if( mMediaPlayer != null ) {<br>        mMediaPlayer.release();<br>    }<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最后，我们要在```Service```的```onDestroy()```方法中做一些事情。  首先，获取对系统服务```AudioManager```的引用，并调用```abandonAudioFocus()```方法，传参为```AudioFocusChangeListener```，这将通知设备上的其他应用程序您将放弃音频焦点。  接下来，反注册监听耳机更改的```BroadcastReceiver```，并释放```MediaSessionCompat```对象。 最后，取消播放控制通知。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>public void onDestroy() {<br>    super.onDestroy();<br>    AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);<br>    audioManager.abandonAudioFocus(this);<br>    unregisterReceiver(mNoisyReceiver);<br>    mMediaSessionCompat.release();<br>    NotificationManagerCompat.from(this).cancel(1);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">现在，应该有一个正在工作的基本背景音频```Service```，```MediaSessionCompat```用于跨设备播放控制。  虽然创建服务就已经涉及了很多知识，您应该能够从应用程序控制播放、通知、Lollipop设备前锁定屏幕（Lollipop设备及以后使用锁定屏幕上的通知）以及从外部设备（如Android Wear）控制这些操作，一旦Service启动后。</span><br><span class="line"></span><br><span class="line">Media lock screen controls on Android Kit Kat</span><br><span class="line">从Activity开始和控制内容</span><br><span class="line">虽然大多数控件都是自动的，但仍然需要从应用控件中启动和控制媒体会话。  最起码，在应用中创建```MediaBrowserCompat.ConnectionCallback```、```MediaControllerCompat.Callback```、  ```MediaBrowserCompat和MediaControllerCompat```对象。</span><br><span class="line"></span><br><span class="line">```MediaControllerCompat.Callback有个onPlaybackStateChanged()```方法 接收播放状态的变化，可用于保持同步UI。</span><br></pre></td></tr></table></figure></p>
+<p>private MediaControllerCompat.Callback mMediaControllerCompatCallback = new MediaControllerCompat.Callback() {</p>
+<pre><code>@Override
+public void onPlaybackStateChanged(PlaybackStateCompat state) {
+    super.onPlaybackStateChanged(state);
+    if( state == null ) {
+        return;
+    }
+
+    switch( state.getState() ) {
+        case PlaybackStateCompat.STATE_PLAYING: {
+            mCurrentState = STATE_PLAYING;
+            break;
+        }
+        case PlaybackStateCompat.STATE_PAUSED: {
+            mCurrentState = STATE_PAUSED;
+            break;
+        }
+    }
+}
+</code></pre><p>};<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```MediaBrowserCompat.ConnectionCallback```有个onConnected()``````方法在```MediaBrowserCompat```对象被创建和连接时被调用。  你可以用它来初始化```MediaControllerCompat```对象，将其链接到```MediaControllerCompat.Callback```，并将其与```Service```的```MediaSessionCompat```关联。  完成后，从这个方法开始音频播放。</span><br></pre></td></tr></table></figure></p>
+<p>private MediaBrowserCompat.ConnectionCallback mMediaBrowserCompatConnectionCallback = new MediaBrowserCompat.ConnectionCallback() {</p>
+<pre><code>@Override
+public void onConnected() {
+    super.onConnected();
+    try {
+        mMediaControllerCompat = new MediaControllerCompat(MainActivity.this, mMediaBrowserCompat.getSessionToken());
+        mMediaControllerCompat.registerCallback(mMediaControllerCompatCallback);
+        setSupportMediaController(mMediaControllerCompat);
+        getSupportMediaController().getTransportControls().playFromMediaId(String.valueOf(R.raw.warner_tautz_off_broadway), null);
+
+    } catch( RemoteException e ) {
+
+    }
+}
+</code></pre><p>};<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">您会注意到上述代码段使用```getSupportMediaController().getTransportControls()```方法与媒体会话进行通信。  使用相同的技术，您可以在音频服务的  ```MediaSessionCompat.Callback```对象调用```onPlay()```和```onPause()```。</span><br></pre></td></tr></table></figure></p>
+<p>if( mCurrentState == STATE_PAUSED ) {<br>    getSupportMediaController().getTransportControls().play();<br>    mCurrentState = STATE_PLAYING;<br>} else {<br>    if( getSupportMediaController().getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {<br>        getSupportMediaController().getTransportControls().pause();<br>    }</p>
+<pre><code>mCurrentState = STATE_PAUSED;
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">完成音频播放后，可以暂停音频服务并断开MediaBrowserCompat对象，Activity被摧毁时执行该操作。</span><br></pre></td></tr></table></figure></p>
+<p>@Override<br>protected void onDestroy() {<br>    super.onDestroy();<br>    if( getSupportMediaController().getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING ) {<br>        getSupportMediaController().getTransportControls().pause();<br>    }</p>
+<pre><code>mMediaBrowserCompat.disconnect();
+</code></pre><p>}<br><code>`</code></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>哇！  正如你所见，本文研究了如何创建和使用背景音频服务。</p>
+<p>在本教程中，创建了一个播放简单音频文件的服务，监听音频焦点更改以及指向MediaSessionCompat的链接在Android设备（包括手机和Android Wear）上提供通用播放控制。  如果在本教程中遇到问题，我强烈建议查看Envato Tuts + GitHub上相关的Android项目代码。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/MediaSessionCompat/" rel="tag"># MediaSessionCompat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/08/27/Sqlite3/SQLite Explain（解释）/" rel="next" title="SQLite Explain（解释）">
+                <i class="fa fa-chevron-left"></i> SQLite Explain（解释）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/08/27/node/2020-08-27-node-cli之commander/" rel="prev" title="node-cli之commander">
+                node-cli之commander <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设置"><span class="nav-number">1.</span> <span class="nav-text">设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

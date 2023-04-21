@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Android 2D绘图基础">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 2D绘图基础">
+<meta property="og:url" content="http://codefarmer.tech/2016/09/13/Android/Android 2D绘图基础/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="Android 2D绘图基础">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEBbe27657053189b5a6d70041bfcc54f8b?method=getImage&version=1311&cstk=aNW9Q6WS">
+<meta property="og:image" content="https://github.com/davyjoneswang/static-res/blob/master/canvas-diagram.png?raw=true">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.368Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 2D绘图基础">
+<meta name="twitter:description" content="Android 2D绘图基础">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/WEBbe27657053189b5a6d70041bfcc54f8b?method=getImage&version=1311&cstk=aNW9Q6WS">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2016/09/13/Android/Android 2D绘图基础/">
+
+
+
+
+
+  <title>Android 2D绘图基础 | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2016/09/13/Android/Android 2D绘图基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android 2D绘图基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-13T17:02:00+08:00">
+                2016-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/09/13/Android/Android 2D绘图基础/" class="leancloud_visitors" data-flag-title="Android 2D绘图基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Android 2D绘图基础
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一-Canvas简介"><a href="#一-Canvas简介" class="headerlink" title="一.Canvas简介"></a>一.Canvas简介</h2><p>Canvas我们可以称之为画布，能够在上面绘制各种东西，是安卓平台2D图形绘制的基础，非常强大。</p>
+<h2 id="二-Canvas的常用操作"><a href="#二-Canvas的常用操作" class="headerlink" title="二.Canvas的常用操作"></a>二.Canvas的常用操作</h2><p><img src="https://note.youdao.com/yws/api/personal/file/WEBbe27657053189b5a6d70041bfcc54f8b?method=getImage&amp;version=1311&amp;cstk=aNW9Q6WS" alt="image"></p>
+<table>
+<thead>
+<tr>
+<th>操作类型</th>
+<th>相关API</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绘制颜色</td>
+<td>drawColor, drawRGB, drawARGB</td>
+<td>使用单一颜色填充整个画布</td>
+</tr>
+<tr>
+<td>绘制基本形状</td>
+<td>drawPoint, drawPoints, drawLine, drawLines, drawRect, drawRoundRect, drawOval, drawCircle, drawArc</td>
+<td>依次为 点、线、矩形、圆角矩形、椭圆、圆、圆弧</td>
+</tr>
+<tr>
+<td>绘制图片</td>
+<td>drawBitmap, drawPicture</td>
+<td>绘制位图和图片</td>
+</tr>
+<tr>
+<td>绘制文本</td>
+<td>drawText, drawPosText, drawTextOnPath</td>
+<td>依次为 绘制文字、绘制文字时指定每个文字位置、根据路径绘制文字</td>
+</tr>
+<tr>
+<td>绘制路径</td>
+<td>drawPath</td>
+<td>绘制路径，绘制贝塞尔曲线时也需要用到该函数</td>
+</tr>
+<tr>
+<td>顶点操作</td>
+<td>drawVertices, drawBitmapMesh</td>
+<td>通过对顶点操作可以使图像形变，drawVertices直接对画布作用、 drawBitmapMesh只对绘制的Bitmap作用</td>
+</tr>
+<tr>
+<td>画布剪裁</td>
+<td>clipPath, clipRect</td>
+<td>设置画布的显示区域</td>
+</tr>
+<tr>
+<td>画布快照</td>
+<td>save, restore, saveLayerXxx, restoreToCount, getSaveCount</td>
+<td>依次为 保存当前状态、 回滚到上一次保存的状态、 保存图层状态、 回滚到指定状态、 获取保存次数</td>
+</tr>
+<tr>
+<td>画布变换</td>
+<td>translate, scale, rotate, skew</td>
+<td>依次为 位移、缩放、 旋转、错切</td>
+</tr>
+<tr>
+<td>Matrix(矩阵)</td>
+<td>getMatrix, setMatrix, concat</td>
+<td>实际上画布的位移，缩放等操作的都是图像矩阵Matrix， 只不过Matrix比较难以理解和使用，故封装了一些常用的方法。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Canvas的类图"><a href="#Canvas的类图" class="headerlink" title="Canvas的类图"></a>Canvas的类图</h3><p><img src="https://github.com/davyjoneswang/static-res/blob/master/canvas-diagram.png?raw=true" alt="类图"><br><a href="http://git.sankuai.com/users/wangyonghua/repos/erp-pos-cahsier-surfaceview/browse/1%E6%9C%88-05-2018%2015-23-52.gif?at=b297faa53f72b0b7b9632b9635f2d03d5049cba8&amp;raw" target="_blank" rel="noopener">http://git.sankuai.com/users/wangyonghua/repos/erp-pos-cahsier-surfaceview/browse/1%E6%9C%88-05-2018%2015-23-52.gif?at=b297faa53f72b0b7b9632b9635f2d03d5049cba8&amp;raw</a></p>
+<h2 id="三-Canvas详解"><a href="#三-Canvas详解" class="headerlink" title="三.Canvas详解"></a>三.Canvas详解</h2><h3 id="1-绘制颜色"><a href="#1-绘制颜色" class="headerlink" title="1. 绘制颜色"></a>1. 绘制颜色</h3><ol>
+<li>drawColor, drawRGB, drawARGB 绘制颜色</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">canvas.drawColor(Color.RED); //绘制红色</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>drawColor(int color, PorterDuff.Mode mode) 带混合模式的绘制颜色, 后面讲混合模式</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">canvas.drawColor(Color.BLUE, PorterDuff.Mode.SRC);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>drawARGB 绘制颜色</li>
+</ol>
+<ol start="3">
+<li>drawPoint 绘制点</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//在坐标（100, 100处画一个点、  需要设置画笔的属性，否则看不到点的大小</span><br><span class="line">canvas.drawPoint(100, 100, mPaint);</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>drawPoints 绘制多个点色</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//画多个点</span><br><span class="line">canvas.drawPoints(new float[]&#123;400,400,400,500,400,600,400,700,400,800,400,900&#125;,mPaint);</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>drawLine 绘制直线</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//在坐标（100,100）和（600,100）之间画一条线</span><br><span class="line">canvas.drawLine(100,100,600,100,mPaint);</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>drawLines 绘制多条直线</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//画多条线</span><br><span class="line">canvas.drawLines(new float[]&#123;100,150,600,150,100,200,600,200,100,250,600,250&#125;,mPaint);</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>drawPicture 绘制picture<br>这里的Picture，个人理解：Picture记录了画笔的操作，可以在将来再次使用。</li>
+</ol>
+<ol start="8">
+<li>drawRect 绘制矩形</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 第一种</span><br><span class="line">canvas.drawRect(100,100,800,400,mPaint);</span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li>drawRoundRect 绘制圆角矩形</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RectF rectF = new RectF(100,100,600,300);</span><br><span class="line">canvas.drawRoundRect(rectF,20,20,mPaint);</span><br></pre></td></tr></table></figure>
+<ol start="10">
+<li>drawOval 绘制椭圆</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//绘制椭圆</span><br><span class="line">RectF rectF = new RectF(100,100,600,400);</span><br><span class="line">canvas.drawOval(rectF,mPaint);</span><br></pre></td></tr></table></figure>
+<ol start="11">
+<li>drawCircle 绘制圆</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 绘制一个圆心坐标在(360,400)，半径为300 的圆。</span><br><span class="line">canvas.drawCircle(360,400,300,mPaint);</span><br></pre></td></tr></table></figure>
+<ol start="11">
+<li>drawArc 画弧</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void drawArc(RectF oval, float startAngle, float sweepAngle, boolean useCenter, Paint paint)&#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//弧在的矩形</span><br><span class="line">oval </span><br><span class="line">//开始角度</span><br><span class="line">startAngle </span><br><span class="line">//扫过角度</span><br><span class="line">sweepAngle  </span><br><span class="line">//是否使用中心</span><br><span class="line">useCenter</span><br></pre></td></tr></table></figure>
+<p> <strong>角度是按照按顺时针方向扫描的</strong></p>
+<p><strong>useCenter true的话，会将矩形中心连接，否则不连接</strong></p>
+<p><strong>Paint的setStyle印象弧是否填充还是描边。</strong></p>
+<ol start="12">
+<li>drawBitmap 绘制位图，</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drawBitmap</span><br></pre></td></tr></table></figure>
+<ol start="13">
+<li>drawBitmapMesh 绘制位图网格</li>
+<li>drawPatch 绘制N-patch图 (most often, a 9-patches.)</li>
+<li>drawPath 绘制路径</li>
+<li>drawPosText </li>
+<li>drawText</li>
+<li>drawTextOnPath</li>
+<li>drawTextRun</li>
+<li>drawVertices</li>
+<li></li>
+</ol>
+<h2 id="Paint-详解"><a href="#Paint-详解" class="headerlink" title="Paint 详解"></a>Paint 详解</h2><h3 id="画笔样式"><a href="#画笔样式" class="headerlink" title="画笔样式"></a>画笔样式</h3><p>设置画笔样式<br>mPaint.setStyle(Paint.Style.FILL);  </p>
+<table>
+<thead>
+<tr>
+<th>Paint.Style</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STROKE</td>
+<td>描边</td>
+</tr>
+<tr>
+<td>FILL</td>
+<td>填充</td>
+</tr>
+<tr>
+<td>FILL_AND_STROKE</td>
+<td>描边加填充</td>
+</tr>
+</tbody>
+</table>
+<h3 id="线宽"><a href="#线宽" class="headerlink" title="线宽"></a>线宽</h3><p>mPaint.setStrokeWidth（）</p>
+<h3 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h3><p>mPaint.setColor（） </p>
+<p>### </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/14/Android/Android 知识点/" rel="next" title="Android 知识点">
+                <i class="fa fa-chevron-left"></i> Android 知识点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/10/ReactNative/react-native-begin-to-study/" rel="prev" title="开始了解React Native">
+                开始了解React Native <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-Canvas简介"><span class="nav-number">1.</span> <span class="nav-text">一.Canvas简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-Canvas的常用操作"><span class="nav-number">2.</span> <span class="nav-text">二.Canvas的常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Canvas的类图"><span class="nav-number">2.1.</span> <span class="nav-text">Canvas的类图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-Canvas详解"><span class="nav-number">3.</span> <span class="nav-text">三.Canvas详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-绘制颜色"><span class="nav-number">3.1.</span> <span class="nav-text">1. 绘制颜色</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paint-详解"><span class="nav-number">4.</span> <span class="nav-text">Paint 详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#画笔样式"><span class="nav-number">4.1.</span> <span class="nav-text">画笔样式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线宽"><span class="nav-number">4.2.</span> <span class="nav-text">线宽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#颜色"><span class="nav-number">4.3.</span> <span class="nav-text">颜色</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

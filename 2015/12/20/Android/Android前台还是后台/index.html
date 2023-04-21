@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Is my Android app currently foreground or background?Update, 2015-03-27: Finally got around to having another look at this, attempting to take into account the feedback from commenters. I just drafted">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android组件前台 后台?">
+<meta property="og:url" content="http://codefarmer.tech/2015/12/20/Android/Android前台还是后台/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="Is my Android app currently foreground or background?Update, 2015-03-27: Finally got around to having another look at this, attempting to take into account the feedback from commenters. I just drafted">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.370Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android组件前台 后台?">
+<meta name="twitter:description" content="Is my Android app currently foreground or background?Update, 2015-03-27: Finally got around to having another look at this, attempting to take into account the feedback from commenters. I just drafted">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2015/12/20/Android/Android前台还是后台/">
+
+
+
+
+
+  <title>Android组件前台 后台? | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2015/12/20/Android/Android前台还是后台/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android组件前台 后台?</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-20T18:20:51+08:00">
+                2015-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2015/12/20/Android/Android前台还是后台/" class="leancloud_visitors" data-flag-title="Android组件前台 后台?">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Is-my-Android-app-currently-foreground-or-background"><a href="#Is-my-Android-app-currently-foreground-or-background" class="headerlink" title="Is my Android app currently foreground or background?"></a>Is my Android app currently foreground or background?</h1><p>Update, 2015-03-27: Finally got around to having another look at this, attempting to take into account the feedback from commenters.</p>
+<p>I just drafted a new version that tries to respond immediately using onStart/onStop when possible, and deals with edge cases like received phone-calls using a delayed Runnable posted to a Handler like the original.</p>
+<p>This time I posted an AndroidStudio project as a new github repo rather than just a gist of the interesting bit.</p>
+<p>I’m not convinced the defensive WeakReferences to Listeners are strictly necessary, but it seems pear cider brings out my cautious side (its Friday night, what can I say).</p>
+<p>Fair warning: I haven’t tested this exhaustively, YMMV.</p>
+<p>Update, 2015-01-30: Lots of interesting discussion in the comments. Nobody, myself included, is particularly happy with the non-determinism inherent in posting runnables to a handler with an arbitrary delay.</p>
+<p>Graham Borland pointed out that if you use onStart/onStop rather than onResume/onPause, you no longer need clever strategies or hacks to determine whether you really have gone background, but others have raised edge cases that complicate matters: phone calls trigger onPause but not onStop, and configuration changes (e.g. rotating the device) call onPause-&gt;onStop-&gt;onStart-&gt;onResume which would toggle our state from foreground to background and back to foreground again.</p>
+<p>Original post:</p>
+<p>Android doesn’t directly provide a way to know if your app is currently foreground or background, by which I mean actively running an Activity (screen on, user present, and your app currently presenting UI to the user).</p>
+<p>Obviously if you’re coding in an Activity then for almost all of the time (e.g. in any callbacks other than onPause, onStop, or onDestroy) you already know you are foreground, however if you have Service’s or BroadcastReceiver’s that need to adjust their behaviour when the app is foreground vs. background you need a different approach.</p>
+<p>Since API level 14 (Android 4, ICS) we can easily obtain this information by hooking into the activity lifecycle events using Application.registerActivityLifecycleCallbacks.</p>
+<p>Using this method we can register a single listener that will be called back whenever an activity lifecycle method is called on any activity in our application. We could call our listener class Foreground, and hook it in to the activity lifecycle methods by providing a custom Application class for our application:</p>
+<pre><code>class MyApplication extends Application {
+    public void onCreate(){
+        Foreground.init(this ;
+    }
+}
+</code></pre><p>Of course, we need to register this custom Application class in our Manifest.xml:</p>
+<pre><code>&lt;application
+    android:label=&quot;@string/app_name&quot;
+    android:theme=&quot;@style/AppTheme&quot;
+    android:name=&quot;.MyApplication&quot;&gt;
+</code></pre><p>So, what does our Foreground class look like? Let’s begin by creating a class that implements ActivityLifecycleCallbacks and allows only one instance of itself to be created via a static method:</p>
+<pre><code>class Foreground implements Application.ActivityLifecycleCallbacks {
+
+    private static Foreground instance;
+
+    public static void init(Application app){
+        if (instance == null){
+            instance = new Foreground();
+            app.registerActivityLifecycleCallbacks(instance);
+        }
+    }
+
+    public static Foreground get(){
+        return instance;
+    }
+
+    private Foreground(){}
+
+    // TODO: implement the lifecycle callback methods!
+
+}
+</code></pre><p>This approach of using Singleton’s is used a lot in Android programming, as it is a technique recommended by Google.</p>
+<p>OK, so we have a class that we can initialise from our Application and then retrieve from any code in our app using Foreground.get(). Now we need to implement the lifecycle callbacks to track the foreground/background status of our app.</p>
+<p>To do that we’ll use the onActivityPaused/onActivityResumed method-pair, using paused to signal a potential shift to background, and resumed to know we are in the foreground.</p>
+<pre><code>private boolean foreground;
+
+public boolean isForeground(){
+    return foreground;
+}
+
+public boolean isBackground(){
+    return !foreground;
+}
+
+public void onActivityPaused(Activity activity){
+    foreground = false;
+}
+
+public void onActivityResumed(Activity activity){
+    foreground = true;
+}
+</code></pre><p>// other ActivityLifecycleCallbacks methods omitted for brevity<br>// we don’t need them, so they are empty anyway ;)<br>Nice, so now from any code in our application we can test whether we’re currently foreground or not, like this:</p>
+<pre><code>Foreground.get().isForeground()
+</code></pre><p>Cool. Are we done? We-ell, depends.</p>
+<h2 id="There-are-three-potential-issues-here"><a href="#There-are-three-potential-issues-here" class="headerlink" title="There are three potential issues here:"></a>There are three potential issues here:</h2><ul>
+<li><p>The app might go to background at any time, so it would be nice if we could get notified instead of having to continually poll the isForeground method.</p>
+</li>
+<li><p>When an application transitions between two Activities there is a brief period during which the first Activity is paused and the second Activity has not yet resumed … during this period isForeground will return false, even though our application is the foreground app.</p>
+</li>
+<li><p>Application.registerActivityLifecycleCallbacks is only available from API-level 14 onwards.</p>
+</li>
+</ul>
+<p>Can we address both of these issues? You betcha!</p>
+<p>First lets make it possible to get notified of foreground/background state transitions. We’ll add a Listener interface to our Foreground class:</p>
+<pre><code>class Foreground implements Application.ActivityLifecycleCallbacks {
+
+    public interface Listener {
+        public void onBecameForeground();
+        public void onBecameBackground();
+    }
+    ...
+}
+</code></pre><p>We’ll also need to manage any registered listeners and allow listeners to be added and removed. We’ll manage registered listeners using a thread-safe and efficient List implementation from java.util.concurrent - CopyOnWriteArrayList:</p>
+<pre><code>private List listeners = new CopyOnWriteArrayList();
+
+public void addListener(Listener listener){
+    listeners.add(listener);
+}
+
+public void removeListener(Listener listener){
+    listeners.remove(listener);
+}
+</code></pre><p>And, of course, we’ll need to notify our listeners whenever we transition between foreground and background states, which we’ll do by updating our onActivityPaused and onActivityResumed methods:</p>
+<pre><code>public void onPause(){
+    foreground = false;
+    for (Listener l : listeners){
+        try {
+            l.onBecameBackground();
+        } catch (Exception exc) {
+            Log.e(&quot;Foreground&quot;, &quot;Unhappy listener&quot;, exc);
+        }
+    }
+}
+
+public void onResume(){
+    foreground = true;
+    for (Listener l : listeners){
+        try {
+            l.onBecameForeground();
+        } catch (Exception exc) {
+            Log.e(&quot;Foreground&quot;, &quot;Unhappy listener&quot;, exc);
+        }
+    }
+}
+</code></pre><p>Allright, now we’re able to register listeners with our Foreground class which will be called-back when we transition from foreground to background and vice-versa.</p>
+<p>Bear in mind that the callback is invoked from the lifecycle callbacks and therefore on the main thread. Remember the golden rule of Android development:</p>
+<blockquote>
+<p> do not block the main thread. If you don’t know what that means you should buy my book :)</p>
+</blockquote>
+<p>Right, that’s problem 1 sorted, what about problem 2? (What, you forgot it already? I mean the brief period between onPause being called in Activity A before onResume is called in Activity B).</p>
+<p>OK, the issue here is that if we blindly update our foreground/background state in onActivityPaused and onActivityResumed we will always have a period where we’re reporting incorrect values. Worse, if we’re firing events we’ll even tell everyone who’s listening that we just went background when we didn’t really!</p>
+<p>Lets fix that by giving ourselves a brief period of grace before announcing that we’ve gone background. This is, like many things in engineering, is a compromise - in this case between immediacy and correctness. We’ll accept a small delay in order not to falsely report that we went to background.</p>
+<p>To do this we’ll use one of the nice features of Android’s Handler class - the ability to post a Runnable onto the main-thread’s event-loop to be executed after a specified delay.</p>
+<p>Things are getting a bit more complex now, and we’ve some extra state to juggle. We’re going to introduce another boolean to track whether we’re paused or not, and we’ll also need to keep a reference to the Runnable that we post to the main thread, so that we can cancel it when necessary.</p>
+<pre><code>private boolean foreground = false, paused = true;
+private Handler handler = new Handler();
+private Runnable check;
+</code></pre><p>A quick note on Handler’s: A Handler created with the no-arg constructor will perform all of its work on the thread that created it. Since we’re instantiating this Handler inline in the Foreground class, and the Foreground instance is being created on the main thread during our Application’s onCreate method callback, any work we post to this Handler will execute on the main thread.</p>
+<p>Here’s what our updated onActivityPaused and onActivityResumed methods look like:</p>
+<pre><code>@Override
+public void onActivityResumed(Activity activity) {
+    paused = false;
+    boolean wasBackground = !foreground;
+    foreground = true;
+
+    if (check != null)
+        handler.removeCallbacks(check);
+
+    if (wasBackground){
+        Log.i(TAG, &quot;went foreground&quot;);
+        for (Listener l : listeners) {
+            try {
+                l.onBecameForeground();
+            } catch (Exception exc) {
+                Log.e(TAG, &quot;Listener threw exception!&quot;, exc);
+            }
+        }
+    } else {
+        Log.i(TAG, &quot;still foreground&quot;);
+    }
+}
+
+@Override
+public void onActivityPaused(Activity activity) {
+    paused = true;
+
+    if (check != null)
+        handler.removeCallbacks(check);
+
+    handler.postDelayed(check = new Runnable(){
+        @Override
+        public void run() {
+            if (foreground &amp;&amp; paused) {
+                foreground = false;
+                Log.i(TAG, &quot;went background&quot;);
+                for (Listener l : listeners) {
+                    try {
+                        l.onBecameBackground();
+                    } catch (Exception exc) {
+                        Log.e(TAG, &quot;Listener threw exception!&quot;, exc);
+                    }
+                }
+            } else {
+                Log.i(TAG, &quot;still foreground&quot;);
+            }
+        }
+    }, CHECK_DELAY);
+}
+</code></pre><p>A couple of things worth pointing out here:</p>
+<p>onActivityPaused schedules a Runnable to execute after CHECKDELAY milliseconds (CHECKDELAY is set to 500), and captures the Runnable in the check member variable so it can be cancelled if necessary<br>onActivityResumed removes (cancels) the check callback if there is one, to cancel the pending notification of going background.<br>So now we have a nice neat mechanism for making direct checks for foreground/background status (Foreground.get().isBackground(), etc), and for being notified of changes to this status using the Listener interface.</p>
+<h2 id="To-support-API-levels-below-14"><a href="#To-support-API-levels-below-14" class="headerlink" title="To support API levels below 14"></a>To support API levels below 14</h2><p>To support API levels below 14 we’d need to hook our Foreground class more directly from the onPause and onResume methods of each individual Activity. This is most easily done by extending all activities in our application from a common base class and implementing the calls to Foreground from there.</p>
+<p>For completeness, here’s the github gist containing the full code for the Foreground class we’ve just explored.</p>
+<pre><code>package com.sjl.util;
+
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * Usage:
+ *
+ * 1. Get the Foreground Singleton, passing a Context or Application object unless you
+ * are sure that the Singleton has definitely already been initialised elsewhere.
+ *
+ * 2.a) Perform a direct, synchronous check: Foreground.isForeground() / .isBackground()
+ *
+ * or
+ *
+ * 2.b) Register to be notified (useful in Service or other non-UI components):
+ *
+ *   Foreground.Listener myListener = new Foreground.Listener(){
+ *       public void onBecameForeground(){
+ *           // ... whatever you want to do
+ *       }
+ *       public void onBecameBackground(){
+ *           // ... whatever you want to do
+ *       }
+ *   }
+ *
+ *   public void onCreate(){
+ *      super.onCreate();
+ *      Foreground.get(this).addListener(listener);
+ *   }
+ *
+ *   public void onDestroy(){
+ *      super.onCreate();
+ *      Foreground.get(this).removeListener(listener);
+ *   }
+ */
+</code></pre><p>Foreground.java</p>
+<pre><code>public class Foreground implements Application.ActivityLifecycleCallbacks {
+
+    public static final long CHECK_DELAY = 500;
+    public static final String TAG = Foreground.class.getName();
+
+    public interface Listener {
+        public void onBecameForeground();
+        public void onBecameBackground();
+    }
+
+    private static Foreground instance;
+    private boolean foreground = false, paused = true;
+    private Handler handler = new Handler();
+    private List&lt;Listener&gt; listeners = new CopyOnWriteArrayList&lt;Listener&gt;();
+    private Runnable check;
+
+    /**
+     * Its not strictly necessary to use this method - _usually_ invoking
+     * get with a Context gives us a path to retrieve the Application and
+     * initialise, but sometimes (e.g. in test harness) the ApplicationContext
+     * is != the Application, and the docs make no guarantees.
+     *
+     * @param application
+     * @return an initialised Foreground instance
+     */
+    public static Foreground init(Application application){
+        if (instance == null) {
+            instance = new Foreground();
+            application.registerActivityLifecycleCallbacks(instance);
+        }
+        return instance;
+    }
+
+    public static Foreground get(Application application){
+        if (instance == null) {
+            init(application);
+        }
+        return instance;
+    }
+
+    public static Foreground get(Context ctx){
+        if (instance == null) {
+            Context appCtx = ctx.getApplicationContext();
+            if (appCtx instanceof Application) {
+                init((Application)appCtx);
+            }
+            throw new IllegalStateException(
+                &quot;Foreground is not initialised and &quot; +
+                &quot;cannot obtain the Application object&quot;);
+        }
+        return instance;
+    }
+
+    public static Foreground get(){
+        if (instance == null) {
+            throw new IllegalStateException(
+                &quot;Foreground is not initialised - invoke &quot; +
+                &quot;at least once with parameterised init/get&quot;);
+        }
+        return instance;
+    }
+
+    public boolean isForeground(){
+        return foreground;
+    }
+
+    public boolean isBackground(){
+        return !foreground;
+    }
+
+    public void addListener(Listener listener){
+        listeners.add(listener);
+    }
+
+    public void removeListener(Listener listener){
+        listeners.remove(listener);
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+        paused = false;
+        boolean wasBackground = !foreground;
+        foreground = true;
+
+        if (check != null)
+            handler.removeCallbacks(check);
+
+        if (wasBackground){
+            Log.i(TAG, &quot;went foreground&quot;);
+            for (Listener l : listeners) {
+                try {
+                    l.onBecameForeground();
+                } catch (Exception exc) {
+                    Log.e(TAG, &quot;Listener threw exception!&quot;, exc);
+                }
+            }
+        } else {
+            Log.i(TAG, &quot;still foreground&quot;);
+        }
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+        paused = true;
+
+        if (check != null)
+            handler.removeCallbacks(check);
+
+        handler.postDelayed(check = new Runnable(){
+            @Override
+            public void run() {
+                if (foreground &amp;&amp; paused) {
+                    foreground = false;
+                    Log.i(TAG, &quot;went background&quot;);
+                    for (Listener l : listeners) {
+                        try {
+                            l.onBecameBackground();
+                        } catch (Exception exc) {
+                            Log.e(TAG, &quot;Listener threw exception!&quot;, exc);
+                        }
+                    }
+                } else {
+                    Log.i(TAG, &quot;still foreground&quot;);
+                }
+            }
+        }, CHECK_DELAY);
+    }
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {}
+
+    @Override
+    public void onActivityStarted(Activity activity) {}
+
+    @Override
+    public void onActivityStopped(Activity activity) {}
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {}
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {}
+}
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/14/Android/Android selector StateListDrawable的匹配原理/" rel="prev" title="Android selector StateListDrawable的匹配原理">
+                Android selector StateListDrawable的匹配原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Is-my-Android-app-currently-foreground-or-background"><span class="nav-number">1.</span> <span class="nav-text">Is my Android app currently foreground or background?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#There-are-three-potential-issues-here"><span class="nav-number">1.1.</span> <span class="nav-text">There are three potential issues here:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#To-support-API-levels-below-14"><span class="nav-number">1.2.</span> <span class="nav-text">To support API levels below 14</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

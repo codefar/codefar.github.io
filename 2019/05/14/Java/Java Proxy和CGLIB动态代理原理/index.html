@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Java Proxy和CGLIB动态代理原理">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Proxy和CGLIB动态代理原理">
+<meta property="og:url" content="http://codefarmer.tech/2019/05/14/Java/Java Proxy和CGLIB动态代理原理/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="Java Proxy和CGLIB动态代理原理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.382Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Proxy和CGLIB动态代理原理">
+<meta name="twitter:description" content="Java Proxy和CGLIB动态代理原理">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2019/05/14/Java/Java Proxy和CGLIB动态代理原理/">
+
+
+
+
+
+  <title>Java Proxy和CGLIB动态代理原理 | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2019/05/14/Java/Java Proxy和CGLIB动态代理原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java Proxy和CGLIB动态代理原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T16:02:00+08:00">
+                2019-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/14/Java/Java Proxy和CGLIB动态代理原理/" class="leancloud_visitors" data-flag-title="Java Proxy和CGLIB动态代理原理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Java Proxy和CGLIB动态代理原理
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java-Proxy和CGLIB动态代理原理"><a href="#Java-Proxy和CGLIB动态代理原理" class="headerlink" title="Java Proxy和CGLIB动态代理原理"></a>Java Proxy和CGLIB动态代理原理</h1><p>动态代理在Java中有着广泛的应用，比如Spring AOP，Hibernate数据查询、测试框架的后端mock、RPC，Java注解对象获取等。静态代理的代理关系在编译时就确定了，而动态代理的代理关系是在编译期确定的。静态代理实现简单，适合于代理类较少且确定的情况，而动态代理则给我们提供了更大的灵活性。今天我们来探讨Java中两种常见的动态代理方式：<strong>JDK原生动态代理和CGLIB动态代理</strong>。</p>
+<h2 id="JDK原生动态代理"><a href="#JDK原生动态代理" class="headerlink" title="JDK原生动态代理"></a>JDK原生动态代理</h2><p>先从直观的示例说起，假设我们有一个接口Hello和一个简单实现HelloImp.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 接口</span><br><span class="line">interface Hello&#123;</span><br><span class="line">    String sayHello(String str);</span><br><span class="line">&#125;</span><br><span class="line">// 实现</span><br><span class="line">class HelloImp implements Hello&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public String sayHello(String str) &#123;</span><br><span class="line">        return &quot;HelloImp: &quot; + str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是Java种再常见不过的场景，使用接口制定协议，然后用不同的实现来实现具体行为。假设你已经拿到上述类库，如果我们想通过日志记录对sayHello()的调用，使用静态代理可以这样做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 静态代理方式</span><br><span class="line">class StaticProxiedHello implements Hello&#123;</span><br><span class="line">    ...</span><br><span class="line">    private Hello hello = new HelloImp();</span><br><span class="line">    @Override</span><br><span class="line">    public String sayHello(String str) &#123;</span><br><span class="line">        logger.info(&quot;You said: &quot; + str);</span><br><span class="line">        return hello.sayHello(str);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上例中静态代理类StaticProxiedHello作为HelloImp的代理，实现了相同的Hello接口。</p>
+<p>用Java动态代理可以这样做：</p>
+<p>首先实现一个InvocationHandler，方法调用会被转发到该类的invoke()方法。<br>然后在需要使用Hello的时候，通过JDK动态代理获取Hello的代理对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// Java Proxy</span><br><span class="line">// 1. 首先实现一个InvocationHandler，方法调用会被转发到该类的invoke()方法。</span><br><span class="line">class LogInvocationHandler implements InvocationHandler&#123;</span><br><span class="line">    ...</span><br><span class="line">    private Hello hello;</span><br><span class="line">    public LogInvocationHandler(Hello hello) &#123;</span><br><span class="line">        this.hello = hello;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        if(&quot;sayHello&quot;.equals(method.getName())) &#123;</span><br><span class="line">            logger.info(&quot;You said: &quot; + Arrays.toString(args));</span><br><span class="line">        &#125;</span><br><span class="line">        return method.invoke(hello, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 2. 然后在需要使用Hello的时候，通过JDK动态代理获取Hello的代理对象。</span><br><span class="line">Hello hello = (Hello)Proxy.newProxyInstance(</span><br><span class="line">    getClass().getClassLoader(), // 1. 类加载器</span><br><span class="line">    new Class&lt;?&gt;[] &#123;Hello.class&#125;, // 2. 代理需要实现的接口，可以有多个</span><br><span class="line">    new LogInvocationHandler(new HelloImp()));// 3. 方法调用的实际处理者</span><br><span class="line">    </span><br><span class="line">System.out.println(hello.sayHello(&quot;I love you!&quot;));</span><br></pre></td></tr></table></figure>
+<p>运行上述代码输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">日志信息: You said: [I love you!]</span><br><span class="line">HelloImp: I love you!</span><br></pre></td></tr></table></figure>
+<p>上述代码的关键是Proxy.newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces, InvocationHandler handler)方法，该方法会根据指定的参数动态创建代理对象。三个参数的意义如下：</p>
+<ul>
+<li>loader，指定代理对象的类加载器；</li>
+<li>interfaces，代理对象需要实现的接口，可以同时指定多个接口；</li>
+<li>handler，方法调用的实际处理者，代理对象的方法调用都会转发到这里（*注意1）。</li>
+<li>newProxyInstance()会返回一个实现了指定接口的代理对象，对该对象的所有方法调用都会转发给InvocationHandler.invoke()方法。理解上述代码需要对Java反射机制有一定了解。动态代理神奇的地方就是：</li>
+</ul>
+<p>代理对象是在程序运行时产生的，而不是编译期；<br>对代理对象的所有接口方法调用都会转发到InvocationHandler.invoke()方法，在invoke()方法里我们可以加入任何逻辑，比如修改方法参数，加入日志功能、安全检查功能等；之后我们通过某种方式执行真正的方法体，示例中通过反射调用了Hello对象的相应方法，还可以通过RPC调用远程方法。</p>
+<blockquote>
+<p>注意1：对于从Object中继承的方法，JDK Proxy会把hashCode()、equals()、toString()这三个非接口方法转发给InvocationHandler，其余的Object方法则不会转发。详见JDK Proxy官方文档。</p>
+</blockquote>
+<p>如果对JDK代理后的对象类型进行深挖，可以看到如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Hello代理对象的类型信息</span><br><span class="line">class=class jdkproxy.$Proxy0</span><br><span class="line">superClass=class java.lang.reflect.Proxy</span><br><span class="line">interfaces: </span><br><span class="line">interface jdkproxy.Hello</span><br><span class="line">invocationHandler=jdkproxy.LogInvocationHandler@a09ee92</span><br></pre></td></tr></table></figure>
+<p>代理对象的类型是jdkproxy.$Proxy0，这是个动态生成的类型，类名是形如$ProxyN的形式；父类是java.lang.reflect.Proxy，所有的JDK动态代理都会继承这个类；同时实现了Hello接口，也就是我们接口列表中指定的那些接口。</p>
+<p>如果你还对jdkproxy.$Proxy0具体实现感兴趣，它大致长这个样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// JDK代理类具体实现</span><br><span class="line">public final class $Proxy0 extends Proxy implements Hello</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  public $Proxy0(InvocationHandler invocationhandler)</span><br><span class="line">  &#123;</span><br><span class="line">    super(invocationhandler);</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">  @Override</span><br><span class="line">  public final String sayHello(String str)&#123;</span><br><span class="line">    ...</span><br><span class="line">    return super.h.invoke(this, m3, new Object[] &#123;str&#125;);// 将方法调用转发给invocationhandler</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这些逻辑没什么复杂之处，但是他们是在运行时动态产生的，无需我们手动编写。更多详情，可参考BrightLoong的Java静态代理&amp;动态代理笔记</p>
+<p>Java动态代理为我们提供了非常灵活的代理机制，但Java动态代理是基于接口的，如果对象没有实现接口我们该如何代理呢？CGLIB登场。</p>
+<h2 id="CGLIB动态代理"><a href="#CGLIB动态代理" class="headerlink" title="CGLIB动态代理"></a>CGLIB动态代理</h2><p>CGLIB(Code Generation Library)是一个基于ASM的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。CGLIB通过继承方式实现代理。</p>
+<p>来看示例，假设我们有一个没有实现任何接口的类HelloConcrete：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class HelloConcrete &#123;</span><br><span class="line">    public String sayHello(String str) &#123;</span><br><span class="line">        return &quot;HelloConcrete: &quot; + str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为没有实现接口该类无法使用JDK代理，通过CGLIB代理实现如下：</p>
+<p>首先实现一个MethodInterceptor，方法调用会被转发到该类的intercept()方法。<br>然后在需要使用HelloConcrete的时候，通过CGLIB动态代理获取代理对象。<br>// CGLIB动态代理<br>// 1. 首先实现一个MethodInterceptor，方法调用会被转发到该类的intercept()方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class MyMethodInterceptor implements MethodInterceptor&#123;</span><br><span class="line">  ...</span><br><span class="line">    @Override</span><br><span class="line">    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable &#123;</span><br><span class="line">        logger.info(&quot;You said: &quot; + Arrays.toString(args));</span><br><span class="line">        return proxy.invokeSuper(obj, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>// 2. 然后在需要使用HelloConcrete的时候，通过CGLIB动态代理获取代理对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Enhancer enhancer = new Enhancer();</span><br><span class="line">enhancer.setSuperclass(HelloConcrete.class);</span><br><span class="line">enhancer.setCallback(new MyMethodInterceptor());</span><br><span class="line"></span><br><span class="line">HelloConcrete hello = (HelloConcrete)enhancer.create();</span><br><span class="line">System.out.println(hello.sayHello(&quot;I love you!&quot;));</span><br></pre></td></tr></table></figure>
+<p>运行上述代码输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">日志信息: You said: [I love you!]</span><br><span class="line">HelloConcrete: I love you!</span><br></pre></td></tr></table></figure>
+<p>上述代码中，我们通过CGLIB的Enhancer来指定要代理的目标对象、实际处理代理逻辑的对象，最终通过调用create()方法得到代理对象，<strong>对这个对象所有非final方法的调用都会转发给MethodInterceptor.intercept()方法</strong>，在intercept()方法里我们可以加入任何逻辑，比如修改方法参数，加入日志功能、安全检查功能等；<strong>通过调用MethodProxy.invokeSuper()方法，我们将调用转发给原始对象</strong>，具体到本例，就是HelloConcrete的具体方法。CGLIG中MethodInterceptor的作用跟JDK代理中的InvocationHandler很类似，都是方法调用的中转站。</p>
+<blockquote>
+<p>注意：对于从Object中继承的方法，CGLIB代理也会进行代理，如hashCode()、equals()、toString()等，但是getClass()、wait()等方法不会，因为它是final方法，CGLIB无法代理。</p>
+</blockquote>
+<p>如果对CGLIB代理之后的对象类型进行深挖，可以看到如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># HelloConcrete代理对象的类型信息</span><br><span class="line">class=class cglib.HelloConcrete$$EnhancerByCGLIB$$e3734e52</span><br><span class="line">superClass=class lh.HelloConcrete</span><br><span class="line">interfaces: </span><br><span class="line">interface net.sf.cglib.proxy.Factory</span><br><span class="line">invocationHandler=not java proxy class</span><br></pre></td></tr></table></figure>
+<p>我们看到使用CGLIB代理之后的对象类型是cglib.HelloConcrete$$EnhancerByCGLIB$$e3734e52，这是CGLIB动态生成的类型；父类是HelloConcrete，印证了<strong>CGLIB是通过继承实现代理；</strong>同时实现了net.sf.cglib.proxy.Factory接口，这个接口是CGLIB自己加入的，包含一些工具方法。</p>
+<p>注意，既然是继承就不得不考虑final的问题。我们知道final类型不能有子类，所以<strong>CGLIB不能代理final类型</strong>，遇到这种情况会抛出类似如下异常：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.lang.IllegalArgumentException: Cannot subclass final class cglib.HelloConcrete</span><br></pre></td></tr></table></figure>
+<p>同样的，<strong>final方法是不能重载的，所以也不能通过CGLIB代理</strong>，遇到这种情况不会抛异常，而是会跳过final方法只代理其他方法。</p>
+<p>如果你还对代理类cglib.HelloConcrete$$EnhancerByCGLIB$$e3734e52具体实现感兴趣，它大致长这个样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// CGLIB代理类具体实现</span><br><span class="line">public class HelloConcrete$$EnhancerByCGLIB$$e3734e52</span><br><span class="line">  extends HelloConcrete</span><br><span class="line">  implements Factory</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  private MethodInterceptor CGLIB$CALLBACK_0; // ~~</span><br><span class="line">  ...</span><br><span class="line">  </span><br><span class="line">  public final String sayHello(String paramString)</span><br><span class="line">  &#123;</span><br><span class="line">    ...</span><br><span class="line">    MethodInterceptor tmp17_14 = CGLIB$CALLBACK_0;</span><br><span class="line">    if (tmp17_14 != null) &#123;</span><br><span class="line">      // 将请求转发给MethodInterceptor.intercept()方法。</span><br><span class="line">      return (String)tmp17_14.intercept(this, </span><br><span class="line">              CGLIB$sayHello$0$Method, </span><br><span class="line">              new Object[] &#123; paramString &#125;, </span><br><span class="line">              CGLIB$sayHello$0$Proxy);</span><br><span class="line">    &#125;</span><br><span class="line">    return super.sayHello(paramString);</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码我们看到，当调用代理对象的sayHello()方法时，首先会尝试转发给MethodInterceptor.intercept()方法，如果没有MethodInterceptor就执行父类的sayHello()。这些逻辑没什么复杂之处，但是他们是在运行时动态产生的，无需我们手动编写。如何获取CGLIB代理类字节码可参考Access the generated byte[] array directly。</p>
+<p>更多关于CGLIB的介绍可以参考Rafael Winterhalter的cglib: The missing manual，一篇很深入的文章。</p>
+<p>结语<br>本文介绍了Java两种常见动态代理机制的用法和原理，JDK原生动态代理是Java原生支持的，不需要任何外部依赖，但是它只能基于接口进行代理；CGLIB通过继承的方式进行代理，无论目标对象有没有实现接口都可以代理，但是无法处理final的情况。</p>
+<p>动态代理是Spring AOP(Aspect Orient Programming, 面向切面编程)的实现方式，了解动态代理原理，对理解Spring AOP大有帮助。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/04/模板引擎学习/2019-5-4-Velocity 简明教程/" rel="next" title="Velocity 简明教程">
+                <i class="fa fa-chevron-left"></i> Velocity 简明教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/14/Java/java 小知识/" rel="prev" title="简单比较 getName()、getCanonicalName()、getSimpleName() 的异同">
+                简单比较 getName()、getCanonicalName()、getSimpleName() 的异同 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-Proxy和CGLIB动态代理原理"><span class="nav-number">1.</span> <span class="nav-text">Java Proxy和CGLIB动态代理原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK原生动态代理"><span class="nav-number">1.1.</span> <span class="nav-text">JDK原生动态代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGLIB动态代理"><span class="nav-number">1.2.</span> <span class="nav-text">CGLIB动态代理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

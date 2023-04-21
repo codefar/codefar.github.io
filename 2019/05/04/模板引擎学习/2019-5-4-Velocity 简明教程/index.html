@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="模版引擎,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="模版引擎">
+<meta name="keywords" content="模版引擎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Velocity 简明教程">
+<meta property="og:url" content="http://codefarmer.tech/2019/05/04/模板引擎学习/2019-5-4-Velocity 简明教程/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="模版引擎">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Velocity 简明教程">
+<meta name="twitter:description" content="模版引擎">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2019/05/04/模板引擎学习/2019-5-4-Velocity 简明教程/">
+
+
+
+
+
+  <title>Velocity 简明教程 | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2019/05/04/模板引擎学习/2019-5-4-Velocity 简明教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Velocity 简明教程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-04T17:02:00+08:00">
+                2019-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/04/模板引擎学习/2019-5-4-Velocity 简明教程/" class="leancloud_visitors" data-flag-title="Velocity 简明教程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  模版引擎
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Velocity-简明教程"><a href="#Velocity-简明教程" class="headerlink" title="Velocity 简明教程"></a>Velocity 简明教程</h1><h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Velocity在Apache官网地址：<a href="http://velocity.apache.org/" target="_blank" rel="noopener">http://velocity.apache.org/</a><br>Velocity是一个基于Java的模板引擎。它允许任何人使用简单而强大的模板语言来引用Java代码中定义的对象。</p>
+<p>作为一个模块引擎，Velocity可以用作品前后端分离的MVC展现层，也可以用来生成SQL、 PostScript、XML等。</p>
+<h1 id="程序基本用法"><a href="#程序基本用法" class="headerlink" title="程序基本用法"></a>程序基本用法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">  Velocity.init();</span><br><span class="line"></span><br><span class="line">      VelocityContext context = new VelocityContext();</span><br><span class="line">      context.put(&quot;name&quot;, &quot;Velocity&quot;);</span><br><span class="line"></span><br><span class="line">      Template template = null;</span><br><span class="line">      try &#123;</span><br><span class="line">          template = Velocity.getTemplate(&quot;mytemplate.vm&quot;);</span><br><span class="line">      &#125; catch( ResourceNotFoundException e ) &#123;</span><br><span class="line">          // couldn&apos;t find the template</span><br><span class="line">      &#125; catch( ParseErrorException pee ) &#123;</span><br><span class="line">          // syntax error: problem parsing the template</span><br><span class="line">      &#125; catch( MethodInvocationException mie ) &#123;</span><br><span class="line">          // something invoked in the template</span><br><span class="line">          // threw an exception</span><br><span class="line">      &#125; catch( Exception e ) &#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      StringWriter sw = new StringWriter();</span><br><span class="line">      template.merge(context, sw);</span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line">      </span><br><span class="line"> //</span><br><span class="line"> </span><br><span class="line"> Properties props = new Properties();</span><br><span class="line">      props.load(this.getClass().getResourceAsStream(&quot;/vm.properties&quot;));</span><br><span class="line">      VelocityEngine ve = new VelocityEngine(props);</span><br><span class="line"></span><br><span class="line">      ve.init();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="模板基本语法"><a href="#模板基本语法" class="headerlink" title="模板基本语法"></a>模板基本语法</h1><h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>使用$符声明变量，可以声明变量也可以对变量进行赋值(变量是弱类型的)。还可以使用$取出在VelocityContext容器中存放的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#set($name =“velocity”)</span><br><span class="line">#set($foo.name = $bar.name)</span><br><span class="line">#set($foo.name = $bar.getName($arg))</span><br><span class="line">#set($foo = 123)</span><br><span class="line">#set($foo = [“foo”,$bar])</span><br></pre></td></tr></table></figure>
+<p>变量的使用<br>在模板文件中使用$name 或者 ${name} 来使用定义的变量。推荐使用 ${name} 这种格式，</p>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>在Velocity中可以使用循环语法遍历集合，语法结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#foreach($item in $list)</span><br><span class="line"> $item</span><br><span class="line"> $velocityCount </span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p>Velocity会创建一个 $velocityCount 的变量作为计数，从 1 开始，每次循环都会加 1。</p>
+<h2 id="条件控制语法"><a href="#条件控制语法" class="headerlink" title="条件控制语法"></a>条件控制语法</h2><p>在Velocity中可以使用条件语法对流程进行控制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#if(condition)</span><br><span class="line">...dosonmething...</span><br><span class="line">#elseif(condition)</span><br><span class="line">...dosomething...</span><br><span class="line">#else</span><br><span class="line">...dosomething...</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<h2 id="关系操作符"><a href="#关系操作符" class="headerlink" title="关系操作符"></a>关系操作符</h2><p>Velocity 引擎提供了 AND、OR 和 NOT 操作符，分别对应&amp;&amp;、||和! 例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#if($foo &amp;&amp; $bar)</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<h2 id="宏"><a href="#宏" class="headerlink" title="宏"></a>宏</h2><p>Velocity 中的宏可以理解为函数定义。定义的语法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#macro(macroName arg1 arg2 …)</span><br><span class="line">...</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+<p>调用这个宏的语法是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#macroName(arg1 arg2 …)</span><br></pre></td></tr></table></figure>
+<p>这里的<strong>参数之间使用空格隔开</strong>，下面是定义和使用 Velocity 宏的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#macro(sayHello $name)</span><br><span class="line">hello $name</span><br><span class="line">#end</span><br><span class="line">#sayHello(“velocity”)</span><br></pre></td></tr></table></figure>
+<p>输出的结果为 hello velocity</p>
+<h2 id="parse-和-include"><a href="#parse-和-include" class="headerlink" title="#parse 和 #include"></a>#parse 和 #include</h2><p>#parse 和 #include 指令的功能都是在外部引用文件，而两者的区别是，#parse 会将引用的内容当成类似于<strong>源码文件</strong>，会将内容在引入的地方进行解析，#include 是将引入文件当成资源文件，会将引入内容原封不动地以<strong>文本输出</strong>。分别看以下例子：</p>
+<p>foo.vm 文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#set($name =“velocity”)</span><br></pre></td></tr></table></figure></p>
+<p>include.vm：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include(“foo.vm”)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为：#set($name =“velocity”)</p>
+<p>parse.vm：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#parse(“foo.vm”)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为：velocity  </p>
+<h2 id="在web项目中使用Velocity"><a href="#在web项目中使用Velocity" class="headerlink" title="在web项目中使用Velocity"></a>在web项目中使用Velocity</h2><p>velocity只是一个模板引擎，在web项目中使用Velocity还得添加一个HTTP框架来处理请求和转发，apache提供了velocity-tools，其提供了VelocityViewServlet，也可继承VelocityViewServlet,从而实现自己的HTTP框架<br>一般都是继承VelocityViewServlet，重写handleRequest方法，在其中存入公共的参数.</p>
+<p>通过继承或直接使用VelocityViewServlet，可以在管理的vm文件中获得request、session与application对象，也可以直接获取在这几个域对象中保存的值，获取的顺序与EL表达式获取的顺序类似:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$&#123;request&#125; --&gt; $&#123;session&#125; --&gt; $&#123;application&#125;</span><br><span class="line"></span><br><span class="line">比如$&#123;testArr&#125;，获取testArr属性，velocity会在velocity的context中寻找。没找到在request域中找，没找到在session中找.</span><br></pre></td></tr></table></figure>
+<p>下面将通过实例的方式讲解如何在web项目中使用Velocity<br>首先引入velocity-tools及其依赖的相关jar包，然后分为如下4步：</p>
+<h3 id="继承VelocityViewServlet"><a href="#继承VelocityViewServlet" class="headerlink" title="继承VelocityViewServlet"></a>继承VelocityViewServlet</h3><p>通过继承VelocityViewServlet重写handleRequest方法，可以自定义转发规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class MyVelocityViewServlet extends VelocityViewServlet &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected Template handleRequest(HttpServletRequest request, HttpServletResponse response, Context ctx) &#123;</span><br><span class="line">        // 往Context容器存放变量</span><br><span class="line">        ctx.put(&quot;fullName&quot;,&quot;lixiaolin&quot;);</span><br><span class="line">        // 也可以往request域中存值</span><br><span class="line">        request.setAttribute(&quot;anotherName&quot;,&quot;xlli&quot;);</span><br><span class="line">        // forward到指定模板</span><br><span class="line">        return getTemplate(&quot;test.vm&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置web-xml"><a href="#配置web-xml" class="headerlink" title="配置web.xml"></a>配置web.xml</h3><p>对自定义的VelocityViewServlet配置就像配置普通的Servlet一样，如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyVelocityServlet&lt;/servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;com.lxl.velocity.MyVelocityViewServlet&lt;/servlet-class&gt;</span><br><span class="line">&lt;/servlet&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyVelocityServlet&lt;/servlet-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;/servlet/myVelocityServlet&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+<p>参考</p>
+<ul>
+<li><a href="http://velocity.apache.org/engine/2.0/user-guide.html" target="_blank" rel="noopener">http://velocity.apache.org/engine/2.0/user-guide.html</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-velocity1/" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/java/j-lo-velocity1/</a></li>
+<li></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/模版引擎/" rel="tag"># 模版引擎</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/04/模板引擎学习/2019-5-4-FreeMarker 简明教程/" rel="next" title="FreeMarker 简明教程">
+                <i class="fa fa-chevron-left"></i> FreeMarker 简明教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/14/Java/Java Proxy和CGLIB动态代理原理/" rel="prev" title="Java Proxy和CGLIB动态代理原理">
+                Java Proxy和CGLIB动态代理原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Velocity-简明教程"><span class="nav-number">1.</span> <span class="nav-text">Velocity 简明教程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#程序基本用法"><span class="nav-number">3.</span> <span class="nav-text">程序基本用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板基本语法"><span class="nav-number">4.</span> <span class="nav-text">模板基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">4.1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">4.2.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件控制语法"><span class="nav-number">4.3.</span> <span class="nav-text">条件控制语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系操作符"><span class="nav-number">4.4.</span> <span class="nav-text">关系操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宏"><span class="nav-number">4.5.</span> <span class="nav-text">宏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parse-和-include"><span class="nav-number">4.6.</span> <span class="nav-text">#parse 和 #include</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在web项目中使用Velocity"><span class="nav-number">4.7.</span> <span class="nav-text">在web项目中使用Velocity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#继承VelocityViewServlet"><span class="nav-number">4.7.1.</span> <span class="nav-text">继承VelocityViewServlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置web-xml"><span class="nav-number">4.7.2.</span> <span class="nav-text">配置web.xml</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Dagger2,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Dagger2 使用">
+<meta name="keywords" content="Android,Dagger2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dagger2 简明教程">
+<meta property="og:url" content="http://codefarmer.tech/2020/02/14/Dagger2/Dagger2 简明教程/index.html">
+<meta property="og:site_name" content="DavyJones的博客">
+<meta property="og:description" content="Dagger2 使用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://codefarmer.tech/2020/02/14/Dagger2/Dagger2%20简明教程/[https://img-blog.csdn.net/20170720213543917?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYnJpYmx1ZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2023-04-21T15:20:40.374Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dagger2 简明教程">
+<meta name="twitter:description" content="Dagger2 使用">
+<meta name="twitter:image" content="http://codefarmer.tech/2020/02/14/Dagger2/Dagger2%20简明教程/[https://img-blog.csdn.net/20170720213543917?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYnJpYmx1ZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://codefarmer.tech/2020/02/14/Dagger2/Dagger2 简明教程/">
+
+
+
+
+
+  <title>Dagger2 简明教程 | DavyJones的博客</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?3fd29be7d3390b9c2190319b4324281f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DavyJones的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://codefarmer.tech/2020/02/14/Dagger2/Dagger2 简明教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DavyJones">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DavyJones的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Dagger2 简明教程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-14T17:02:00+08:00">
+                2020-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/02/14/Dagger2/Dagger2 简明教程/" class="leancloud_visitors" data-flag-title="Dagger2 简明教程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Dagger2 使用
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Dagger2-简明教程"><a href="#Dagger2-简明教程" class="headerlink" title="Dagger2 简明教程"></a>Dagger2 简明教程</h1><p>[TOC]</p>
+<h1 id="第一章：依赖注入与控制反转"><a href="#第一章：依赖注入与控制反转" class="headerlink" title="第一章：依赖注入与控制反转"></a>第一章：依赖注入与控制反转</h1><p>面向对象编程需要处理各种依赖关系，多个对象或者组件互相依赖。通常，我们都会自己通过new来创建依赖对象。但是，这样通常会带来一系列的问题。</p>
+<ol>
+<li>对象和它的依赖项形成强依赖，如果我们要替换依赖项的实现，那我们就不得不去修改对象。</li>
+<li>在对对象进行测试时，我们不得不先创建它的依赖项，如果对象依赖项很多，那么将非常痛苦。</li>
+</ol>
+<p>依赖注入与控制反转是一种思想。在这个世界里，对象的依赖不是有自己提供，而是由外部容器提供，容器由所有它需要的依赖，容器找到它的依赖，并将它们注入给对象。</p>
+<p><strong>控制反式IOC</strong>: 控制反转是将组件间的依赖关系从程序内部提到外部由容器来管理。</p>
+<p><strong>依赖注入D</strong>: 依赖注入是指将组件的依赖通过外部以参数或其他形式由容器注入，并非有组件自己提供。通常依赖注入有两种方式：设值注入和构造注入。设值注入指通过set的方法传入，构造注入指通过构造函数的方式传入参数。</p>
+<h1 id="第二章：JDK中的依赖注入"><a href="#第二章：JDK中的依赖注入" class="headerlink" title="第二章：JDK中的依赖注入"></a>第二章：JDK中的依赖注入</h1><p>JDK本身提供了依赖注入的框架，但是JDK没有提供实现。我们先看下JDK中的框架。</p>
+<p><img src="[https://img-blog.csdn.net/20170720213543917?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYnJpYmx1ZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"></p>
+<h1 id="第三章：Dagger2"><a href="#第三章：Dagger2" class="headerlink" title="第三章：Dagger2"></a>第三章：Dagger2</h1><blockquote>
+<p>在下面的内容中，我们称需要注入的对象称为对象。那些注入的对象我们称为依赖。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;  Class A &#123;</span><br><span class="line">&gt;    B b;</span><br><span class="line">&gt;  &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p> 我们称A为对象，B为依赖。</p>
+</blockquote>
+<p>Dagger2是依赖注入与控制反转思想的一种Java实现。除Dagger2外，java中最重量的该框架就是Spring。 Spring是JavaWeb开发最火最优秀的框架。</p>
+<p>思考一下： 如果抛却这些框架，自己实现这样一个框架。那么框架需要做哪些最基本的事？ </p>
+<ol>
+<li>框架需要知道对象需要哪些依赖。 </li>
+<li>框架需要知道如何生成这些依赖。</li>
+<li>框架需要知道如何把依赖注入给对象。</li>
+</ol>
+<p>有了这些，我们就可以有一个基本的框架实现。</p>
+<p>在额外思考一下，多个对象都依赖一个依赖项，框架在生成依赖时，：</p>
+<ol>
+<li>如何做到依赖是单例。</li>
+<li>如何区分出不用的依赖。</li>
+</ol>
+<p>那我们来领略一下Dagger2是怎么做的吧。</p>
+<h2 id="Dagger2-简介"><a href="#Dagger2-简介" class="headerlink" title="Dagger2 简介"></a>Dagger2 简介</h2><p>Dagger是一个完全静态的，Java和Android的编译时依赖注入框架。它改编了由Square 创建的早期版本，现在由Google维护。</p>
+<h2 id="Dagger2-简明使用"><a href="#Dagger2-简明使用" class="headerlink" title="Dagger2 简明使用"></a>Dagger2 简明使用</h2><ol>
+<li>引入依赖</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//纯java依赖</span><br><span class="line">compile &apos;com.google.dagger:dagger:2.16&apos;</span><br><span class="line">annotationProcessor &apos;com.google.dagger:dagger-compiler:2.16&apos;</span><br><span class="line"></span><br><span class="line">//下面的可不添加</span><br><span class="line">//Android依赖库-非必须项</span><br><span class="line">compile &apos;com.google.dagger:dagger-android:2.16&apos;</span><br><span class="line">annotationProcessor &apos;com.google.dagger:dagger-android-processor:2.16&apos;</span><br><span class="line">//Android support依赖库-非必须项</span><br><span class="line">compile &apos;com.google.dagger:dagger-android-support:2.16&apos;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>基本使用</li>
+</ol>
+<h2 id="Daggaer2-剖析"><a href="#Daggaer2-剖析" class="headerlink" title="Daggaer2 剖析"></a>Daggaer2 剖析</h2><p>按照我们提出的问题，我们一步一步梳理Dagger2是如何解决这些问题的。</p>
+<h3 id="问题1-》框架如何知道对象需要哪些依赖。"><a href="#问题1-》框架如何知道对象需要哪些依赖。" class="headerlink" title="问题1 -》框架如何知道对象需要哪些依赖。"></a>问题1 -》框架如何知道对象需要哪些依赖。</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line"></span><br><span class="line">    @Inject</span><br><span class="line">    Boss boss;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="问题2-》框架需要知道如何生成这些依赖。"><a href="#问题2-》框架需要知道如何生成这些依赖。" class="headerlink" title="问题2 -》框架需要知道如何生成这些依赖。"></a>问题2 -》框架需要知道如何生成这些依赖。</h3><ol>
+<li>使用@Inject注解在类的构造函数上</li>
+</ol>
+<p>对于我们自己写的类， 我们可以直接类的构造函数上添加@Inject 来表示提供依赖。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class Boss &#123;</span><br><span class="line"></span><br><span class="line">    @Inject</span><br><span class="line">    public Boss() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用@module注解</li>
+</ol>
+<p>对于第三发类等我们不能修改的类或者其它不能添加@Inject的类， 我们可以使用模块来表示提供依赖. Dagger2使用@Module和@Provides来提供依赖。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Module</span><br><span class="line">public class ActivityModule &#123;</span><br><span class="line"></span><br><span class="line">    @Provides</span><br><span class="line">    public ExecutorService provideExecutorService() &#123;</span><br><span class="line">        return Executors.newSingleThreadExecutor();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Provides</span><br><span class="line">    public ThreadFactory provideThreadFactory() &#123;</span><br><span class="line">        return Executors.defaultThreadFactory();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="问题3-》框架需要知道如何把依赖注入给对象"><a href="#问题3-》框架需要知道如何把依赖注入给对象" class="headerlink" title="问题3 -》框架需要知道如何把依赖注入给对象"></a>问题3 -》框架需要知道如何把依赖注入给对象</h3><p>Dagger2 通过编著Component注解的类完成注入工作。形式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Component()</span><br><span class="line">public interface ActivityComponent &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>build一下工程，将会为我们生成如下的类。</p>
+<h3 id="生成的类"><a href="#生成的类" class="headerlink" title="生成的类"></a>生成的类</h3><ol>
+<li>提供依赖的类，Dagger2为每一个提供依赖的类生成一个工厂类来生成依赖。<br>他们的继承广西是这样的</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph BT</span><br><span class="line">CLASS_Factory--&gt;Factory</span><br><span class="line">Factory--&gt;Provider</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public final class Boss_Factory implements Factory&lt;Boss&gt; &#123;</span><br><span class="line">  private static final Boss_Factory INSTANCE = new Boss_Factory();</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public Boss get() &#123;</span><br><span class="line">    return provideInstance();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static Boss provideInstance() &#123;</span><br><span class="line">    return new Boss();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static Boss_Factory create() &#123;</span><br><span class="line">    return INSTANCE;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static Boss newBoss() &#123;</span><br><span class="line">    return new Boss();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用module注解的类，生成的类名为 模块名+方法名字+Factory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">public final class ActivityModule_ProvideExecutorServiceFactory</span><br><span class="line">    implements Factory&lt;ExecutorService&gt; &#123;</span><br><span class="line">  private final ActivityModule module;</span><br><span class="line"></span><br><span class="line">  public ActivityModule_ProvideExecutorServiceFactory(ActivityModule module) &#123;</span><br><span class="line">    this.module = module;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public ExecutorService get() &#123;</span><br><span class="line">    return provideInstance(module);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ExecutorService provideInstance(ActivityModule module) &#123;</span><br><span class="line">    return proxyProvideExecutorService(module);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ActivityModule_ProvideExecutorServiceFactory create(ActivityModule module) &#123;</span><br><span class="line">    return new ActivityModule_ProvideExecutorServiceFactory(module);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ExecutorService proxyProvideExecutorService(ActivityModule instance) &#123;</span><br><span class="line">    return Preconditions.checkNotNull(</span><br><span class="line">        instance.provideExecutorService(),</span><br><span class="line">        &quot;Cannot return null from a non-@Nullable @Provides method&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public final class ActivityModule_ProvideThreadFactoryFactory implements Factory&lt;ThreadFactory&gt; &#123;</span><br><span class="line">  private final ActivityModule module;</span><br><span class="line"></span><br><span class="line">  public ActivityModule_ProvideThreadFactoryFactory(ActivityModule module) &#123;</span><br><span class="line">    this.module = module;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public ThreadFactory get() &#123;</span><br><span class="line">    return provideInstance(module);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ThreadFactory provideInstance(ActivityModule module) &#123;</span><br><span class="line">    return proxyProvideThreadFactory(module);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ActivityModule_ProvideThreadFactoryFactory create(ActivityModule module) &#123;</span><br><span class="line">    return new ActivityModule_ProvideThreadFactoryFactory(module);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ThreadFactory proxyProvideThreadFactory(ActivityModule instance) &#123;</span><br><span class="line">    return Preconditions.checkNotNull(</span><br><span class="line">        instance.provideThreadFactory(),</span><br><span class="line">        &quot;Cannot return null from a non-@Nullable @Provides method&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>需要注入的类，Dagger2为每一个需要注入的类生成一个实现MembersInjector的类，来完成注入工作。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph BT</span><br><span class="line">CLASS_MembersInjector--&gt;MembersInjector</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public final class MainActivity_MembersInjector implements MembersInjector&lt;MainActivity&gt; &#123;</span><br><span class="line">  private final Provider&lt;Boss&gt; bossProvider;</span><br><span class="line"></span><br><span class="line">  public MainActivity_MembersInjector(Provider&lt;Boss&gt; bossProvider) &#123;</span><br><span class="line">    this.bossProvider = bossProvider;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static MembersInjector&lt;MainActivity&gt; create(Provider&lt;Boss&gt; bossProvider) &#123;</span><br><span class="line">    return new MainActivity_MembersInjector(bossProvider);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void injectMembers(MainActivity instance) &#123;</span><br><span class="line">    injectBoss(instance, bossProvider.get());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void injectBoss(MainActivity instance, Boss boss) &#123;</span><br><span class="line">    instance.boss = boss;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在生成的类中，Dagger会为每个需要注入的成员，</p>
+<ul>
+<li>添加一个Provider类型的成员。</li>
+<li>构造函数和静态工厂方法添加一个对应的Provider类型的参数。</li>
+<li>添加inject*的方法，并在injectMembers调用。</li>
+<li></li>
+</ul>
+<ol start="3">
+<li>关联起来二者的component<br>Dagger2会生成对应的类实现或者继承我们的Component注解的类。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public final class DaggerActivityComponent implements ActivityComponent &#123;</span><br><span class="line">  private DaggerActivityComponent(Builder builder) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  public static Builder builder() &#123;</span><br><span class="line">    return new Builder();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ActivityComponent create() &#123;</span><br><span class="line">    return new Builder().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static final class Builder &#123;</span><br><span class="line">    private Builder() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public ActivityComponent build() &#123;</span><br><span class="line">      return new DaggerActivityComponent(this);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，我们的类使用了静态的工厂方法和Builder方法的设计模式。</p>
+<p>到现在为止，我们只是看到了基本的实现。而且component类里有没有真的注入。接下来，我们修改Componet来完成注入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component()</span><br><span class="line">public interface ActivityComponent &#123;</span><br><span class="line">    void inject(MainActivity mainActivity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Build工程后，可以看到生成的类增加了下面两个方法。实际上，Dagger2会每一个需要注入的成员 增加这样两个方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void inject(MainActivity mainActivity)</span><br><span class="line">和 </span><br><span class="line">private MainActivity injectMainActivity(MainActivity instance) &#123;</span><br><span class="line">    MainActivity_MembersInjector.injectBoss(instance, new Boss());</span><br><span class="line">    return instance;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">public final class DaggerActivityComponent implements ActivityComponent &#123;</span><br><span class="line">  private DaggerActivityComponent(Builder builder) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  public static Builder builder() &#123;</span><br><span class="line">    return new Builder();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ActivityComponent create() &#123;</span><br><span class="line">    return new Builder().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static final class Builder &#123;</span><br><span class="line">    private Builder() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public ActivityComponent build() &#123;</span><br><span class="line">      return new DaggerActivityComponent(this);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//变更后</span><br><span class="line"></span><br><span class="line">public final class DaggerActivityComponent implements ActivityComponent &#123;</span><br><span class="line">  private DaggerActivityComponent(Builder builder) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  public static Builder builder() &#123;</span><br><span class="line">    return new Builder();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ActivityComponent create() &#123;</span><br><span class="line">    return new Builder().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void inject(MainActivity mainActivity) &#123;</span><br><span class="line">    injectMainActivity(mainActivity);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  private MainActivity injectMainActivity(MainActivity instance) &#123;</span><br><span class="line">    MainActivity_MembersInjector.injectBoss(instance, new Boss());</span><br><span class="line">    return instance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static final class Builder &#123;</span><br><span class="line">    private Builder() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public ActivityComponent build() &#123;</span><br><span class="line">      return new DaggerActivityComponent(this);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到此，好像所有的类都有了，但少了一点，为MainActivity注入的方法，好像没人调用。我们增加最后一步，来完成所有的工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">    @Inject</span><br><span class="line">    Boss boss;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        DaggerActivityComponent.create().inject(this);</span><br><span class="line">        System.out.println(boss);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行代码我们就可以看到boss，已经被设置了值了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">06-21 11:45:31.189 1710-1710/davy.dagger2learn I/System.out: davy.dagger2learn.Boss@8c15cb2</span><br></pre></td></tr></table></figure>
+<p>来看下，那些基类的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import javax.inject.Provider;</span><br><span class="line">public interface Factory&lt;T&gt; extends Provider&lt;T&gt; &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface MembersInjector&lt;T&gt; &#123;</span><br><span class="line">    void injectMembers(T instance);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面说到了使用@Inject提供注解来提供依赖的类BOSS。 但是使用@Module注解的类 并没有说到。下面说这个问题。</p>
+<p>首先，修改MainActivity，添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Inject</span><br><span class="line">ThreadFactory threadFactory;</span><br></pre></td></tr></table></figure>
+<p>接下来，build工程，发现报错了信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">错误: [Dagger/MissingBinding] java.util.concurrent.ThreadFactory cannot be provided without an @Provides-annotated method.</span><br><span class="line">java.util.concurrent.ThreadFactory is injected at</span><br><span class="line">davy.dagger2learn.MainActivity.threadFactory</span><br><span class="line">davy.dagger2learn.MainActivity is injected at</span><br><span class="line">davy.dagger2learn.ActivityComponent.inject(davy.dagger2learn.MainActivity)</span><br></pre></td></tr></table></figure>
+<p>意思是：使用@Provides注解的方法提供的类, 无法提供依赖。</p>
+<p>正确的方式是。使用Provides提供依赖 需要在Compoent中将Module添加进来。</p>
+<p>修改如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Component(modules = &#123;ActivityModule.class&#125;)</span><br><span class="line">public interface ActivityComponent &#123;</span><br><span class="line">    void inject(MainActivity mainActivity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再次运行，发现功能正常了。</p>
+<p>查看生产的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">public final class DaggerActivityComponent implements ActivityComponent &#123;</span><br><span class="line">  private ActivityModule activityModule;</span><br><span class="line"></span><br><span class="line">  private DaggerActivityComponent(Builder builder) &#123;</span><br><span class="line">    initialize(builder);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static Builder builder() &#123;</span><br><span class="line">    return new Builder();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static ActivityComponent create() &#123;</span><br><span class="line">    return new Builder().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">  private void initialize(final Builder builder) &#123;</span><br><span class="line">    this.activityModule = builder.activityModule;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void inject(MainActivity mainActivity) &#123;</span><br><span class="line">    injectMainActivity(mainActivity);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  private MainActivity injectMainActivity(MainActivity instance) &#123;</span><br><span class="line">    MainActivity_MembersInjector.injectBoss(instance, new Boss());</span><br><span class="line">    MainActivity_MembersInjector.injectThreadFactory(</span><br><span class="line">        instance,</span><br><span class="line">        ActivityModule_ProvideThreadFactoryFactory.proxyProvideThreadFactory(activityModule));</span><br><span class="line">    return instance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static final class Builder &#123;</span><br><span class="line">    private ActivityModule activityModule;</span><br><span class="line"></span><br><span class="line">    private Builder() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public ActivityComponent build() &#123;</span><br><span class="line">      if (activityModule == null) &#123;</span><br><span class="line">        this.activityModule = new ActivityModule();</span><br><span class="line">      &#125;</span><br><span class="line">      return new DaggerActivityComponent(this);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Builder activityModule(ActivityModule activityModule) &#123;</span><br><span class="line">      this.activityModule = Preconditions.checkNotNull(activityModule);</span><br><span class="line">      return this;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们发现，</p>
+<ul>
+<li>对于使用@Inject在构造函数的类，Dagger2直接使用new 创建类。</li>
+<li>对于使用Module的类，是在DaggerActivityComponent添加module 成员来提供依赖。</li>
+</ul>
+<h1 id="第四章：总结"><a href="#第四章：总结" class="headerlink" title="第四章：总结"></a>第四章：总结</h1><p>上面，我们总结并学会了Dagger2的基本用法。</p>
+<ol>
+<li>使用@Inject在成员上，标识需要注入</li>
+<li>使用@Inject在构造函数上，标识可以提供依赖。</li>
+<li>使用@Module和@Provides标注类和方法，标识提供依赖。</li>
+<li>使用@Component标注类，并添加inject方法，来将上面提供的依赖和需要注入的类结合起来，</li>
+<li>使用Daggee*Component来完成注入工作。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="DavyJones 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Dagger2/" rel="tag"># Dagger2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/12/ReactNative/添加TypeScript支持/" rel="next" title="React Native-添加TypeScript支持">
+                <i class="fa fa-chevron-left"></i> React Native-添加TypeScript支持
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/15/Dagger2/Dagger2 简明教程2/" rel="prev" title="Dagger2 简明教程2">
+                Dagger2 简明教程2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="uyan_frame"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">DavyJones</p>
+              <p class="site-description motion-element" itemprop="description">码农的个人站</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=526307800&auto=1&height=66"></iframe>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dagger2-简明教程"><span class="nav-number">1.</span> <span class="nav-text">Dagger2 简明教程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章：依赖注入与控制反转"><span class="nav-number">2.</span> <span class="nav-text">第一章：依赖注入与控制反转</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章：JDK中的依赖注入"><span class="nav-number">3.</span> <span class="nav-text">第二章：JDK中的依赖注入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章：Dagger2"><span class="nav-number">4.</span> <span class="nav-text">第三章：Dagger2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dagger2-简介"><span class="nav-number">4.1.</span> <span class="nav-text">Dagger2 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dagger2-简明使用"><span class="nav-number">4.2.</span> <span class="nav-text">Dagger2 简明使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Daggaer2-剖析"><span class="nav-number">4.3.</span> <span class="nav-text">Daggaer2 剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-》框架如何知道对象需要哪些依赖。"><span class="nav-number">4.3.1.</span> <span class="nav-text">问题1 -》框架如何知道对象需要哪些依赖。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2-》框架需要知道如何生成这些依赖。"><span class="nav-number">4.3.2.</span> <span class="nav-text">问题2 -》框架需要知道如何生成这些依赖。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3-》框架需要知道如何把依赖注入给对象"><span class="nav-number">4.3.3.</span> <span class="nav-text">问题3 -》框架需要知道如何把依赖注入给对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成的类"><span class="nav-number">4.3.4.</span> <span class="nav-text">生成的类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章：总结"><span class="nav-number">5.</span> <span class="nav-text">第四章：总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DavyJones</span>
+
+  
+</div>
+
+
+
+
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style="display:none">
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style="display:none">
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2156892"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("8Q7LOt1Q8Iw1HKbXWdazeHRW-gzGzoHsz", "i2BJQMu9PC5HRJO93fUnCeI9");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
